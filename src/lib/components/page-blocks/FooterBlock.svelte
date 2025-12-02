@@ -1,12 +1,11 @@
 <script>
   export let data = {};
   export let meta = {};
-  export let anchor = '';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<footer class={`landing-block ${backgroundClass}`} id={anchor || undefined}>
+<footer id="footer" class={backgroundClass}>
   <div class="container">
     <div class="row g-4 align-items-center">
       <div class="col-lg-8">

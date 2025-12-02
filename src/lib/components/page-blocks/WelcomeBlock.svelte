@@ -2,17 +2,13 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
 
   export let data = {};
-  export let anchor = '';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section id={anchor || undefined}>
-  <div class={backgroundClass}>
-    <div class="container" id="welcome">
-      {#if data?.title}
-        <h1 class="h1">{data.title}</h1>
-      {/if}
+<section id="welcome" class={backgroundClass}>
+  <div class="container">
+      <h1>{data.title}</h1>
 
       <div class="d-flex">
         {#if data?.content}
@@ -28,5 +24,4 @@
         />
       </div>
     </div>
-  </div>
 </section>

@@ -2,18 +2,16 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
   export let data = {};
-  export let anchor = '';
 
   const supporters = data?.supporters ?? [];
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section>
-  <div class={`${backgroundClass} footer`}>
-		<div class="container" id="supporters">
+<section id="supporters" class={`${backgroundClass} footer`}>
+	<div class="container">
 			<div class="row align-items-center">
 				<div class="col-md-12">
-					<h4 class="h4 mb-7">Gefördert von:</h4>
+					<h4>Gefördert von:</h4>
 
 					{#if supporters.length}
 						<!-- Supporters will be displayed in rows as per original design -->
@@ -58,7 +56,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 <style>

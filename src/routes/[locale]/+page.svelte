@@ -23,22 +23,29 @@
 
 {#each landingBlocks as block (block.key)}
   {#if block.type === 'geko-page-blocks.welcome'}
-    <WelcomeBlock data={block.data} anchor={block.anchor} />
+    <WelcomeBlock data={block.data} />
   {:else if block.type === 'geko-page-blocks.about'}
-    <AboutBlock data={block.data} anchor={block.anchor} />
+    <AboutBlock data={block.data} />
   {:else if block.type === 'geko-page-blocks.calendar'}
-    <CalendarBlock data={block.data} events={eventItems} anchor={block.anchor} />
+    <CalendarBlock data={block.data} events={eventItems} />
   {:else if block.type === 'geko-page-blocks.news'}
-    <NewsBlock data={block.data} announcements={newsItems} anchor={block.anchor} />
+    <NewsBlock data={block.data} announcements={newsItems} />
   {:else if block.type === 'geko-page-blocks.contact'}
-    <ContactBlock data={block.data} {meta} anchor={block.anchor} />
+    <ContactBlock data={block.data} {meta} />
   {:else if block.type === 'geko-page-blocks.services'}
-    <ServicesBlock data={block.data} {services} anchor={block.anchor} />
+    <ServicesBlock data={block.data} {services} />
   {:else if block.type === 'geko-page-blocks.neighbours'}
-    <NeighboursBlock data={block.data} anchor={block.anchor} />
+    <NeighboursBlock data={block.data} />
   {:else if block.type === 'geko-page-blocks.supporters'}
-    <SupportersBlock data={block.data} anchor={block.anchor} />
+    <SupportersBlock data={block.data} />
   {:else if block.type === 'geko-page-blocks.footer'}
-    <FooterBlock data={block.data} {meta} anchor={block.anchor} />
+    <FooterBlock data={block.data} {meta} />
+  {:else}
+    {@const backgroundClass = block.data?.background_color ? `bg-geko-${block.data.background_color}` : 'bg-geko-white'}
+    <section class={backgroundClass}>
+      <div class="container">
+        <p class="text-muted mb-0">Blocktyp {block.type} ist noch nicht implementiert.</p>
+      </div>
+    </section>
   {/if}
 {/each}

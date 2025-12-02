@@ -2,16 +2,13 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
 
   export let data = {};
-  export let anchor = '';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section class={`landing-block ${backgroundClass}`} id={anchor || undefined}>
+<section id="neighbours" class={backgroundClass}>
 	<div class="container">
-		{#if data?.title}
-			<h2 class="fw-bold mb-4">{data.title}</h2>
-		{/if}
+        <h2>{data.title}</h2>
 
 		{#if data?.content}
 			<div class="rich-text">

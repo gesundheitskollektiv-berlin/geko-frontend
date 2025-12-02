@@ -1,7 +1,6 @@
 <script>
   export let data = {};
   export let events = [];
-  export let anchor = '';
 
   // data and events are kept for future calendar implementation
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -10,9 +9,8 @@
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section id={anchor || undefined}>
-  <div class={backgroundClass}>
-    <div class="container" id="contact">
+<section id="calendar" class={backgroundClass}>
+  <div class="container">
       <!-- TODO: Implement calendar component -->
       <!-- Calendar will be implemented with FullCalendar or similar -->
       <div class="pb-3 text-center" id="calendar-title"></div>
@@ -34,5 +32,4 @@
         </ul>
       </div>
     </div>
-  </div>
 </section>

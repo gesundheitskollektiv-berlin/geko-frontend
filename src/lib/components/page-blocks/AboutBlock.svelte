@@ -2,19 +2,15 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
 
   export let data = {};
-  export let anchor = '';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section id={anchor || undefined}>
-  <div class={backgroundClass}>
-    <div class="container" id="about-us">
+<section id="about" class={backgroundClass}>
+  <div class="container">
       <div class="row">
         <div class="col-12">
-          {#if data?.title}
-            <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{data.title}</h2>
-          {/if}
+          <h2>{data.title}</h2>
         </div>
       </div>
 
@@ -35,5 +31,4 @@
       <div class="my-5 mt-7"></div>
       <h3 class="h3">Material</h3>
     </div>
-  </div>
 </section>

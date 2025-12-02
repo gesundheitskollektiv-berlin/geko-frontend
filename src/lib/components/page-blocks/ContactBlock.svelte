@@ -3,27 +3,20 @@
 
   export let data = {};
   export let meta = {};
-  export let anchor = '';
 
   let showGoogleMap = false;
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
-
   $: mapQuery = encodeURIComponent(
     `${meta?.street ?? ''}, ${meta?.postal ?? ''} ${meta?.city ?? ''}`.trim()
   );
 
-  function toggleMap() {
-    showGoogleMap = !showGoogleMap;
-  }
+  const toggleMap = () => (showGoogleMap = !showGoogleMap);
 </script>
 
-<section id={anchor || undefined}>
-  <div class={backgroundClass}>
-    <div class="container" id="contact">
-      {#if data?.title}
-        <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{data.title}</h2>
-      {/if}
+<section id="contact" class={backgroundClass}>
+  <div class="container">
+    <h2>{data.title}</h2>
 
       <!-- Contact Information Row -->
       <div class="row mb-5">
@@ -115,5 +108,4 @@
         </div>
       </div>
     </div>
-  </div>
 </section>

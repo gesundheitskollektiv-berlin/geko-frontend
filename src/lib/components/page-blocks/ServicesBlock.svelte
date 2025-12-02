@@ -3,20 +3,14 @@
 
   export let data = {};
   export let services = [];
-  export let anchor = '';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section id={anchor || undefined}>
-  <div class={backgroundClass}>
-		<div class="container" id="services">
+<section id="services" class={backgroundClass}>
+	<div class="container">
 			<div class="row">
-				<div class="col-12">
-					{#if data?.title}
-						<h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{data.title}</h2>
-					{/if}
-				</div>
+				<h2>{data.title}</h2>
 			</div>
 
 			<div class="card shadow-none">
@@ -68,6 +62,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 

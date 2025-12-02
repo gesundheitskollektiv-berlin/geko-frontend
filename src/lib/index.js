@@ -19,7 +19,7 @@ export {
 export { formatDate, formatDateTime, formatDateShort } from './helpers/formatDate';
 
 // Landing helpers
-export { mapLandingBlocks, getBackgroundClass } from './helpers/landingBlocks';
+export { mapLandingBlocks } from './helpers/landingBlocks';
 
 // Generic components
 export { default as StrapiImage } from './components/StrapiImage.svelte';

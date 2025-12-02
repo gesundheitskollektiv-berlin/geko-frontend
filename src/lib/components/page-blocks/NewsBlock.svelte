@@ -4,7 +4,8 @@
   export let data = {};
   export let announcements = [];
   export let anchor = '';
-  export let backgroundClass = 'bg-white';
+
+  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
 <section class={`landing-block ${backgroundClass}`} id={anchor || undefined}>

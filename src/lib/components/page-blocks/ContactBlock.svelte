@@ -1,13 +1,13 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
-  import { onMount } from 'svelte';
 
   export let data = {};
   export let meta = {};
   export let anchor = '';
-  export let backgroundClass = 'bg-white';
 
   let showGoogleMap = false;
+
+  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 
   $: mapQuery = encodeURIComponent(
     `${meta?.street ?? ''}, ${meta?.postal ?? ''} ${meta?.city ?? ''}`.trim()

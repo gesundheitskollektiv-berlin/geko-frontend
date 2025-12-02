@@ -23,58 +23,26 @@
 
 {#each landingBlocks as block (block.key)}
   {#if block.type === 'geko-page-blocks.welcome'}
-    <WelcomeBlock data={block.data} anchor={block.anchor} backgroundClass={block.backgroundClass} />
+    <WelcomeBlock data={block.data} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.about'}
-    <AboutBlock data={block.data} anchor={block.anchor} backgroundClass={block.backgroundClass} />
+    <AboutBlock data={block.data} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.calendar'}
-    <CalendarBlock
-      data={block.data}
-      events={eventItems}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <CalendarBlock data={block.data} events={eventItems} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.news'}
-    <NewsBlock
-      data={block.data}
-      announcements={newsItems}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <NewsBlock data={block.data} announcements={newsItems} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.contact'}
-    <ContactBlock
-      data={block.data}
-      {meta}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <ContactBlock data={block.data} {meta} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.services'}
-    <ServicesBlock
-      data={block.data}
-      {services}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <ServicesBlock data={block.data} {services} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.neighbours'}
-    <NeighboursBlock
-      data={block.data}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <NeighboursBlock data={block.data} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.supporters'}
-    <SupportersBlock
-      data={block.data}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <SupportersBlock data={block.data} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.footer'}
-    <FooterBlock
-      data={block.data}
-      {meta}
-      anchor={block.anchor}
-      backgroundClass={block.backgroundClass}
-    />
+    <FooterBlock data={block.data} {meta} anchor={block.anchor} />
   {:else}
-    <section class={`landing-block ${block.backgroundClass}`} id={block.anchor || undefined}>
+    {@const backgroundClass = block.data?.background_color ? `bg-geko-${block.data.background_color}` : 'bg-geko-white'}
+    <section class={`landing-block ${backgroundClass}`} id={block.anchor || undefined}>
       <div class="container">
         <p class="text-muted mb-0">Blocktyp {block.type} ist noch nicht implementiert.</p>
       </div>

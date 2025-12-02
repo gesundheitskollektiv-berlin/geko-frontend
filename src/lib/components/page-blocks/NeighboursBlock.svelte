@@ -8,15 +8,19 @@
 
 <section id="neighbours" class={backgroundClass}>
 	<div class="container">
-        <h2>{data.title}</h2>
+		<div class="row justify-content-center">
+			<div class="col-lg-7 col-md-10">
+					<h2>{data.title}</h2>
 
-		{#if data?.content}
-			<div class="rich-text">
-				{@html resolveRichText(data.content)}
+					{#if data?.content}
+						<div class="rich-text">
+							{@html resolveRichText(data.content)}
+						</div>
+					{:else}
+						<p class="text-muted">Weitere Informationen folgen in Kürze.</p>
+					{/if}
 			</div>
-		{:else}
-			<p class="text-muted">Weitere Informationen folgen in Kürze.</p>
-		{/if}
+		</div>
 	</div>
 </section>
 

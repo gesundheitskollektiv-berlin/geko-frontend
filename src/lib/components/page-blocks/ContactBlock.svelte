@@ -16,10 +16,12 @@
 
 <section id="contact" class={backgroundClass}>
   <div class="container">
-    <h2>{data.title}</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-10">
+          <h2>{data.title}</h2>
 
-      <!-- Contact Information Row -->
-      <div class="row mb-5">
+          <!-- Contact Information Row -->
+          <div class="row mb-5">
         <div class="col-md-7" id="contact-image">
           {#if meta?.page_banner}
             <img
@@ -105,6 +107,8 @@
               {@html resolveRichText(data.content)}
             </div>
           {/if}
+        </div>
+      </div>
         </div>
       </div>
     </div>

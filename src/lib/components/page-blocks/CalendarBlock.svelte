@@ -11,25 +11,29 @@
 
 <section id="calendar" class={backgroundClass}>
   <div class="container">
-      <!-- TODO: Implement calendar component -->
-      <!-- Calendar will be implemented with FullCalendar or similar -->
-      <div class="pb-3 text-center" id="calendar-title"></div>
-      <div id="calendar"></div>
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-10">
+          <!-- TODO: Implement calendar component -->
+          <!-- Calendar will be implemented with FullCalendar or similar -->
+          <div class="pb-3 text-center" id="calendar-title"></div>
+          <div id="calendar"></div>
 
-      <div id="calendar-legend" class="pt-3">
-        <ul>
-          <li class="background-color-blue calendar-legend-item">
-            <span>
-              Im
-              <a class="text-decoration-underline" href="#block-4"
-                >Geko Stadtteil-Gesundheits-Zentrum</a
-              >
-            </span>
-          </li>
-          <li class="background-color-yellow calendar-legend-item">
-            <span>Im Kiez</span>
-          </li>
-        </ul>
+          <div id="calendar-legend" class="pt-3">
+            <ul>
+              <li class="background-color-blue calendar-legend-item">
+                <span>
+                  Im
+                  <a class="text-decoration-underline" href="#block-4"
+                    >Geko Stadtteil-Gesundheits-Zentrum</a
+                  >
+                </span>
+              </li>
+              <li class="background-color-yellow calendar-legend-item">
+                <span>Im Kiez</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 </section>

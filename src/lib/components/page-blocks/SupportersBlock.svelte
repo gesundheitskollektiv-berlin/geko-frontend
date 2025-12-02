@@ -9,50 +9,54 @@
 
 <section id="supporters" class={`${backgroundClass} footer`}>
 	<div class="container">
-			<div class="row align-items-center">
-				<div class="col-md-12">
-					<h4>Gefördert von:</h4>
+		<div class="row justify-content-center">
+			<div class="col-lg-7 col-md-10">
+					<div class="row align-items-center">
+						<div class="col-md-12">
+							<h4>Gefördert von:</h4>
 
-					{#if supporters.length}
-						<!-- Supporters will be displayed in rows as per original design -->
-						<!-- TODO: Implement proper row-based layout matching original -->
-						<div class="row mb-7">
-							{#each supporters as supporter}
-								<div class="col-xs-6 col-md-4">
-									{#if supporter?.project_url}
-										<a
-											href={supporter.project_url}
-											target="_blank"
-											rel="noreferrer"
-											class="supporter-link d-block text-center"
-										>
-											{#if supporter?.image}
-												<StrapiImage
-													asset={supporter.image}
-													className="img-fluid no-border-radius supporter-logo"
-													alt={supporter.title || 'Supporter Logo'}
-												/>
+							{#if supporters.length}
+								<!-- Supporters will be displayed in rows as per original design -->
+								<!-- TODO: Implement proper row-based layout matching original -->
+								<div class="row mb-7">
+									{#each supporters as supporter}
+										<div class="col-xs-6 col-md-4">
+											{#if supporter?.project_url}
+												<a
+													href={supporter.project_url}
+													target="_blank"
+													rel="noreferrer"
+													class="supporter-link d-block text-center"
+												>
+													{#if supporter?.image}
+														<StrapiImage
+															asset={supporter.image}
+															className="img-fluid no-border-radius supporter-logo"
+															alt={supporter.title || 'Supporter Logo'}
+														/>
+													{:else}
+														<p class="mb-0">{supporter.title}</p>
+													{/if}
+												</a>
 											{:else}
-												<p class="mb-0">{supporter.title}</p>
-											{/if}
-										</a>
-									{:else}
-										<div class="supporter-link d-block text-center">
-											{#if supporter?.image}
-												<StrapiImage
-													asset={supporter.image}
-													className="img-fluid no-border-radius supporter-logo"
-													alt={supporter.title || 'Supporter Logo'}
-												/>
-											{:else}
-												<p class="mb-0">{supporter.title}</p>
+												<div class="supporter-link d-block text-center">
+													{#if supporter?.image}
+														<StrapiImage
+															asset={supporter.image}
+															className="img-fluid no-border-radius supporter-logo"
+															alt={supporter.title || 'Supporter Logo'}
+														/>
+													{:else}
+														<p class="mb-0">{supporter.title}</p>
+													{/if}
+												</div>
 											{/if}
 										</div>
-									{/if}
+									{/each}
 								</div>
-							{/each}
+							{/if}
 						</div>
-					{/if}
+					</div>
 				</div>
 			</div>
 		</div>

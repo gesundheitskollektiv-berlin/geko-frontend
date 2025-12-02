@@ -8,20 +8,24 @@
 
 <section id="welcome" class={backgroundClass}>
   <div class="container">
-      <h1>{data.title}</h1>
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-10">
+          <h1>{data.title}</h1>
 
-      <div class="d-flex">
-        {#if data?.content}
-          <div class="d-inline-block" style="flex: 1">
-            {@html resolveRichText(data.content)}
+          <div class="d-flex">
+            {#if data?.content}
+              <div class="d-inline-block" style="flex: 1">
+                {@html resolveRichText(data.content)}
+              </div>
+            {/if}
+            <img
+              class="d-none d-lg-inline-block"
+              style="flex: 1; transform: scale(0.75);"
+              src="/assets/img/Icons/Sprechblasen-neu.svg"
+              alt=""
+            />
           </div>
-        {/if}
-        <img
-          class="d-none d-lg-inline-block"
-          style="flex: 1; transform: scale(0.75);"
-          src="/assets/img/Icons/Sprechblasen-neu.svg"
-          alt=""
-        />
+        </div>
       </div>
     </div>
 </section>

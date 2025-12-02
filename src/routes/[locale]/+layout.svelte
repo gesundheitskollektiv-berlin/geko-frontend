@@ -18,7 +18,5 @@
 </svelte:head>
 
 <div class="bg-light min-vh-100">
-  <div class="container py-5">
-    {@render children()}
-  </div>
+  {@render children()}
 </div>

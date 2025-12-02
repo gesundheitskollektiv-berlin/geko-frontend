@@ -14,6 +14,34 @@ body {
   color: #34495e;
 }
 
+.bg-geko-red {
+  background-color: #ff521c;
+}
+
+.bg-geko-yellow {
+  background-color: #fff15b;
+}
+
+.bg-geko-blue {
+  background-color: #58a9ff;
+}
+
+.bg-geko-green {
+  background-color: #71cf9a;
+}
+
+.landing-block {
+  padding-block: 4rem;
+
+  @media (min-width: 992px) {
+    padding-block: 5rem;
+  }
+}
+
+.landing-block .rich-text :global(p) {
+  margin-bottom: 1rem;
+}
+
 a {
   color: inherit;
   text-decoration: underline;
@@ -39,5 +67,10 @@ a {
 
 .card {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.supporter-logo {
+  max-height: 80px;
+  object-fit: contain;
 }
 

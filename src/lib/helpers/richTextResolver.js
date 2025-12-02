@@ -1,8 +1,12 @@
 export function resolveRichText(nodes) {
+  if (!nodes) return '';
+  if (typeof nodes === 'string') return nodes;
+  if (!Array.isArray(nodes)) return '';
   return nodes.map((c) => resolveRichTextNode(c)).join('');
 }
 
 function resolveRichTextNode(node) {
+  if (typeof node === 'string') return node;
   let html = '';
   const children = node.children ? node.children.map((c) => resolveRichTextNode(c)).join('') : '';
 

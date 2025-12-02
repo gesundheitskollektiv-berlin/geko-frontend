@@ -11,7 +11,7 @@
 <section id={sectionId} class={backgroundClass}>
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-lg-7 col-md-10">
+			<div class="col-lg-7 col-md-10 my-5">
 					<h2>{data.title}</h2>
 
 					{#if data?.content}

@@ -11,7 +11,7 @@
 <footer id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-7 col-md-10 my-5">
           <div class="row g-4 align-items-center">
             <div class="col-lg-8">
               <h3 class="fw-bold mb-2">{meta?.company ?? 'Gesundheitskollektiv Berlin e.V.'}</h3>

@@ -14,6 +14,7 @@ export async function getDataFromCMS(path, locale) {
   }
 
   // For single entries or small collections, use original method
+  // pLevel is essential for populating relations and media fields (images, etc.)
   const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
   return await fetchData(queryUrl);
 }
@@ -24,6 +25,7 @@ async function fetchAllPages(path, locale) {
   let totalPages = 1;
 
   do {
+    // pLevel is essential for populating relations and media fields (images, etc.)
     const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
     const result = await fetchData(queryUrl);
 
@@ -53,6 +55,7 @@ async function fetchAllPages(path, locale) {
 }
 
 export async function getDetailsDataFromCMS(path, locale, slug) {
+  // pLevel is essential for populating relations and media fields (images, etc.)
   const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&pLevel`;
   return await fetchData(queryUrl);
 }

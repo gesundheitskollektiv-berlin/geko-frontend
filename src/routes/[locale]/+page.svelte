@@ -8,16 +8,29 @@
   import NeighboursBlock from '$lib/components/page-blocks/NeighboursBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
-  export let data;
+  import StrapiImage from '$lib/components/StrapiImage.svelte';
+  
+  let { data } = $props();
 
-  $: landingPage = data['geko-page-landing']?.data ?? {};
-  $: landingBlocks = landingPage?.content ?? [];
-  $: meta = data['geko-meta']?.data ?? {};
-  $: announcements = data['geko-announcements']?.data ?? [];
-  $: newsItems = announcements.filter((item) => !item.is_event);
-  $: eventItems = announcements.filter((item) => item.is_event);
-  $: services = data['geko-services']?.data ?? [];
+  const landingPage = $derived(data['geko-page-landing']?.data ?? {});
+  const landingBlocks = $derived(landingPage?.content ?? []);
+  const meta = $derived(data['geko-meta']?.data ?? {});
+  const announcements = $derived(data['geko-announcements']?.data ?? []);
+  const newsItems = $derived(announcements.filter((item) => !item.is_event));
+  const eventItems = $derived(announcements.filter((item) => item.is_event));
+  const services = $derived(data['geko-services']?.data ?? []);
 </script>
+
+{#if meta?.page_banner}
+  <div class="w-100">
+    <StrapiImage
+      asset={meta.page_banner}
+      alt={meta.page_banner.alternativeText || 'Geko Eingang'}
+      class="w-100"
+      style="display: block;"
+    />
+  </div>
+{/if}
 
 {#each landingBlocks as block, idx (`${block?.__component ?? 'unknown'}-${block?.id ?? idx}`)}
   {#if block?.__component === 'geko-page-blocks.welcome'}

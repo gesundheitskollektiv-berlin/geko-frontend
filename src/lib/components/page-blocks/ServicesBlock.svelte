@@ -30,14 +30,6 @@
 												>
 													<div class="card service-card">
 														<div class="card-body d-flex align-items-center px-md-3 px-0">
-															{#if service?.icon_name}
-																<img
-																	src={`/assets/img/icons/${service.icon_name}.png`}
-																	alt={service.title}
-																	class="me-0 me-md-3"
-																	loading="lazy"
-																/>
-															{/if}
 															<p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
 														</div>
 													</div>
@@ -45,14 +37,6 @@
 											{:else}
 												<div class="card service-card">
 													<div class="card-body d-flex align-items-center px-md-3 px-0">
-														{#if service?.icon_name}
-															<img
-																src={`/assets/img/icons/${service.icon_name}.png`}
-																alt={service.title}
-																class="me-0 me-md-3"
-																loading="lazy"
-															/>
-														{/if}
 														<p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
 													</div>
 												</div>

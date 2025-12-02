@@ -24,16 +24,7 @@
 
           <!-- Contact Information Row -->
           <div class="row mb-5">
-        <div class="col-md-7" id="contact-image">
-          {#if meta?.page_banner}
-            <img
-              src={meta.page_banner.url}
-              alt={meta.page_banner.alternativeText || 'Geko Eingang'}
-              class="img-fluid rounded w-100"
-            />
-          {/if}
-        </div>
-        <div class="col-md-5" id="contact-data">
+        <div class="col-md-12" id="contact-data">
           <!-- ADDRESS -->
           <div class="card border-0 bg-transparent">
             <div class="card-body">

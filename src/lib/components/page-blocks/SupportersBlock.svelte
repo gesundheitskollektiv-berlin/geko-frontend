@@ -33,8 +33,8 @@
 													{#if supporter?.image}
 														<StrapiImage
 															asset={supporter.image}
-															className="img-fluid no-border-radius supporter-logo"
-															alt={supporter.title || 'Supporter Logo'}
+															class="img-fluid no-border-radius supporter-logo"
+															alt={supporter.image.alternativeText || supporter.title || 'Supporter Logo'}
 														/>
 													{:else}
 														<p class="mb-0">{supporter.title}</p>
@@ -45,8 +45,8 @@
 													{#if supporter?.image}
 														<StrapiImage
 															asset={supporter.image}
-															className="img-fluid no-border-radius supporter-logo"
-															alt={supporter.title || 'Supporter Logo'}
+															class="img-fluid no-border-radius supporter-logo"
+															alt={supporter.image.alternativeText || supporter.title || 'Supporter Logo'}
 														/>
 													{:else}
 														<p class="mb-0">{supporter.title}</p>

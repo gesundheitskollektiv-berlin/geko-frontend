@@ -19,7 +19,7 @@
   $: services = data['geko-services']?.data ?? [];
 </script>
 
-{#each landingBlocks as block, idx (block?.id ?? idx)}
+{#each landingBlocks as block, idx (`${block?.__component ?? 'unknown'}-${block?.id ?? idx}`)}
   {#if block?.__component === 'geko-page-blocks.welcome'}
     <WelcomeBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.about'}

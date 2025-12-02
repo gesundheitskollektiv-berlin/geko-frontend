@@ -2,17 +2,19 @@
   import { slugify } from '$lib/helpers/landingBlocks';
   import { onMount } from 'svelte';
 
-  export let landingBlocks = [];
+  let { landingBlocks = [] } = $props();
 
   let isNavbarOpen = false;
 
   // Filter blocks that should appear in navbar
-  $: navItems = landingBlocks
-    .filter((block) => block?.navbar_link === true)
-    .map((block) => ({
-      title: block?.navbar_link_title || '',
-      href: `#${slugify(block?.navbar_link_title || '')}`
-    }));
+  const navItems = $derived(
+    (landingBlocks || [])
+      .filter((block) => block?.navbar_link === true)
+      .map((block) => ({
+        title: block?.navbar_link_title || '',
+        href: `#${slugify(block?.navbar_link_title || '')}`
+      }))
+  );
 
   function toggleNavbar() {
     isNavbarOpen = !isNavbarOpen;
@@ -59,7 +61,7 @@
   });
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" style="z-index: 1030;">
   <div class="container">
     <a class="navbar-brand" href="/">Geko</a>
 
@@ -71,7 +73,7 @@
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
-      on:click={toggleNavbar}
+      onclick={toggleNavbar}
     >
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -80,7 +82,7 @@
       <ul class="navbar-nav ms-auto">
         {#each navItems as item}
           <li class="nav-item">
-            <a class="nav-link" href={item.href} on:click={handleNavClick}>
+            <a class="nav-link" href={item.href} onclick={handleNavClick}>
               {item.title}
             </a>
           </li>

@@ -1,5 +1,6 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
+  import { slugify } from '$lib/helpers/landingBlocks';
 
   export let data = {};
   export let meta = {};
@@ -7,6 +8,7 @@
   let showGoogleMap = false;
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'contact';
   $: mapQuery = encodeURIComponent(
     `${meta?.street ?? ''}, ${meta?.postal ?? ''} ${meta?.city ?? ''}`.trim()
   );
@@ -14,7 +16,7 @@
   const toggleMap = () => (showGoogleMap = !showGoogleMap);
 </script>
 
-<section id="contact" class={backgroundClass}>
+<section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7 col-md-10">

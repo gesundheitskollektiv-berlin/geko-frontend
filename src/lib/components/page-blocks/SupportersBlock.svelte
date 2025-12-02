@@ -1,13 +1,15 @@
 <script>
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import { slugify } from '$lib/helpers/landingBlocks';
 
   export let data = {};
 
   const supporters = data?.supporters ?? [];
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'supporters';
 </script>
 
-<section id="supporters" class={`${backgroundClass} footer`}>
+<section id={sectionId} class={`${backgroundClass} footer`}>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 col-md-10">

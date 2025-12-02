@@ -1,4 +1,6 @@
 <script>
+  import { slugify } from '$lib/helpers/landingBlocks';
+
   export let data = {};
   export let events = [];
 
@@ -7,9 +9,10 @@
   const _ = { data, events };
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar';
 </script>
 
-<section id="calendar" class={backgroundClass}>
+<section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7 col-md-10">

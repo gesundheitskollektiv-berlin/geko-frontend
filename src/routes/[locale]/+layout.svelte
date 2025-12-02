@@ -3,8 +3,13 @@
   import { onMount } from 'svelte';
   import favicon from '$lib/assets/favicon.svg';
   import '../../app.scss';
+  import Navbar from '$lib/components/Navbar.svelte';
+  import { mapLandingBlocks } from '$lib/helpers/landingBlocks';
 
-  let { children } = $props();
+  let { children, data } = $props();
+
+  const landingPage = $derived(data['geko-page-landing']?.data ?? {});
+  const landingBlocks = $derived(mapLandingBlocks(landingPage?.content ?? []));
 
   onMount(async () => {
     if (!browser) return;
@@ -17,6 +22,7 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
+<Navbar {landingBlocks} />
 <div class="bg-light min-vh-100">
   {@render children()}
 </div>

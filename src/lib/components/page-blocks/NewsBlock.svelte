@@ -1,13 +1,15 @@
 <script>
   import { formatDate } from '$lib/helpers/formatDate';
+  import { slugify } from '$lib/helpers/landingBlocks';
 
   export let data = {};
   export let announcements = [];
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'news';
 </script>
 
-<section id="news" class={backgroundClass}>
+<section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7 col-md-10">

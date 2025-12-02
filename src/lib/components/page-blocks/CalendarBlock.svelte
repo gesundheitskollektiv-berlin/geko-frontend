@@ -11,7 +11,7 @@
 </script>
 
 <section id={anchor || undefined}>
-  <div class={`py-5 ${backgroundClass}`}>
+  <div class={backgroundClass}>
     <div class="container" id="contact">
       <!-- TODO: Implement calendar component -->
       <!-- Calendar will be implemented with FullCalendar or similar -->

@@ -40,12 +40,5 @@
     <SupportersBlock data={block.data} anchor={block.anchor} />
   {:else if block.type === 'geko-page-blocks.footer'}
     <FooterBlock data={block.data} {meta} anchor={block.anchor} />
-  {:else}
-    {@const backgroundClass = block.data?.background_color ? `bg-geko-${block.data.background_color}` : 'bg-geko-white'}
-    <section class={`landing-block ${backgroundClass}`} id={block.anchor || undefined}>
-      <div class="container">
-        <p class="text-muted mb-0">Blocktyp {block.type} ist noch nicht implementiert.</p>
-      </div>
-    </section>
   {/if}
 {/each}

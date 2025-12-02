@@ -8,7 +8,7 @@
 </script>
 
 <section id={anchor || undefined}>
-  <div class={`py-5 ${backgroundClass}`}>
+  <div class={backgroundClass}>
     <div class="container" id="welcome">
       {#if data?.title}
         <h1 class="h1">{data.title}</h1>

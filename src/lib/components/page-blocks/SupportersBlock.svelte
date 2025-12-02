@@ -8,8 +8,8 @@
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
 </script>
 
-<section class="py-5">
-  <div class={`${backgroundClass} py-5 footer`}>
+<section>
+  <div class={`${backgroundClass} footer`}>
 		<div class="container" id="supporters">
 			<div class="row align-items-center">
 				<div class="col-md-12">

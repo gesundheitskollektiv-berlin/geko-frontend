@@ -19,7 +19,7 @@
 </script>
 
 <section id={anchor || undefined}>
-  <div class={`py-0 ${backgroundClass}`}>
+  <div class={backgroundClass}>
     <div class="container" id="contact">
       {#if data?.title}
         <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{data.title}</h2>

@@ -8,7 +8,7 @@
 </script>
 
 <section id={anchor || undefined}>
-  <div class={`py-5 ${backgroundClass}`}>
+  <div class={backgroundClass}>
     <div class="container" id="about-us">
       <div class="row">
         <div class="col-12">

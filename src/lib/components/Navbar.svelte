@@ -8,10 +8,10 @@
 
   // Filter blocks that should appear in navbar
   $: navItems = landingBlocks
-    .filter((block) => block.data?.navbar_link === true)
+    .filter((block) => block?.navbar_link === true)
     .map((block) => ({
-      title: block.data?.navbar_link_title || '',
-      href: `#${slugify(block.data?.navbar_link_title || '')}`
+      title: block?.navbar_link_title || '',
+      href: `#${slugify(block?.navbar_link_title || '')}`
     }));
 
   function toggleNavbar() {

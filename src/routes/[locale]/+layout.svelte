@@ -4,12 +4,11 @@
   import favicon from '$lib/assets/favicon.svg';
   import '../../app.scss';
   import Navbar from '$lib/components/Navbar.svelte';
-  import { mapLandingBlocks } from '$lib/helpers/landingBlocks';
 
   let { children, data } = $props();
 
   const landingPage = $derived(data['geko-page-landing']?.data ?? {});
-  const landingBlocks = $derived(mapLandingBlocks(landingPage?.content ?? []));
+  const landingBlocks = $derived(landingPage?.content ?? []);
 
   onMount(async () => {
     if (!browser) return;

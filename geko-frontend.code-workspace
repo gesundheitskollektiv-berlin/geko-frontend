@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../geko-verein"
+		},
+		{
+			"path": "../strapi"
+		},
+		{
+			"path": "../../../../msg/new-website/msg-frontend"
+		}
+	],
+	"settings": {}
+}

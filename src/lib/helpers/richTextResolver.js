@@ -61,4 +61,3 @@ function resolveRichTextNode(node) {
 
   return html;
 }
-

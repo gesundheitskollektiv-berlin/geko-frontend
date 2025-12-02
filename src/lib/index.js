@@ -7,12 +7,12 @@ export { getDataFromCMS, getDetailsDataFromCMS } from './helpers/getDataFromCMS'
 export { resolveRichText } from './helpers/richTextResolver';
 
 // Translation helpers
-export { 
-  SUPPORTED_LOCALES, 
-  DEFAULT_LOCALE, 
-  isValidLocale, 
-  getValidLocale, 
-  getLocaleName 
+export {
+  SUPPORTED_LOCALES,
+  DEFAULT_LOCALE,
+  isValidLocale,
+  getValidLocale,
+  getLocaleName
 } from './helpers/translation';
 
 // Date formatting helpers

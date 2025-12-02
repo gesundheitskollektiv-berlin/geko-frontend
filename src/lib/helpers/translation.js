@@ -38,4 +38,3 @@ export function getLocaleName(locale) {
   };
   return localeNames[locale] || locale;
 }
-

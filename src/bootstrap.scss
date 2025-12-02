@@ -1,6 +1,6 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
 
 // Brand palette sourced from legacy Jekyll `_colors.scss`
 $geko-white: #fff;
@@ -18,28 +18,28 @@ $geko-text-dark: #34495e;
 
 // Override Bootstrap theme colors and add custom geko colors
 $theme-colors: (
-  "primary": $geko-blue,
-  "secondary": $geko-dark-grey,
-  "success": $geko-green,
-  "info": $geko-turquoise,
-  "warning": $geko-yellow,
-  "danger": $geko-red,
-  "light": $geko-light-grey,
-  "dark": $geko-dark-grey,
-  "white": $geko-white,
-  "black": $geko-black,
-  "muted": $geko-text-dark,
+  'primary': $geko-blue,
+  'secondary': $geko-dark-grey,
+  'success': $geko-green,
+  'info': $geko-turquoise,
+  'warning': $geko-yellow,
+  'danger': $geko-red,
+  'light': $geko-light-grey,
+  'dark': $geko-dark-grey,
+  'white': $geko-white,
+  'black': $geko-black,
+  'muted': $geko-text-dark,
   // Custom geko brand colors
-  "geko-red": $geko-red,
-  "geko-yellow": $geko-yellow,
-  "geko-blue": $geko-blue,
-  "geko-green": $geko-green,
-  "geko-lilac": $geko-lilac,
-  "geko-grey-green": $geko-grey-green,
-  "geko-turquoise": $geko-turquoise,
-  "geko-dark-grey": $geko-dark-grey,
-  "geko-light-grey": $geko-light-grey,
-  "geko-text-dark": $geko-text-dark
+  'geko-red': $geko-red,
+  'geko-yellow': $geko-yellow,
+  'geko-blue': $geko-blue,
+  'geko-green': $geko-green,
+  'geko-lilac': $geko-lilac,
+  'geko-grey-green': $geko-grey-green,
+  'geko-turquoise': $geko-turquoise,
+  'geko-dark-grey': $geko-dark-grey,
+  'geko-light-grey': $geko-light-grey,
+  'geko-text-dark': $geko-text-dark
 );
 
 // Custom spacing scale (values in px)
@@ -72,66 +72,67 @@ $font-sizes: (
 
 $enable-rfs: false;
 
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
 
 // Extend utilities with custom font sizes and widths
 $utilities: map-merge(
   $utilities,
   (
-    "font-size": map-merge(
-      map-get($utilities, "font-size"),
-      (
-        values: $font-sizes,
-        responsive: true
+    'font-size': map-merge(
+        map-get($utilities, 'font-size'),
+        (
+          values: $font-sizes,
+          responsive: true
+        )
+      ),
+    'width': map-merge(
+        map-get($utilities, 'width'),
+        (
+          values: map-merge(
+              map-get(map-get($utilities, 'width'), 'values'),
+              (
+                10: 10%
+              )
+            ),
+          responsive: true
+        )
       )
-    ),
-    "width": map-merge(
-      map-get($utilities, "width"),
-      (
-        values: map-merge(
-          map-get(map-get($utilities, "width"), "values"),
-          (10: 10%)
-        ),
-        responsive: true
-      )
-    )
   )
 );
 
 // Import Bootstrap core + components
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/reboot";
-@import "bootstrap/scss/type";
-@import "bootstrap/scss/images";
-@import "bootstrap/scss/containers";
-@import "bootstrap/scss/grid";
-@import "bootstrap/scss/tables";
-@import "bootstrap/scss/forms";
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/button-group";
-@import "bootstrap/scss/nav";
-@import "bootstrap/scss/navbar";
-@import "bootstrap/scss/card";
-@import "bootstrap/scss/accordion";
-@import "bootstrap/scss/breadcrumb";
-@import "bootstrap/scss/pagination";
-@import "bootstrap/scss/badge";
-@import "bootstrap/scss/alert";
-@import "bootstrap/scss/progress";
-@import "bootstrap/scss/list-group";
-@import "bootstrap/scss/close";
-@import "bootstrap/scss/toasts";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/tooltip";
-@import "bootstrap/scss/popover";
-@import "bootstrap/scss/carousel";
-@import "bootstrap/scss/spinners";
-@import "bootstrap/scss/offcanvas";
-@import "bootstrap/scss/placeholders";
-@import "bootstrap/scss/helpers";
-@import "bootstrap/scss/utilities/api";
-
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/images';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/dropdown';
+@import 'bootstrap/scss/button-group';
+@import 'bootstrap/scss/nav';
+@import 'bootstrap/scss/navbar';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/accordion';
+@import 'bootstrap/scss/breadcrumb';
+@import 'bootstrap/scss/pagination';
+@import 'bootstrap/scss/badge';
+@import 'bootstrap/scss/alert';
+@import 'bootstrap/scss/progress';
+@import 'bootstrap/scss/list-group';
+@import 'bootstrap/scss/close';
+@import 'bootstrap/scss/toasts';
+@import 'bootstrap/scss/modal';
+@import 'bootstrap/scss/tooltip';
+@import 'bootstrap/scss/popover';
+@import 'bootstrap/scss/carousel';
+@import 'bootstrap/scss/spinners';
+@import 'bootstrap/scss/offcanvas';
+@import 'bootstrap/scss/placeholders';
+@import 'bootstrap/scss/helpers';
+@import 'bootstrap/scss/utilities/api';

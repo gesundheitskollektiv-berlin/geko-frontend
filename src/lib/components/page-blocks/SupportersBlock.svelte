@@ -8,41 +8,83 @@
 	const supporters = data?.supporters ?? [];
 </script>
 
-<section class={`landing-block ${backgroundClass}`} id={anchor || undefined}>
-	<div class="container">
-		<div class="row mb-4">
-			<div class="col-12">
-				<h2 class="fw-bold">Unterstützt von</h2>
-				<p class="text-muted mb-0">
-					Wir danken allen Förderern und Partner:innen, die unsere Arbeit möglich machen.
-				</p>
-			</div>
-		</div>
+<section class="py-5">
+	<div class="bg-white py-5 footer">
+		<div class="container" id="supporters">
+			<div class="row align-items-center">
+				<div class="col-md-12">
+					<h4 class="h4 mb-7">Gefördert von:</h4>
 
-		<div class="row g-4 align-items-center">
-			{#if supporters.length}
-				{#each supporters as supporter, index}
-					<div class="col-6 col-md-3 text-center" id={`supporter-${index}`}>
-						{#if supporter?.image}
-							<a
-								href={supporter?.project_url ?? '#'}
-								target="_blank"
-								rel="noreferrer"
-								class="d-inline-flex justify-content-center align-items-center w-100"
-							>
-								<StrapiImage asset={supporter.image} className="supporter-logo" />
-							</a>
-						{:else if supporter?.title}
-							<p class="fw-semibold">{supporter.title}</p>
-						{/if}
-					</div>
-				{/each}
-			{:else}
-				<div class="col-12">
-					<div class="alert alert-light border fw-semibold">Noch keine Unterstützer:innen eingetragen.</div>
+					{#if supporters.length}
+						<!-- Supporters will be displayed in rows as per original design -->
+						<!-- TODO: Implement proper row-based layout matching original -->
+						<div class="row mb-7">
+							{#each supporters as supporter}
+								<div class="col-xs-6 col-md-4">
+									{#if supporter?.project_url}
+										<a
+											href={supporter.project_url}
+											target="_blank"
+											rel="noreferrer"
+											class="supporter-link d-block text-center"
+										>
+											{#if supporter?.image}
+												<StrapiImage
+													asset={supporter.image}
+													className="img-fluid no-border-radius supporter-logo"
+													alt={supporter.title || 'Supporter Logo'}
+												/>
+											{:else}
+												<p class="mb-0">{supporter.title}</p>
+											{/if}
+										</a>
+									{:else}
+										<div class="supporter-link d-block text-center">
+											{#if supporter?.image}
+												<StrapiImage
+													asset={supporter.image}
+													className="img-fluid no-border-radius supporter-logo"
+													alt={supporter.title || 'Supporter Logo'}
+												/>
+											{:else}
+												<p class="mb-0">{supporter.title}</p>
+											{/if}
+										</div>
+									{/if}
+								</div>
+							{/each}
+						</div>
+					{/if}
 				</div>
-			{/if}
+			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+	.supporter-logo {
+		max-width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+
+	.supporter-link {
+		display: block;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.supporter-link:hover img {
+		filter: grayscale(50%);
+		transition: filter 0.15s ease-in-out;
+	}
+
+	@media (max-width: 768px) {
+		.supporter-logo {
+			max-height: 80px !important;
+		}
+	}
+</style>
 

@@ -16,7 +16,7 @@ $geko-blue: #58a9ff;
 $geko-red: #ff521c;
 $geko-text-dark: #34495e;
 
-// Override Bootstrap theme colors
+// Override Bootstrap theme colors and add custom geko colors
 $theme-colors: (
   "primary": $geko-blue,
   "secondary": $geko-dark-grey,
@@ -28,7 +28,18 @@ $theme-colors: (
   "dark": $geko-dark-grey,
   "white": $geko-white,
   "black": $geko-black,
-  "muted": $geko-text-dark
+  "muted": $geko-text-dark,
+  // Custom geko brand colors
+  "geko-red": $geko-red,
+  "geko-yellow": $geko-yellow,
+  "geko-blue": $geko-blue,
+  "geko-green": $geko-green,
+  "geko-lilac": $geko-lilac,
+  "geko-grey-green": $geko-grey-green,
+  "geko-turquoise": $geko-turquoise,
+  "geko-dark-grey": $geko-dark-grey,
+  "geko-light-grey": $geko-light-grey,
+  "geko-text-dark": $geko-text-dark
 );
 
 // Custom spacing scale (values in px)
@@ -60,28 +71,6 @@ $font-sizes: (
 );
 
 $enable-rfs: false;
-
-// Navbar tweaks
-$navbar-padding-y: 0;
-$navbar-padding-x: 0;
-$navbar-nav-link-padding-x: 1rem;
-$navbar-brand-padding-y: 0;
-$navbar-toggler-border-radius: 16px;
-$navbar-dark-color: $geko-white;
-$navbar-dark-hover-color: rgba($geko-white, 0.75);
-
-// Card tweaks
-$card-border-radius: 1rem;
-$card-border-width: 0;
-$card-cap-bg: transparent;
-$card-bg: $geko-white;
-
-// Accordion tweaks
-$accordion-border-width: 3px;
-$accordion-border-color: $geko-black;
-$accordion-button-active-bg: $geko-yellow;
-$accordion-button-active-color: $geko-dark-grey;
-$accordion-button-focus-box-shadow: none;
 
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";

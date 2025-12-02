@@ -6,25 +6,25 @@
 	export let backgroundClass = 'bg-white';
 </script>
 
-<section class={`landing-block ${backgroundClass}`} id={anchor || undefined}>
-	<div class="container">
-		<div class="row align-items-center gy-5">
-			<div class="col-lg-7">
-				{#if data?.title}
-					<p class="text-uppercase fw-semibold text-secondary mb-2">{data.title}</p>
-				{/if}
+<section id={anchor || undefined}>
+	<div class={`py-5 ${backgroundClass}`}>
+		<div class="container" id="welcome">
+			{#if data?.title}
+				<h1 class="h1">{data.title}</h1>
+			{/if}
 
+			<div class="d-flex">
 				{#if data?.content}
-					<div class="rich-text fs-5">
+					<div class="d-inline-block" style="flex: 1">
 						{@html resolveRichText(data.content)}
 					</div>
 				{/if}
-			</div>
-			<div class="col-lg-5 text-center">
-				<div class="p-4 rounded-4 bg-white shadow-sm">
-					<p class="mb-0 fw-semibold text-uppercase small">Gesundheitskollektiv Berlin e.V.</p>
-					<p class="mb-0 text-muted">Gemeinsam Gesundheit gestalten</p>
-				</div>
+				<img
+					class="d-none d-lg-inline-block"
+					style="flex: 1; transform: scale(0.75);"
+					src="/assets/img/Icons/Sprechblasen-neu.svg"
+					alt=""
+				/>
 			</div>
 		</div>
 	</div>

@@ -28,7 +28,9 @@
       <h3 id="job-offers" class="h3">Stellenausschreibungen</h3>
 
       <!-- Materials section - TODO: implement materials component -->
-      <div class="my-5 mt-7"></div>
       <h3 class="h3">Material</h3>
+      <div class="">
+        <p>fooo</p>
+      </div>
     </div>
 </section>

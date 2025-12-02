@@ -50,7 +50,7 @@
   {:else if block?.__component === 'geko-page-blocks.supporters'}
     <SupportersBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.footer'}
-    <FooterBlock data={block} {meta} />
+    <FooterBlock data={block} {meta} locale={data.locale} />
   {:else}
     {@const backgroundClass = block?.background_color ? `bg-geko-${block.background_color}` : 'bg-geko-white'}
     <section class={backgroundClass}>

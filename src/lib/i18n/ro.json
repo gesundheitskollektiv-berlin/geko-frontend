@@ -6,7 +6,16 @@
   "currentNews": "Știri actuale de la colectivul de sănătate",
   "noAnnouncements": "Nu sunt disponibile anunțuri.",
   "current": "Actual",
-  "supportedBy": "Susținut de:"
+  "supportedBy": "Susținut de:",
+  "chooseLanguage": "Alegeți limba",
+  "languages": {
+    "de": "Deutsch",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "ro": "Română",
+    "tr": "Türkçe"
+  }
 }
 
 

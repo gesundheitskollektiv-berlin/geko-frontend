@@ -1,8 +1,10 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { t, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 
-  let { landingBlocks = [] } = $props();
+  let { landingBlocks = [], locale = 'de' } = $props();
 
   let isNavbarOpen = false;
 
@@ -48,6 +50,12 @@
     }
   }
 
+  function switchLocale(newLocale) {
+    const currentPath = window.location.pathname;
+    const newPath = currentPath.replace(`/${locale}`, `/${newLocale}`);
+    goto(newPath);
+  }
+
   onMount(() => {
     const navbarCollapse = document.getElementById('navbarNav');
     if (navbarCollapse) {
@@ -61,9 +69,11 @@
   });
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" style="z-index: 1030;">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3" style="z-index: 1030; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
   <div class="container">
-    <a class="navbar-brand" href="/">Geko</a>
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" style="height: 55px; width: auto;" />
+    </a>
 
     <button
       class="navbar-toggler"
@@ -80,15 +90,64 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <!-- Navigation Items -->
         {#each navItems as item}
           <li class="nav-item">
-            <a class="btn-geko bg-geko-yellow text-black mx-1" href={item.href} onclick={handleNavClick}>
+            <a class="btn-geko bg-geko-yellow text-black mx-2" href={item.href} onclick={handleNavClick}>
               {item.title}
             </a>
           </li>
         {/each}
+        
+        <!-- Locale Selector Dropdown -->
+        <li class="nav-item dropdown ms-4">
+          <button 
+            class="btn btn-white text-black dropdown-toggle"
+            type="button"
+            id="localeDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {locale.toUpperCase()}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="localeDropdown">
+            {#each SUPPORTED_LOCALES as localeOption}
+              <li>
+                <button 
+                  class="dropdown-item"
+                  class:active={localeOption === locale}
+                  onclick={() => switchLocale(localeOption)}
+                >
+                  {t(locale).languages[localeOption]}
+                </button>
+              </li>
+            {/each}
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+
+<style>
+  .btn-white {
+    background-color: white;
+    color: black;
+    border: 1px solid #dee2e6;
+    border-radius: 25px;
+    padding: 0.25rem 1.0rem;
+    font-family: "CerebriSansPro", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .btn-white:hover {
+    background-color: #f8f9fa;
+  }
+
+  .dropdown-item.active {
+    background-color: #0d6efd;
+    color: white;
+  }
+</style>
 

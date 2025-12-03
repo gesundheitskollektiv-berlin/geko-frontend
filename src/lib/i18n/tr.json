@@ -6,7 +6,16 @@
   "currentNews": "Sağlık kolektifinden güncel haberler",
   "noAnnouncements": "Duyuru bulunmamaktadır.",
   "current": "Güncel",
-  "supportedBy": "Destekleyen:"
+  "supportedBy": "Destekleyen:",
+  "chooseLanguage": "Dil seçin",
+  "languages": {
+    "de": "Deutsch",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "ro": "Română",
+    "tr": "Türkçe"
+  }
 }
 
 

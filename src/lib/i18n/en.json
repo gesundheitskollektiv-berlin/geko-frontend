@@ -6,7 +6,16 @@
   "currentNews": "Current news from the health collective",
   "noAnnouncements": "No announcements available.",
   "current": "Current",
-  "supportedBy": "Supported by:"
+  "supportedBy": "Supported by:",
+  "chooseLanguage": "Choose language",
+  "languages": {
+    "de": "Deutsch",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "ro": "Română",
+    "tr": "Türkçe"
+  }
 }
 
 

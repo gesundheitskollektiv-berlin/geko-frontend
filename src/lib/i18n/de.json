@@ -6,7 +6,16 @@
   "currentNews": "Aktuelle Meldungen aus dem Gesundheitskollektiv",
   "noAnnouncements": "Keine Neuigkeiten verfügbar.",
   "current": "Aktuell",
-  "supportedBy": "Gefördert von:"
+  "supportedBy": "Gefördert von:",
+  "chooseLanguage": "Sprache wählen",
+  "languages": {
+    "de": "Deutsch",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "ro": "Română",
+    "tr": "Türkçe"
+  }
 }
 
 

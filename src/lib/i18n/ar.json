@@ -6,7 +6,16 @@
   "currentNews": "الأخبار الحالية من مجموعة الصحة",
   "noAnnouncements": "لا توجد إعلانات متاحة.",
   "current": "حالي",
-  "supportedBy": "بدعم من:"
+  "supportedBy": "بدعم من:",
+  "chooseLanguage": "أختر اللغة",
+  "languages": {
+    "de": "Deutsch",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية",
+    "ro": "Română",
+    "tr": "Türkçe"
+  }
 }
 
 

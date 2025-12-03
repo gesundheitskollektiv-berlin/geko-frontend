@@ -21,7 +21,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<Navbar {landingBlocks} />
+<Navbar {landingBlocks} locale={data.locale} />
 <div class="bg-light min-vh-100">
 {@render children()}
 </div>

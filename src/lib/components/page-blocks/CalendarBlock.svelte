@@ -15,7 +15,7 @@
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-10 col-md-10">
           <!-- TODO: Implement calendar component -->
           <!-- Calendar will be implemented with FullCalendar or similar -->
           <div class="pb-3 text-center" id="calendar-title"></div>

@@ -1,6 +1,7 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
+  import StrapiImage from '$lib/components/StrapiImage.svelte';
 
   export let data = {};
 
@@ -14,10 +15,14 @@
       <div class="col-lg-10 col-md-10 my-5">
           <h2>{data.title}</h2>
 
-          {#if data?.content}
-            <div class="rich-text">
-              {@html resolveRichText(data.content)}
-            </div>
+          {@html resolveRichText(data.content)}
+
+          {#if data?.team_image}
+            <StrapiImage
+              asset={data.team_image}
+              alt={data.team_image.alternativeText || 'Team'}
+              class="img-fluid my-4"
+            />
           {/if}
 
           <!-- Newsletter section - TODO: implement newsletter component -->

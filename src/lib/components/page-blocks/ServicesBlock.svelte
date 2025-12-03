@@ -1,9 +1,10 @@
 <script>
-  import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
+  import ServicesItems from '$lib/components/ServicesItems.svelte';
 
   export let data = {};
   export let services = [];
+  export let locale = 'de';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'services';
@@ -15,40 +16,12 @@
 			<div class="col-lg-10 col-md-10 my-5">
 					<h2>{data.title}</h2>
 
-					<div class="card shadow-none">
-						<div class={`card-body p-4 ${backgroundClass}`}>
-							<div class="row row-cols-1">
-								{#if services?.length}
-									{#each services as service (service.id)}
-										<div class="col">
-											{#if service?.project_url}
-												<a
-													href={service.project_url}
-													class="text-decoration-none"
-													target={service.external_link_only ? '_blank' : '_self'}
-													rel={service.external_link_only ? 'noreferrer' : undefined}
-												>
-													<div class="card service-card">
-														<div class="card-body d-flex align-items-center px-md-3 px-0">
-															<p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
-														</div>
-													</div>
-												</a>
-											{:else}
-												<div class="card service-card">
-													<div class="card-body d-flex align-items-center px-md-3 px-0">
-														<p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
-													</div>
-												</div>
-											{/if}
-										</div>
-									{/each}
-								{/if}
-							</div>
+					<div class="card shadow-none border-0">
+						<div class={`card-body py-4 px-0 ${backgroundClass}`}>
+							<ServicesItems {services} {locale} />
 						</div>
 					</div>
 			</div>
 		</div>
 	</div>
 </section>
-

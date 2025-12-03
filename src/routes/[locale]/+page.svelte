@@ -47,7 +47,7 @@
   {:else if block?.__component === 'geko-page-blocks.contact'}
     <ContactBlock data={block} {meta} />
   {:else if block?.__component === 'geko-page-blocks.services'}
-    <ServicesBlock data={block} {services} />
+    <ServicesBlock data={block} {services} {locale} />
   {:else if block?.__component === 'geko-page-blocks.neighbours'}
     <NeighboursBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.supporters'}

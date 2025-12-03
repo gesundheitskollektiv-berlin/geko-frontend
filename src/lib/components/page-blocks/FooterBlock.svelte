@@ -10,27 +10,27 @@
   $: baseUrl = `/${locale}`;
 </script>
 
-<footer id={sectionId} class={`${backgroundClass}`}>
-  <div class="container">
+<footer id={sectionId} class={`${backgroundClass} py-5`}>
+  <div class="container fs-5" id="footer">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-10">
         <!-- LOGO SECTION -->
         <div class="row">
           <div class="col-12">
             <div class="mb-5"></div>
-            <p class="mb-2">Geko - Stadtteil-Gesundheits-Zentrum Neukölln<br>Wird getragen von</p>
+            <p class="mb-4">Geko - Stadtteil-Gesundheits-Zentrum Neukölln<br>Wird getragen von</p>
             <a href={baseUrl}>
-              <figure id="logo-kollektiv" class="mb-3">
-                <img id="logo-kollektiv" src="/assets/img/Logo_Kollektiv.svg" alt="Logo" class="logo-footer" />
+              <figure id="logo-kollektiv" class="mb-0 py-3 text-start">
+                <img src="/assets/img/Logo_Kollektiv.svg" alt="Logo" style="height: 80px; width: auto;" />
               </figure>
             </a>
           </div>
         </div>
 
         <!-- THREE COLUMNS -->
-        <div class="row">
+        <div class="row mt-4">
           <!-- CONTACT -->
-          <div class="col-md-4">
+          <div class="col-md-4 contact-data">
         <h5 class="h5">Kontakt</h5>
         <span class="fa fa-home" aria-hidden="true"></span>
         &nbsp;
@@ -40,21 +40,21 @@
         <span class="fa fa-phone" aria-hidden="true"></span>
         &nbsp;
         {#if meta?.phone}
-          <a href={`tel:${meta.phone}`} target="_blank" rel="noopener">{meta.phone}</a>
+          <a href={`tel:${meta.phone}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.phone}</a>
         {/if}
         <br>
 
         <span class="fa fa-at" aria-hidden="true"></span>
         &nbsp;
         {#if meta?.email}
-          <a href={`mailto:${meta.email}`} target="_blank" rel="noopener">{meta.email}</a>
+          <a href={`mailto:${meta.email}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.email}</a>
         {/if}
         <br>
 
         <div class="my-3"></div>
         <strong>Presseanfragen:</strong><br>
         {#if meta?.press_email}
-          <a href={`mailto:${meta.press_email}`} target="_blank" rel="noopener">{meta.press_email}</a>
+          <a href={`mailto:${meta.press_email}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.press_email}</a>
         {/if}
       </div>
 
@@ -64,21 +64,21 @@
         {#if meta?.facebook}
           <span class="fab fa-facebook" aria-hidden="true"></span>
           &nbsp;
-          <a href={meta.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href={meta.facebook} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Facebook</a>
           <br>
         {/if}
 
         {#if meta?.instagram}
           <span class="fab fa-instagram" aria-hidden="true"></span>
           &nbsp;
-          <a href={meta.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href={meta.instagram} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Instagram</a>
           <br>
         {/if}
 
         {#if meta?.twitter}
           <span class="fab fa-twitter" aria-hidden="true"></span>
           &nbsp;
-          <a href={meta.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href={meta.twitter} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Twitter</a>
         {/if}
 
         <div class="my-3"></div>
@@ -99,9 +99,9 @@
           VRNR 34 873<br>
         </div>
 
-        <p>
-          <a href={`${baseUrl}/impressum`}>Ausführliches Impressum</a><br>
-          <a href={`${baseUrl}/datenschutz`}>Datenschutz</a><br>
+        <p class="mb-4">
+          <a href={`${baseUrl}/impressum`} class="text-decoration-underline fw-lighter">Ausführliches Impressum</a><br>
+          <a href={`${baseUrl}/datenschutz`} class="text-decoration-underline fw-lighter">Datenschutz</a><br>
         </p>
       </div>
     </div>
@@ -110,9 +110,3 @@
   </div>
 </footer>
 
-<style>
-  .logo-footer {
-    max-width: 200px;
-    height: auto;
-  }
-</style>

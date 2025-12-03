@@ -80,7 +80,7 @@ $enable-rfs: false;
 $font-family-base: 'CerebriSansPro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-size-base: 1.125rem; // 18px
 $headings-font-family: 'CerebriSansPro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$headings-font-weight: 500;
+$headings-font-weight: 600;
 $headings-color: $geko-black;
 $headings-line-height: 1.2;
 $headings-margin-bottom: 0;
@@ -121,48 +121,6 @@ $utilities: map-merge(
 @import 'bootstrap/scss/root';
 @import 'bootstrap/scss/reboot';
 @import 'bootstrap/scss/type';
-
-// Responsive heading sizes (matching old Jekyll site)
-// Default (mobile/tablet-portrait): h1=42px, h2=30px, h3=21px, h4=18px
-h1 {
-  font-size: 2.625rem; // 42px
-}
-
-h2 {
-  font-size: 1.875rem; // 30px
-}
-
-h3 {
-  font-size: 1.3125rem; // 21px
-}
-
-h4 {
-  font-size: 1.125rem; // 18px
-}
-
-// Large screens (tablet-landscape and up, ≥992px): h1=60px, h2=42px, h3=30px, h4=21px
-@include media-breakpoint-up(lg) {
-  body {
-    font-size: 1.3125rem; // 21px
-  }
-
-  h1 {
-    font-size: 3.75rem; // 60px
-  }
-
-  h2 {
-    font-size: 2.625rem; // 42px
-  }
-
-  h3 {
-    font-size: 1.875rem; // 30px
-  }
-
-  h4 {
-    font-size: 1.3125rem; // 21px
-  }
-}
-
 @import 'bootstrap/scss/images';
 @import 'bootstrap/scss/containers';
 @import 'bootstrap/scss/grid';

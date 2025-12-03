@@ -15,9 +15,7 @@
 					<h2>{data.title}</h2>
 
 					{#if data?.content}
-						<div class="rich-text">
-							{@html resolveRichText(data.content)}
-						</div>
+						{@html resolveRichText(data.content)}
 					{:else}
 						<p class="text-muted">Weitere Informationen folgen in Kürze.</p>
 					{/if}

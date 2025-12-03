@@ -2,8 +2,10 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import JobDescription from '$lib/components/JobDescription.svelte';
 
   export let data = {};
+  export let jobs = [];
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'about';
@@ -28,9 +30,15 @@
           <!-- Newsletter section - TODO: implement newsletter component -->
           <div class="my-5 mt-7"></div>
 
-          <!-- Job offers section - TODO: implement job offers component -->
+          <!-- Job offers section -->
           <div class="my-5"></div>
           <h3 id="job-offers" class="h3">Stellenausschreibungen</h3>
+
+          {#if jobs.length > 0}
+            {#each jobs as job (job.id)}
+              <JobDescription {job} />
+            {/each}
+          {/if}
 
           <!-- Materials section - TODO: implement materials component -->
           <h3 class="h3">Material</h3>

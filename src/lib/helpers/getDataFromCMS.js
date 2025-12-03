@@ -7,7 +7,7 @@ const fetchData = async (url) => {
 
 export async function getDataFromCMS(path, locale) {
   // For collections that might have pagination, fetch all pages
-  const shouldFetchAllPages = ['geko-announcements', 'geko-services'];
+  const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs'];
 
   if (shouldFetchAllPages.includes(path)) {
     return await fetchAllPages(path, locale);

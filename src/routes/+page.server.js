@@ -5,3 +5,4 @@ export function load() {
   // Redirect root path to default locale
   throw redirect(307, `/${DEFAULT_LOCALE}`);
 }
+

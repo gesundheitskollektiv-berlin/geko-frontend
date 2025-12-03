@@ -62,3 +62,4 @@ export function formatDateShort(dateString, locale = 'de') {
 
   return new Intl.DateTimeFormat(locale, options).format(date);
 }
+

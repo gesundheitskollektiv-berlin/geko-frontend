@@ -51,7 +51,7 @@
   {:else if block?.__component === 'geko-page-blocks.neighbours'}
     <NeighboursBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.supporters'}
-    <SupportersBlock data={block} />
+    <SupportersBlock data={block} {locale} />
   {:else if block?.__component === 'geko-page-blocks.footer'}
     <FooterBlock data={block} {meta} locale={data.locale} />
   {:else}

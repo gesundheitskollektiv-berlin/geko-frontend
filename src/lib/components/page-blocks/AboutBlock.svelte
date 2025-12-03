@@ -3,9 +3,11 @@
   import { slugify } from '$lib/helpers/landingBlocks';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import JobDescription from '$lib/components/JobDescription.svelte';
+  import MaterialDescription from '$lib/components/MaterialDescription.svelte';
 
   export let data = {};
   export let jobs = [];
+  export let materials = [];
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'about';
@@ -40,11 +42,14 @@
             {/each}
           {/if}
 
-          <!-- Materials section - TODO: implement materials component -->
+          <!-- Materials section -->
           <h3 class="h3">Material</h3>
-          <div class="">
-            <p>fooo</p>
-          </div>
+
+          {#if materials.length > 0}
+            {#each materials as material (material.id)}
+              <MaterialDescription {material} />
+            {/each}
+          {/if}
         </div>
       </div>
     </div>

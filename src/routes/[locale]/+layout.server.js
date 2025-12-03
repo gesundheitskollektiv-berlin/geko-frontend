@@ -16,7 +16,8 @@ export async function load({ params }) {
     'geko-meta',
     'geko-announcements',
     'geko-services',
-    'geko-jobs'
+    'geko-jobs',
+    'geko-materials'
   ];
 
   // Fetch data from all endpoints

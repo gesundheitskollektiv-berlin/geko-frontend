@@ -20,6 +20,7 @@
   const eventItems = $derived(announcements.filter((item) => item.is_event));
   const services = $derived(data['geko-services']?.data ?? []);
   const jobs = $derived(data['geko-jobs']?.data ?? []);
+  const materials = $derived(data['geko-materials']?.data ?? []);
 </script>
 
 {#if meta?.page_banner}
@@ -37,7 +38,7 @@
   {#if block?.__component === 'geko-page-blocks.welcome'}
     <WelcomeBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.about'}
-    <AboutBlock data={block} {jobs} />
+    <AboutBlock data={block} {jobs} {materials} />
   {:else if block?.__component === 'geko-page-blocks.calendar'}
     <CalendarBlock data={block} events={eventItems} />
   {:else if block?.__component === 'geko-page-blocks.news'}

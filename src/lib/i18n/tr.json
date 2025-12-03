@@ -1,6 +1,10 @@
 {
   "download": "indir",
   "jobOffers": "İş İlanları",
-  "materials": "Materyal"
+  "materials": "Materyal",
+  "allAnnouncements": "Tüm Duyurular",
+  "currentNews": "Sağlık kolektifinden güncel haberler",
+  "noAnnouncements": "Duyuru bulunmamaktadır.",
+  "current": "Güncel"
 }
 

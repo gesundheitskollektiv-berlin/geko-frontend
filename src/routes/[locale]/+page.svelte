@@ -43,7 +43,7 @@
   {:else if block?.__component === 'geko-page-blocks.calendar'}
     <CalendarBlock data={block} events={eventItems} />
   {:else if block?.__component === 'geko-page-blocks.news'}
-    <NewsBlock data={block} announcements={newsItems} />
+    <NewsBlock data={block} announcements={announcements} {locale} />
   {:else if block?.__component === 'geko-page-blocks.contact'}
     <ContactBlock data={block} {meta} />
   {:else if block?.__component === 'geko-page-blocks.services'}

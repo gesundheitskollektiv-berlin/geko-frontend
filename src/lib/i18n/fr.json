@@ -1,6 +1,10 @@
 {
   "download": "télécharger",
   "jobOffers": "Offres d'emploi",
-  "materials": "Matériel"
+  "materials": "Matériel",
+  "allAnnouncements": "Toutes les annonces",
+  "currentNews": "Actualités du collectif de santé",
+  "noAnnouncements": "Aucune annonce disponible.",
+  "current": "Actuel"
 }
 

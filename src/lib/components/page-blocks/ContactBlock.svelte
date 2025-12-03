@@ -84,7 +84,7 @@
                 class="toggle-map-view btn-geko bg-geko-blue text-white px-3"
                 onclick={toggleMap}
               >
-                <span class="text-white">Zeige Google-Karte</span>
+                Zeige Google-Karte
               </button>
             </div>
 
@@ -94,7 +94,7 @@
                 class="toggle-map-view btn-geko bg-geko-blue text-white px-3"
                 onclick={toggleMap}
               >
-                <span class="text-white">Zeige einfache Karte</span>
+                Zeige einfache Karte
               </button>
             </div>
           </div>

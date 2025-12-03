@@ -11,6 +11,9 @@
     },
     {
       "path": "../../../../msg/new-website/msg-frontend"
+    },
+    {
+      "path": "../../../labournettv"
     }
   ],
   "settings": {}

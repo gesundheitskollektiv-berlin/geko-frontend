@@ -82,7 +82,7 @@
       <ul class="navbar-nav ms-auto">
         {#each navItems as item}
           <li class="nav-item">
-            <a class="nav-link" href={item.href} onclick={handleNavClick}>
+            <a class="btn-geko bg-geko-yellow text-black mx-1" href={item.href} onclick={handleNavClick}>
               {item.title}
             </a>
           </li>

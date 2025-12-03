@@ -33,8 +33,8 @@
         <!-- View all button -->
         {#if announcements?.length > maxAnnouncements}
           <div class="row">
-            <div class="col-12 text-center">
-              <a class="btn btn-dark" href="/{locale}/announcements">{t(locale).allAnnouncements}</a>
+            <div class="col-12">
+              <a class="btn-geko bg-geko-blue text-white" href="/{locale}/announcements">{t(locale).allAnnouncements}</a>
             </div>
           </div>
         {/if}

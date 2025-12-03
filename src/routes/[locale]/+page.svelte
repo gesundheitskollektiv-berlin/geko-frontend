@@ -21,6 +21,7 @@
   const services = $derived(data['geko-services']?.data ?? []);
   const jobs = $derived(data['geko-jobs']?.data ?? []);
   const materials = $derived(data['geko-materials']?.data ?? []);
+  const locale = $derived(data.locale);
 </script>
 
 {#if meta?.page_banner}
@@ -38,7 +39,7 @@
   {#if block?.__component === 'geko-page-blocks.welcome'}
     <WelcomeBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.about'}
-    <AboutBlock data={block} {jobs} {materials} />
+    <AboutBlock data={block} {jobs} {materials} {locale} />
   {:else if block?.__component === 'geko-page-blocks.calendar'}
     <CalendarBlock data={block} events={eventItems} />
   {:else if block?.__component === 'geko-page-blocks.news'}

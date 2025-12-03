@@ -1,7 +1,7 @@
 <script>
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
-  import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/favicon.svg';
   import '../../app.scss';
   import Navbar from '$lib/components/Navbar.svelte';
 
@@ -18,10 +18,10 @@
 </script>
 
 <svelte:head>
-  <link rel="icon" href={favicon} />
+	<link rel="icon" href={favicon} />
 </svelte:head>
 
 <Navbar {landingBlocks} />
 <div class="bg-light min-vh-100">
-  {@render children()}
+{@render children()}
 </div>

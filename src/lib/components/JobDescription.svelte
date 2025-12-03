@@ -1,8 +1,9 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { PUBLIC_STRAPI_URL } from '$env/static/public';
+  import { t } from '$lib/helpers/translation';
 
-  let { job = {} } = $props();
+  let { job = {}, locale = 'de' } = $props();
 
   const getDownloadUrl = (file) => {
     if (!file?.url) return '';
@@ -13,9 +14,9 @@
   const downloads = $derived(job?.downlads ?? []);
 </script>
 
-<div class="row mb-3 mb-sm-4 mb-md-5 mb-lg-6">
+<div class="row mt-5">
   <div class="col-12">
-    <h4 class="mt-5 mb-3">{job.title}</h4>
+    <h4 class="mb-3">{job.title}</h4>
 
     {#if job.job_description}
       <div class="rich-text mb-3">
@@ -33,7 +34,7 @@
           rel="noopener noreferrer"
         >
           <span class="fas fa-download me-2" aria-hidden="true"></span>
-          {download.name || 'Stellenausschreibung herunterladen'}
+          {t(locale).download}
         </a>
       {/each}
     {/if}

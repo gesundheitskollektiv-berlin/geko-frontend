@@ -21,6 +21,7 @@
   const services = $derived(data['geko-services']?.data ?? []);
   const jobs = $derived(data['geko-jobs']?.data ?? []);
   const materials = $derived(data['geko-materials']?.data ?? []);
+  const calendarEvents = $derived(data.calendarEvents ?? []);
   const locale = $derived(data.locale);
 </script>
 
@@ -41,7 +42,7 @@
   {:else if block?.__component === 'geko-page-blocks.about'}
     <AboutBlock data={block} {jobs} {materials} {locale} />
   {:else if block?.__component === 'geko-page-blocks.calendar'}
-    <CalendarBlock data={block} events={eventItems} />
+    <CalendarBlock data={block} events={calendarEvents} {locale} />
   {:else if block?.__component === 'geko-page-blocks.news'}
     <NewsBlock data={block} announcements={announcements} {locale} />
   {:else if block?.__component === 'geko-page-blocks.contact'}

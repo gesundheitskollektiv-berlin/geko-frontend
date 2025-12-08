@@ -1,42 +1,90 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
+  import { t } from '$lib/helpers/translation';
+  import { isValidHttpUrl } from '$lib/helpers/calendar';
+  import CalendarWeekList from '$lib/components/CalendarWeekList.svelte';
+  import CalendarEventModal from '$lib/components/CalendarEventModal.svelte';
 
-  export let data = {};
-  export let events = [];
+  let { data = {}, events = [], locale = 'de' } = $props();
 
-  // data and events are kept for future calendar implementation
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _ = { data, events };
+  // Modal state
+  let selectedEvent = $state(null);
+  let isModalOpen = $state(false);
 
-  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
-  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar';
+  // Derived reactive values
+  const backgroundClass = $derived(data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white');
+  const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar');
+
+  // Handle event click
+  function handleEventClick(event) {
+    const description = event.description || '';
+    const firstLine = description.split('\n')[0].trim();
+
+    if (isValidHttpUrl(firstLine)) {
+      // Open external URL in new tab
+      window.open(firstLine, '_blank');
+    } else {
+      // Show modal with event details
+      selectedEvent = event;
+      isModalOpen = true;
+    }
+  }
+
+  function closeModal() {
+    isModalOpen = false;
+    selectedEvent = null;
+  }
 </script>
 
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-10">
-          <!-- TODO: Implement calendar component -->
-          <!-- Calendar will be implemented with FullCalendar or similar -->
-          <div class="pb-3 text-center" id="calendar-title"></div>
-          <div id="calendar"></div>
+      <div class="col-lg-10 col-md-10 py-5">
+        <h2 class="text-center mb-4">{t(locale).calendar}</h2>
 
-          <div id="calendar-legend" class="pt-3">
-            <ul>
-              <li class="background-color-blue calendar-legend-item">
-                <span>
-                  Im
-                  <a class="text-decoration-underline" href="#block-4"
-                    >Geko Stadtteil-Gesundheits-Zentrum</a
-                  >
-                </span>
-              </li>
-              <li class="background-color-yellow calendar-legend-item">
-                <span>Im Kiez</span>
-              </li>
-            </ul>
+        <!-- Calendar week list component -->
+        <CalendarWeekList {events} {locale} onEventClick={handleEventClick} />
+
+        <!-- Legend -->
+        <div id="calendar-legend" class="mt-5">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="legend-item d-flex align-items-center">
+                <div class="legend-color" style="background-color: #58a9ff;"></div>
+                <span class="legend-text">{t(locale).legendBlueItem}</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="legend-item d-flex align-items-center">
+                <div class="legend-color" style="background-color: #fff15b;"></div>
+                <span class="legend-text">{t(locale).legendYellowItem}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </section>
+
+<!-- Event Modal -->
+<CalendarEventModal event={selectedEvent} isOpen={isModalOpen} onClose={closeModal} {locale} />
+
+<style>
+  .legend-item {
+    padding: 0.5rem 0;
+  }
+
+  .legend-color {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .legend-text {
+    font-size: 1rem;
+    color: #495057;
+  }
+</style>

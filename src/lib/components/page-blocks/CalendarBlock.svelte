@@ -1,49 +1,23 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
   import { t } from '$lib/helpers/translation';
-  import { isValidHttpUrl } from '$lib/helpers/calendar';
   import CalendarWeekList from '$lib/components/CalendarWeekList.svelte';
-  import CalendarEventModal from '$lib/components/CalendarEventModal.svelte';
 
   let { data = {}, events = [], locale = 'de' } = $props();
-
-  // Modal state
-  let selectedEvent = $state(null);
-  let isModalOpen = $state(false);
 
   // Derived reactive values
   const backgroundClass = $derived(data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white');
   const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar');
-
-  // Handle event click
-  function handleEventClick(event) {
-    const description = event.description || '';
-    const firstLine = description.split('\n')[0].trim();
-
-    if (isValidHttpUrl(firstLine)) {
-      // Open external URL in new tab
-      window.open(firstLine, '_blank');
-    } else {
-      // Show modal with event details
-      selectedEvent = event;
-      isModalOpen = true;
-    }
-  }
-
-  function closeModal() {
-    isModalOpen = false;
-    selectedEvent = null;
-  }
 </script>
 
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-10 py-5">
-        <h2 class="text-center mb-4">{t(locale).calendar}</h2>
+      <div class="col-lg-10 col-md-10 my-5">
+        <h2 class="mb-4">{data.title || t(locale).calendar}</h2>
 
         <!-- Calendar week list component -->
-        <CalendarWeekList {events} {locale} onEventClick={handleEventClick} />
+        <CalendarWeekList {events} {locale} />
 
         <!-- Legend -->
         <div id="calendar-legend" class="mt-5">
@@ -66,9 +40,6 @@
     </div>
   </div>
 </section>
-
-<!-- Event Modal -->
-<CalendarEventModal event={selectedEvent} isOpen={isModalOpen} onClose={closeModal} {locale} />
 
 <style>
   .legend-item {

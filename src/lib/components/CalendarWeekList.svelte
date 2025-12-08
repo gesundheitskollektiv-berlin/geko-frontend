@@ -1,11 +1,17 @@
 <script>
-  import { getWeekStart, getWeekEnd, filterEventsByWeek, groupEventsByDay, formatDate, formatTime, getWeekRangeText } from '$lib/helpers/calendar';
+  import { browser } from '$app/environment';
+  import { marked } from 'marked';
+  import DOMPurify from 'dompurify';
+  import { getWeekStart, getWeekEnd, filterEventsByWeek, groupEventsByDay, formatDate, formatTime, getWeekRangeText, formatDateRange, isValidHttpUrl } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
 
-  let { events = [], locale = 'de', onEventClick } = $props();
+  let { events = [], locale = 'de' } = $props();
 
   // State for current week
   let currentWeekStart = $state(getWeekStart(new Date()));
+  
+  // State for expanded event accordion
+  let expandedEventId = $state(null);
 
   // Derived week events
   const weekEvents = $derived(filterEventsByWeek(events, currentWeekStart));
@@ -29,10 +35,53 @@
   }
 
   function handleEventClick(event) {
-    if (onEventClick) {
-      onEventClick(event);
+    // Check if description is just a URL
+    const description = event.description || '';
+    const firstLine = description.split('\n')[0].trim();
+
+    if (isValidHttpUrl(firstLine)) {
+      // Open external URL in new tab
+      window.open(firstLine, '_blank');
+      return;
+    }
+
+    // Toggle accordion
+    if (expandedEventId === event.uid) {
+      expandedEventId = null; // Close if already open
+    } else {
+      expandedEventId = event.uid; // Open this one
     }
   }
+
+  // Parsed description for expanded event
+  const parsedDescription = $derived(() => {
+    if (!browser || !expandedEventId) return '';
+    
+    const event = events.find(e => e.uid === expandedEventId);
+    if (!event?.description) return '';
+    
+    try {
+      const rawHtml = marked.parse(event.description);
+      return DOMPurify.sanitize(rawHtml);
+    } catch (error) {
+      console.error('Error parsing description:', error);
+      return '';
+    }
+  });
+
+  // Get expanded event
+  const expandedEvent = $derived(() => {
+    if (!expandedEventId) return null;
+    return events.find(e => e.uid === expandedEventId);
+  });
+
+  // Google Maps embed URL for expanded event
+  const mapUrl = $derived(() => {
+    const event = expandedEvent();
+    if (!event?.location) return null;
+    const encodedLocation = encodeURIComponent(event.location);
+    return `https://www.google.com/maps?q=${encodedLocation}&output=embed`;
+  });
 
   // Get all dates for the current week (even if no events)
   function getWeekDates() {
@@ -52,33 +101,24 @@
 <div class="calendar-week-list">
   <!-- Header with navigation -->
   <div class="calendar-header mb-4">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="calendar-nav-buttons">
-        <button 
-          type="button"
-          class="btn btn-sm btn-outline-secondary me-2" 
-          onclick={goToPreviousWeek}
-          aria-label={t(locale).previous}
-        >
-          ‹ {t(locale).previous}
-        </button>
-        <button 
-          type="button"
-          class="btn btn-sm btn-primary me-2" 
-          onclick={goToToday}
-        >
-          {t(locale).today}
-        </button>
-        <button 
-          type="button"
-          class="btn btn-sm btn-outline-secondary" 
-          onclick={goToNextWeek}
-          aria-label={t(locale).next}
-        >
-          {t(locale).next} ›
-        </button>
-      </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button 
+        type="button"
+        class="btn btn-link nav-arrow p-0" 
+        onclick={goToPreviousWeek}
+        aria-label={t(locale).previous}
+      >
+        ←
+      </button>
       <h3 class="calendar-title mb-0">{weekRange}</h3>
+      <button 
+        type="button"
+        class="btn btn-link nav-arrow p-0" 
+        onclick={goToNextWeek}
+        aria-label={t(locale).next}
+      >
+        →
+      </button>
     </div>
   </div>
 
@@ -88,9 +128,9 @@
       {@const dateKey = date.toISOString().split('T')[0]}
       {@const dayEvents = groupedEvents[dateKey] || []}
       
-      <div class="calendar-day" class:has-events={dayEvents.length > 0}>
+      <div class="calendar-day mt-3" class:has-events={dayEvents.length > 0}>
         <!-- Date header -->
-        <div class="day-header">
+        <div class="day-header mb-3">
           <h4 class="day-date">
             {formatDate(date, locale, { weekday: 'long', month: 'long', day: 'numeric' })}
           </h4>
@@ -99,34 +139,76 @@
         <!-- Events for this day -->
         {#if dayEvents.length > 0}
           <div class="day-events">
-            {#each dayEvents as event (event.uid)}
-              <div 
-                class="event-item" 
-                style="border-left: 4px solid {event.color};"
-                onclick={() => handleEventClick(event)}
-                role="button"
-                tabindex="0"
-                onkeydown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleEventClick(event);
-                  }
-                }}
-              >
-                <div class="event-time">
-                  {formatTime(event.start, locale)}
-                  {#if event.end && new Date(event.end).getTime() - new Date(event.start).getTime() > 60000}
-                    - {formatTime(event.end, locale)}
-                  {/if}
-                </div>
-                <div class="event-title">{event.title}</div>
-                {#if event.location}
-                  <div class="event-location text-muted">
-                    📍 {event.location}
+              {#each dayEvents as event (event.uid)}
+                  <div class="event-wrapper">
+                    <div 
+                      class="event-item" 
+                      class:mb-1={expandedEventId !== event.uid}
+                      class:expanded={expandedEventId === event.uid}
+                      style="border-left: 8px solid {event.color};"
+                      onclick={() => handleEventClick(event)}
+                      role="button"
+                      tabindex="0"
+                      onkeydown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleEventClick(event);
+                        }
+                      }}
+                    >
+                      <div class="event-time">
+                        {formatTime(event.start, locale)}
+                        {#if event.end && new Date(event.end).getTime() - new Date(event.start).getTime() > 60000}
+                          - {formatTime(event.end, locale)}
+                        {/if}
+                      </div>
+                      <div class="event-title">{event.title}</div>
+                      {#if event.location}
+                        <div class="event-location text-muted">
+                          📍 {event.location}
+                        </div>
+                      {/if}
+                    </div>
+
+                    <!-- Accordion content -->
+                    {#if expandedEventId === event.uid}
+                      <div class="event-details-accordion mb-1">
+                        <!-- Description -->
+                        {#if event.description}
+                          <div class="event-detail">
+                            <div class="event-description">
+                              {@html parsedDescription()}
+                            </div>
+                          </div>
+                        {/if}
+
+                        <!-- Location -->
+                        {#if event.location}
+                          <div class="event-detail mt-3">
+                            <i class="fas fa-house me-2"></i>
+                            <span>{event.location}</span>
+                          </div>
+
+                          <!-- Google Maps iframe -->
+                          {#if mapUrl()}
+                            <div class="map-container mt-3">
+                              <iframe
+                                src={mapUrl()}
+                                width="100%"
+                                height="300"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Event location map"
+                              ></iframe>
+                            </div>
+                          {/if}
+                        {/if}
+                      </div>
+                    {/if}
                   </div>
-                {/if}
-              </div>
-            {/each}
+                {/each}
           </div>
         {:else}
           <div class="no-events text-muted fst-italic">
@@ -144,46 +226,63 @@
   }
 
   .calendar-header {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
     padding: 1rem;
     background-color: #f8f9fa;
-    border-radius: 0.375rem;
   }
 
   .calendar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #495057;
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
+  }
+
+  .nav-arrow {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    min-width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-arrow:hover {
+    color: #0d6efd;
+    text-decoration: none;
+    transform: scale(1.2);
+  }
+
+  .nav-arrow:focus {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
   }
 
   .calendar-events {
-    border: 1px solid #dee2e6;
-    border-radius: 0.375rem;
     overflow: hidden;
   }
 
   .calendar-day {
-    border-bottom: 1px solid #dee2e6;
-  }
-
-  .calendar-day:last-child {
-    border-bottom: none;
+    margin-bottom: 1.5rem;
   }
 
   .day-header {
-    background-color: #f8f9fa;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #e9ecef;
+    background-color: white;
+    padding: 1.25rem 1rem 0.75rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .day-date {
-    font-size: 1rem;
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
+    font-size: 1.125rem;
     font-weight: 600;
     margin: 0;
-    color: #495057;
-  }
-
-  .calendar-day.has-events .day-header {
-    background-color: #e7f1ff;
+    color: #212529;
   }
 
   .day-events {
@@ -192,26 +291,104 @@
 
   .event-item {
     padding: 0.75rem 1rem;
+    margin: 0 1.5rem;
     background-color: white;
-    border-bottom: 1px solid #f1f3f5;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-  }
-
-  .event-item:last-child {
-    border-bottom: none;
   }
 
   .event-item:hover {
     background-color: #f8f9fa;
   }
 
-  .event-item:focus {
-    outline: 2px solid #0d6efd;
-    outline-offset: -2px;
-  }
+      .event-item:focus {
+        outline: 2px solid #0d6efd;
+        outline-offset: -2px;
+      }
 
-  .event-time {
+      .event-item.expanded {
+        background-color: #e7f1ff;
+      }
+
+      .event-details-accordion {
+        padding: 1rem;
+        margin: 0 1.5rem;
+        background-color: #f8f9fa;
+        animation: slideDown 0.2s ease-in-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          max-height: 0;
+        }
+        to {
+          opacity: 1;
+          max-height: 1000px;
+        }
+      }
+
+      .event-detail {
+        font-family: 'CerebriSansPro', system-ui, sans-serif;
+        font-size: 1rem;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .event-detail i {
+        flex-shrink: 0;
+        color: #6c757d;
+        font-size: 1rem;
+        margin-top: 0.25rem;
+      }
+
+      .event-detail span,
+      .event-detail .event-description {
+        flex: 1;
+      }
+
+      .event-description {
+        line-height: 1.6;
+      }
+
+      .event-description :global(p) {
+        margin-bottom: 0.75rem;
+      }
+
+      .event-description :global(p:last-child) {
+        margin-bottom: 0;
+      }
+
+      .event-description :global(a) {
+        color: #0d6efd;
+        text-decoration: underline;
+      }
+
+      .event-description :global(a:hover) {
+        color: #0a58ca;
+      }
+
+      .event-description :global(ul),
+      .event-description :global(ol) {
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .event-description :global(li) {
+        margin-bottom: 0.25rem;
+      }
+
+      .map-container {
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .map-container iframe {
+        display: block;
+      }
+
+      .event-time {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
     color: #6c757d;
@@ -219,19 +396,29 @@
   }
 
   .event-title {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     color: #212529;
     margin-bottom: 0.25rem;
   }
 
   .event-location {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
     font-size: 0.875rem;
   }
 
   .no-events {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
     padding: 1rem;
     text-align: center;
+  }
+
+  /* Responsive typography - match site standards */
+  @media (min-width: 992px) {
+    .day-date {
+      font-size: 1.3125rem; /* 21px on desktop, matching h4 */
+    }
   }
 
   @media (max-width: 768px) {
@@ -239,23 +426,21 @@
       padding: 0.75rem;
     }
 
-    .calendar-nav-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem;
-    }
-
-    .calendar-nav-buttons .btn {
-      font-size: 0.875rem;
-      padding: 0.25rem 0.5rem;
-    }
-
     .calendar-title {
-      font-size: 1rem;
+      font-size: 1.25rem;
     }
 
-    .day-date {
-      font-size: 0.875rem;
+    .nav-arrow {
+      font-size: 1.5rem;
+      min-width: 2rem;
+    }
+
+    .event-details-accordion {
+      padding: 0.75rem;
+    }
+
+    .map-container iframe {
+      height: 250px;
     }
   }
 </style>

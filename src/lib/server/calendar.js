@@ -37,7 +37,14 @@ function parseICalData(icsData, color) {
     const comp = new ICAL.Component(jcalData);
     const vevents = comp.getAllSubcomponents('vevent');
 
-    const events = vevents.map(vevent => {
+    // Define date range for recurring events (1 year from now)
+    const rangeStart = new Date();
+    const rangeEnd = new Date();
+    rangeEnd.setFullYear(rangeEnd.getFullYear() + 1);
+
+    const allEvents = [];
+
+    vevents.forEach(vevent => {
       const event = new ICAL.Event(vevent);
       
       // Get basic event data
@@ -45,35 +52,64 @@ function parseICalData(icsData, color) {
       const description = event.description || '';
       const location = event.location || '';
       
-      // Parse dates
-      let startDate = null;
-      let endDate = null;
+      // Get duration for recurring events
+      const duration = event.duration;
       
-      if (event.startDate) {
-        startDate = event.startDate.toJSDate();
+      // Check if event is recurring
+      if (event.isRecurring()) {
+        // Expand recurring event into multiple occurrences
+        const occurrences = expandRecurringEvent(vevent, rangeStart, rangeEnd);
+        
+        occurrences.forEach((startDate, index) => {
+          // Calculate end date based on duration
+          let endDate = new Date(startDate);
+          if (duration) {
+            endDate = new Date(startDate.getTime() + duration.toSeconds() * 1000);
+          } else if (event.endDate) {
+            // Use original duration
+            const originalDuration = event.endDate.toJSDate().getTime() - event.startDate.toJSDate().getTime();
+            endDate = new Date(startDate.getTime() + originalDuration);
+          }
+          
+          allEvents.push({
+            title,
+            description,
+            location,
+            start: startDate,
+            end: endDate,
+            color,
+            isRecurring: true,
+            uid: `${event.uid}-${index}`
+          });
+        });
+      } else {
+        // Single event
+        let startDate = null;
+        let endDate = null;
+        
+        if (event.startDate) {
+          startDate = event.startDate.toJSDate();
+        }
+        
+        if (event.endDate) {
+          endDate = event.endDate.toJSDate();
+        }
+        
+        allEvents.push({
+          title,
+          description,
+          location,
+          start: startDate,
+          end: endDate,
+          color,
+          isRecurring: false,
+          uid: event.uid
+        });
       }
-      
-      if (event.endDate) {
-        endDate = event.endDate.toJSDate();
-      }
-
-      // Handle recurring events
-      const isRecurring = !!event.recurrenceId || vevent.hasProperty('rrule');
-      
-      return {
-        title,
-        description,
-        location,
-        start: startDate,
-        end: endDate,
-        color,
-        isRecurring,
-        uid: event.uid
-      };
     });
 
     // Filter out events without valid dates
-    return events.filter(e => e.start !== null);
+    return allEvents.filter(e => e.start !== null);
   } catch (error) {
     console.error('Error parsing iCal data:', error);
     return [];
@@ -82,25 +118,53 @@ function parseICalData(icsData, color) {
 
 /**
  * Expands recurring events into individual occurrences
- * @param {Array} events - Array of event objects
+ * @param {ICAL.Component} vevent - The VEVENT component
  * @param {Date} rangeStart - Start of date range
  * @param {Date} rangeEnd - End of date range
- * @returns {Array} Array of expanded event objects
+ * @returns {Array} Array of event dates
  */
-function expandRecurringEvents(events, rangeStart, rangeEnd) {
-  const expanded = [];
+function expandRecurringEvent(vevent, rangeStart, rangeEnd) {
+  const occurrences = [];
   
-  for (const event of events) {
-    if (!event.isRecurring) {
-      expanded.push(event);
-    } else {
-      // For now, just include the base event
-      // TODO: Implement proper recurrence expansion if needed
-      expanded.push(event);
+  try {
+    const event = new ICAL.Event(vevent);
+    
+    if (!event.isRecurring()) {
+      // Not recurring, just return the original date
+      return [event.startDate.toJSDate()];
     }
+    
+    // Create time objects for range
+    const rangeStartTime = ICAL.Time.fromJSDate(rangeStart, true);
+    const rangeEndTime = ICAL.Time.fromJSDate(rangeEnd, true);
+    
+    // Get the iterator for recurring events
+    const iterator = event.iterator();
+    let next;
+    
+    // Limit to prevent infinite loops
+    let count = 0;
+    const maxOccurrences = 500;
+    
+    while ((next = iterator.next()) && count < maxOccurrences) {
+      // Check if we're past the end date
+      if (next.compare(rangeEndTime) > 0) {
+        break;
+      }
+      
+      // Only include if within range
+      if (next.compare(rangeStartTime) >= 0) {
+        occurrences.push(next.toJSDate());
+      }
+      
+      count++;
+    }
+    
+    return occurrences;
+  } catch (error) {
+    console.error('Error expanding recurring event:', error);
+    return [];
   }
-  
-  return expanded;
 }
 
 /**

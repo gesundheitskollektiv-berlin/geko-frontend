@@ -104,21 +104,37 @@
     <div class="d-flex justify-content-center align-items-center gap-3">
       <button 
         type="button"
-        class="btn btn-link nav-arrow p-0" 
+        class="btn btn-link nav-button p-0" 
         onclick={goToPreviousWeek}
         aria-label={t(locale).previous}
       >
-        ←
+        <i class="fas fa-chevron-left"></i>
+        <span class="ms-2">{t(locale).previous}</span>
       </button>
       <h3 class="calendar-title mb-0">{weekRange}</h3>
       <button 
         type="button"
-        class="btn btn-link nav-arrow p-0" 
+        class="btn btn-link nav-button p-0" 
         onclick={goToNextWeek}
         aria-label={t(locale).next}
       >
-        →
+        <span class="me-2">{t(locale).next}</span>
+        <i class="fas fa-chevron-right"></i>
       </button>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="calendar-legend mb-4">
+    <div class="d-flex justify-content-center gap-4 flex-wrap">
+      <div class="legend-item d-flex align-items-center">
+        <div class="legend-color" style="background-color: #58a9ff;"></div>
+        <span class="legend-text">{t(locale).legendBlueItem}</span>
+      </div>
+      <div class="legend-item d-flex align-items-center">
+        <div class="legend-color" style="background-color: #fff15b;"></div>
+        <span class="legend-text">{t(locale).legendYellowItem}</span>
+      </div>
     </div>
   </div>
 
@@ -128,7 +144,7 @@
       {@const dateKey = date.toISOString().split('T')[0]}
       {@const dayEvents = groupedEvents[dateKey] || []}
       
-      <div class="calendar-day mt-3" class:has-events={dayEvents.length > 0}>
+      <div class="calendar-day mt-5" class:has-events={dayEvents.length > 0}>
         <!-- Date header -->
         <div class="day-header mb-3">
           <h4 class="day-date">
@@ -238,27 +254,25 @@
     color: #212529;
   }
 
-  .nav-arrow {
+  .nav-button {
     font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 600;
     line-height: 1;
     color: #6c757d;
     text-decoration: none;
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
-    min-width: 2.5rem;
+    transition: color 0.2s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .nav-arrow:hover {
+  .nav-button:hover {
     color: #0d6efd;
     text-decoration: none;
-    transform: scale(1.2);
   }
 
-  .nav-arrow:focus {
+  .nav-button:focus {
     outline: 2px solid #0d6efd;
     outline-offset: 2px;
   }
@@ -275,6 +289,7 @@
     background-color: white;
     padding: 1.25rem 1rem 0.75rem 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem 0.5rem 0 0;
   }
 
   .day-date {
@@ -291,7 +306,6 @@
 
   .event-item {
     padding: 0.75rem 1rem;
-    margin: 0 1.5rem;
     background-color: white;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
@@ -414,6 +428,24 @@
     text-align: center;
   }
 
+  .legend-item {
+    padding: 0.5rem 0;
+  }
+
+  .legend-color {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .legend-text {
+    font-family: 'CerebriSansPro', system-ui, sans-serif;
+    font-size: 1rem;
+    color: #212529;
+  }
+
   /* Responsive typography - match site standards */
   @media (min-width: 992px) {
     .day-date {
@@ -430,9 +462,16 @@
       font-size: 1.25rem;
     }
 
-    .nav-arrow {
-      font-size: 1.5rem;
-      min-width: 2rem;
+    .nav-button {
+      font-size: 0.875rem;
+    }
+
+    .nav-button span {
+      display: none;
+    }
+
+    .nav-button i {
+      font-size: 1.25rem;
     }
 
     .event-details-accordion {

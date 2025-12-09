@@ -145,25 +145,21 @@ export function formatDateRange(start, end, locale = 'de') {
 }
 
 /**
- * Gets the week range display text
+ * Gets the week range display text in numeric format
  * @param {Date} weekStart - Start of the week
  * @param {string} locale - The locale code
- * @returns {string} Week range text (e.g., "Dec 8 - Dec 14, 2025")
+ * @returns {string} Week range text (e.g., "08.12.2025 - 14.12.2025")
  */
 export function getWeekRangeText(weekStart, locale = 'de') {
   const weekEnd = getWeekEnd(weekStart);
   
-  const startMonth = formatDate(weekStart, locale, { month: 'short' });
-  const startDay = weekStart.getDate();
+  const formatNumericDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
   
-  const endMonth = formatDate(weekEnd, locale, { month: 'short' });
-  const endDay = weekEnd.getDate();
-  const endYear = weekEnd.getFullYear();
-  
-  if (startMonth === endMonth) {
-    return `${startMonth} ${startDay} - ${endDay}, ${endYear}`;
-  } else {
-    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${endYear}`;
-  }
+  return `${formatNumericDate(weekStart)} - ${formatNumericDate(weekEnd)}`;
 }
 

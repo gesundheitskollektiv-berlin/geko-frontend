@@ -2,114 +2,81 @@
   import { t } from '$lib/helpers/translation';
   import './calendar.scss';
 
-  let { weekRange = '', locale = 'de', onPrevious, onNext, onToday } = $props();
+  let { weekRange = '', locale = 'de', isCurrentWeek = false, onPrevious, onNext, onToday } = $props();
 </script>
 
-<div class="calendar-header mb-4">
-  <div class="d-flex justify-content-between align-items-center">
-    <!-- Previous button (left edge) -->
-    <button 
-      type="button"
-      class="btn btn-link nav-button" 
-      onclick={onPrevious}
-      aria-label={t(locale).previous}
-    >
-      <i class="fas fa-chevron-left"></i>
-    </button>
-    
-    <!-- Center: Date range + Reset button -->
-    <div class="d-flex align-items-center gap-2">
-      <h3 class="calendar-title mb-0">{weekRange}</h3>
-      <button 
-        type="button"
-        class="btn btn-link reset-button" 
-        onclick={onToday}
-        aria-label="Go to current week"
-      >
-        <i class="fas fa-arrow-rotate-right"></i>
-      </button>
+<div class="calendar-header mt-5 mb-5">
+  <div class="row header-content align-items-center">
+    <!-- Week date range - left side -->
+    <div class="col-auto">
+      <h2 class="calendar-title mb-0">
+        <i class="fas fa-calendar me-2"></i>{weekRange}
+      </h2>
     </div>
     
-    <!-- Next button (right edge) -->
-    <button 
-      type="button"
-      class="btn btn-link nav-button" 
-      onclick={onNext}
-      aria-label={t(locale).next}
-    >
-      <i class="fas fa-chevron-right"></i>
-    </button>
+    <!-- Action buttons - right side -->
+    <div class="col-auto ms-auto">
+      <div class="d-flex gap-2">
+        <button 
+          type="button"
+          class="btn btn-geko bg-geko-dark-grey text-white"
+          onclick={onPrevious}
+          aria-label={t(locale).previous}
+        >
+          <i class="fas fa-backward"></i>
+        </button>
+        
+        <button 
+          type="button"
+          class="btn btn-geko bg-geko-dark-grey text-white"
+          onclick={onToday}
+          disabled={isCurrentWeek}
+          aria-label={t(locale).today}
+        >
+          {t(locale).today}
+        </button>
+        
+        <button 
+          type="button"
+          class="btn btn-geko bg-geko-dark-grey text-white"
+          onclick={onNext}
+          aria-label={t(locale).next}
+        >
+          <i class="fas fa-forward"></i>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
   .calendar-header {
     font-family: var(--calendar-font-family);
-    padding: 1rem;
-    background-color: var(--calendar-bg-light);
+    /* No background color */
+  }
+
+  .header-content {
+    background-color: var(--calendar-white);
+    padding: 0.75rem 1rem;
+    box-shadow: var(--calendar-shadow-standard);
+    border-radius: 0.5rem 0.5rem 0 0;
   }
 
   .calendar-title {
     font-family: var(--calendar-font-family);
-    font-size: 1.5rem;
     font-weight: 700;
     color: var(--calendar-text-dark);
-  }
-
-  .nav-button {
     font-size: 1.5rem;
-    color: var(--calendar-text-muted);
-    text-decoration: none;
-    transition: color var(--calendar-transition-standard);
-    padding: 0.5rem;
   }
 
-  .nav-button:hover {
-    color: var(--calendar-primary);
-    text-decoration: none;
-  }
-
-  .nav-button:focus {
-    outline: 2px solid var(--calendar-primary);
-    outline-offset: 2px;
-  }
-
-  .reset-button {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--calendar-text-muted);
-    border: 1px solid var(--calendar-border-gray);
-    background-color: transparent;
-    transition: all var(--calendar-transition-standard);
-    text-decoration: none;
-  }
-
-  .reset-button:hover {
-    color: var(--calendar-primary);
-    border-color: var(--calendar-primary);
-    text-decoration: none;
-  }
-
-  .reset-button i {
-    font-size: 0.875rem;
-  }
-
-  @media (max-width: 768px) {
-    .calendar-header {
-      padding: 0.75rem;
-    }
-
+  @media (max-width: 992px) {
     .calendar-title {
-      font-size: 1rem;
+      font-size: 1.5rem;
     }
-
-    .nav-button {
-      font-size: 1.25rem;
+    
+    .calendar-header .btn {
+      font-size: 0.875rem;
+      padding: 0.25rem 0.5rem;
     }
   }
 </style>

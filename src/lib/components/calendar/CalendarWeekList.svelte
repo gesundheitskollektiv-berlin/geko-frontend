@@ -17,6 +17,12 @@
   const weekEvents = $derived(filterEventsByWeek(events, currentWeekStart));
   const groupedEvents = $derived(groupEventsByDay(weekEvents));
   const weekRange = $derived(getWeekRangeText(currentWeekStart, locale));
+  
+  // Check if current week is being displayed
+  const isCurrentWeek = $derived(() => {
+    const today = getWeekStart(new Date());
+    return currentWeekStart.getTime() === today.getTime();
+  });
 
   function goToPreviousWeek() {
     const newDate = new Date(currentWeekStart);
@@ -70,12 +76,13 @@
 
 <div class="calendar-week-list">
   <!-- Legend -->
-  <CalendarLegend {locale} />
+  <!-- <CalendarLegend {locale} /> -->
 
   <!-- Header with navigation -->
   <CalendarHeader 
     {weekRange} 
     {locale} 
+    isCurrentWeek={isCurrentWeek()}
     onPrevious={goToPreviousWeek}
     onNext={goToNextWeek}
     onToday={goToToday}

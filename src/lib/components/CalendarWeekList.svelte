@@ -99,6 +99,20 @@
 </script>
 
 <div class="calendar-week-list">
+  <!-- Legend -->
+  <div class="calendar-legend mb-4">
+    <div class="d-flex justify-content-center gap-4 flex-wrap">
+      <div class="legend-item d-flex align-items-center">
+        <div class="legend-color bg-geko-blue"></div>
+        <span>{t(locale).legendBlueItem}</span>
+      </div>
+      <div class="legend-item d-flex align-items-center">
+        <div class="legend-color bg-geko-yellow"></div>
+        <span>{t(locale).legendYellowItem}</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Header with navigation -->
   <div class="calendar-header mb-4">
     <div class="d-flex justify-content-center align-items-center gap-3">
@@ -121,20 +135,6 @@
         <span class="me-2">{t(locale).next}</span>
         <i class="fas fa-chevron-right"></i>
       </button>
-    </div>
-  </div>
-
-  <!-- Legend -->
-  <div class="calendar-legend mb-4">
-    <div class="d-flex justify-content-center gap-4 flex-wrap">
-      <div class="legend-item d-flex align-items-center">
-        <div class="legend-color" style="background-color: #58a9ff;"></div>
-        <span class="legend-text">{t(locale).legendBlueItem}</span>
-      </div>
-      <div class="legend-item d-flex align-items-center">
-        <div class="legend-color" style="background-color: #fff15b;"></div>
-        <span class="legend-text">{t(locale).legendYellowItem}</span>
-      </div>
     </div>
   </div>
 
@@ -227,7 +227,7 @@
                 {/each}
           </div>
         {:else}
-          <div class="no-events text-muted fst-italic">
+          <div class="no-events my-0 py-0">
             {t(locale).noEvents || 'No events'}
           </div>
         {/if}
@@ -288,7 +288,7 @@
   .day-header {
     background-color: white;
     padding: 1.25rem 1rem 0.75rem 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
     border-radius: 0.5rem 0.5rem 0 0;
   }
 
@@ -438,12 +438,6 @@
     border-radius: 0.25rem;
     margin-right: 0.75rem;
     flex-shrink: 0;
-  }
-
-  .legend-text {
-    font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-size: 1rem;
-    color: #212529;
   }
 
   /* Responsive typography - match site standards */

@@ -1,0 +1,56 @@
+/* 
+ * Shared Calendar Styles
+ * CSS custom properties and utility classes for calendar components
+ */
+
+@import '../../../bootstrap.scss';
+
+:root {
+  /* Colors - using Bootstrap/Geko brand colors */
+  --calendar-bg-light: #{$geko-light-grey};
+  --calendar-text-muted: #{$geko-text-dark};
+  --calendar-text-dark: #{$geko-black};
+  --calendar-primary: #{$geko-blue};
+  --calendar-primary-dark: darken($geko-blue, 10%);
+  --calendar-border-gray: #dee2e6;
+  --calendar-expanded-bg: lighten($geko-blue, 35%);
+  --calendar-white: #{$geko-white};
+
+  /* Typography */
+  --calendar-font-family: #{$font-family-base};
+
+  /* Transitions */
+  --calendar-transition-standard: 0.2s ease-in-out;
+
+  /* Shadows */
+  --calendar-shadow-standard: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --calendar-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Breakpoints (for reference in media queries) */
+  --calendar-breakpoint-md: 768px;
+}
+
+/* Common utility classes */
+
+/* Standard focus state for interactive elements */
+.calendar-focus-outline:focus {
+  outline: 2px solid var(--calendar-primary);
+  outline-offset: 2px;
+}
+
+/* Standard focus state for inset elements */
+.calendar-focus-inset:focus {
+  outline: 2px solid var(--calendar-primary);
+  outline-offset: -2px;
+}
+
+/* Standard transition for interactive elements */
+.calendar-transition {
+  transition: all var(--calendar-transition-standard);
+}
+
+/* Base typography for calendar text */
+.calendar-text {
+  font-family: var(--calendar-font-family);
+}
+

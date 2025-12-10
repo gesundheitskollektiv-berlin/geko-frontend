@@ -1,7 +1,7 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
   import { t } from '$lib/helpers/translation';
-  import CalendarWeekList from '$lib/components/CalendarWeekList.svelte';
+  import CalendarWeekList from '$lib/components/calendar/CalendarWeekList.svelte';
 
   let { data = {}, events = [], locale = 'de' } = $props();
 

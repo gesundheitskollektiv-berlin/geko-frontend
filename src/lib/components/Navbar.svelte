@@ -1,4 +1,5 @@
 <script>
+  import { browser } from '$app/environment';
   import { slugify } from '$lib/helpers/landingBlocks';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -7,6 +8,19 @@
   let { landingBlocks = [], locale = 'de' } = $props();
 
   let isNavbarOpen = false;
+  let isScrolled = $state(false);
+
+  // Handle scroll behavior
+  $effect(() => {
+    if (!browser) return;
+    
+    const handleScroll = () => {
+      isScrolled = window.scrollY > 50;
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  });
 
   // Filter blocks that should appear in navbar
   const navItems = $derived(
@@ -69,10 +83,10 @@
   });
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top py-3" style="z-index: 1030; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" class:py-3={!isScrolled} class:py-2={isScrolled}>
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" style="height: 55px; width: auto;" />
+      <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" class="navbar-logo" class:navbar-logo-small={isScrolled} />
     </a>
 
     <button
@@ -130,6 +144,22 @@
 </nav>
 
 <style>
+  .navbar {
+    z-index: 1030;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: padding 0.3s ease;
+  }
+
+  .navbar-logo {
+    height: 55px;
+    width: auto;
+    transition: height 0.3s ease;
+  }
+
+  .navbar-logo-small {
+    height: 45px;
+  }
+
   .btn-white {
     background-color: white;
     color: black;

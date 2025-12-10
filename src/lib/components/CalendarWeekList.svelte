@@ -115,24 +115,37 @@
 
   <!-- Header with navigation -->
   <div class="calendar-header mb-4">
-    <div class="d-flex justify-content-center align-items-center gap-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- Previous button (left edge) -->
       <button 
         type="button"
-        class="btn btn-link nav-button p-0" 
+        class="btn btn-link nav-button" 
         onclick={goToPreviousWeek}
         aria-label={t(locale).previous}
       >
         <i class="fas fa-chevron-left"></i>
-        <span class="ms-2">{t(locale).previous}</span>
       </button>
-      <h3 class="calendar-title mb-0">{weekRange}</h3>
+      
+      <!-- Center: Date range + Reset button -->
+      <div class="d-flex align-items-center gap-2">
+        <h3 class="calendar-title mb-0">{weekRange}</h3>
+        <button 
+          type="button"
+          class="btn btn-link reset-button" 
+          onclick={goToToday}
+          aria-label="Go to current week"
+        >
+          <i class="fas fa-arrow-rotate-right"></i>
+        </button>
+      </div>
+      
+      <!-- Next button (right edge) -->
       <button 
         type="button"
-        class="btn btn-link nav-button p-0" 
+        class="btn btn-link nav-button" 
         onclick={goToNextWeek}
         aria-label={t(locale).next}
       >
-        <span class="me-2">{t(locale).next}</span>
         <i class="fas fa-chevron-right"></i>
       </button>
     </div>
@@ -255,16 +268,11 @@
   }
 
   .nav-button {
-    font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1;
+    font-size: 1.5rem;
     color: #6c757d;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0.5rem;
   }
 
   .nav-button:hover {
@@ -275,6 +283,31 @@
   .nav-button:focus {
     outline: 2px solid #0d6efd;
     outline-offset: 2px;
+  }
+
+  .reset-button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+
+  .reset-button:hover {
+    color: #0d6efd;
+    border-color: #0d6efd;
+    text-decoration: none;
+  }
+
+  .reset-button i {
+    font-size: 0.875rem;
   }
 
   .calendar-events {
@@ -453,18 +486,10 @@
     }
 
     .calendar-title {
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
 
     .nav-button {
-      font-size: 0.875rem;
-    }
-
-    .nav-button span {
-      display: none;
-    }
-
-    .nav-button i {
       font-size: 1.25rem;
     }
 

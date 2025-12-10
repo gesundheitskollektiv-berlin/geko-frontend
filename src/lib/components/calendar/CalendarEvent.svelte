@@ -8,8 +8,7 @@
 
 <div class="event-wrapper">
   <div 
-    class="event-item" 
-    class:mb-1={!isExpanded}
+    class="event-item mt-1" 
     class:expanded={isExpanded}
     style="border-left: 8px solid {event.color};"
     onclick={onClick}
@@ -37,7 +36,7 @@
   </div>
 
   <!-- Accordion content -->
-  <CalendarEventAccordion {event} {locale} {isExpanded} />
+  <CalendarEventAccordion {event} {locale} {isExpanded} color={event.color} />
 </div>
 
 <style>
@@ -53,12 +52,11 @@
   }
 
   .event-item:focus {
-    outline: 2px solid var(--calendar-primary);
-    outline-offset: -2px;
+    outline: none;
   }
 
   .event-item.expanded {
-    background-color: var(--calendar-expanded-bg);
+    background-color: var(--calendar-white);
   }
 
   .event-time {

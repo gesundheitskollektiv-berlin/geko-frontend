@@ -72,6 +72,14 @@
     
     return dates;
   }
+
+  // Check if a date is today
+  function isToday(date) {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+           date.getMonth() === today.getMonth() &&
+           date.getFullYear() === today.getFullYear();
+  }
 </script>
 
 <div class="calendar-week-list">
@@ -100,6 +108,7 @@
         {locale} 
         {expandedEventId}
         onEventClick={handleEventClick}
+        isToday={isToday(date)}
       />
     {/each}
   </div>

@@ -37,7 +37,7 @@
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    background-color: #000;
+    background-color: #2e2e2e; /* Same dark grey as calendar action buttons */
     color: #fff;
     border: none;
     cursor: pointer;

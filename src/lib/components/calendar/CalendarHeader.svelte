@@ -56,7 +56,7 @@
   }
 
   .header-content {
-    background-color: var(--calendar-white);
+    background-color: var(--calendar-bg-light);
     padding: 0.75rem 1rem;
     box-shadow: var(--calendar-shadow-standard);
     border-radius: 0.5rem 0.5rem 0 0;

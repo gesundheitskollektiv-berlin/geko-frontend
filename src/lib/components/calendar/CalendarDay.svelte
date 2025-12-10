@@ -4,10 +4,10 @@
   import CalendarEvent from './CalendarEvent.svelte';
   import './calendar.scss';
 
-  let { date, events = [], locale = 'de', expandedEventId = null, onEventClick } = $props();
+  let { date, events = [], locale = 'de', expandedEventId = null, onEventClick, isToday = false } = $props();
 </script>
 
-<div class="calendar-day mt-5" class:has-events={events.length > 0}>
+<div class="calendar-day mt-5" class:has-events={events.length > 0} class:today={isToday}>
   <!-- Date header -->
   <div class="day-header mb-3">
     <h4 class="day-date">
@@ -37,6 +37,11 @@
 <style>
   .calendar-day {
     margin-bottom: 1.5rem;
+  }
+
+  .calendar-day.today {
+    border: 1px solid #000;
+    border-radius: 0.5rem 0.5rem 0 0;
   }
 
   .day-header {

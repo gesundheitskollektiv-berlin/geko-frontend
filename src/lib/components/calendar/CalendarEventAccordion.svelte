@@ -5,7 +5,7 @@
   import { t } from '$lib/helpers/translation';
   import './calendar.scss';
 
-  let { event, locale = 'de', isExpanded = false } = $props();
+  let { event, locale = 'de', isExpanded = false, color = '#58a9ff' } = $props();
 
   // Parsed description
   const parsedDescription = $derived(() => {
@@ -29,7 +29,7 @@
 </script>
 
 {#if isExpanded}
-  <div class="event-details-accordion mb-1">
+  <div class="event-details-accordion mb-1" style="border-left: 8px solid {color};">
     <!-- Description -->
     {#if event.description}
       <div class="event-detail">
@@ -68,7 +68,6 @@
 <style>
   .event-details-accordion {
     padding: 1rem;
-    margin: 0 1.5rem;
     background-color: var(--calendar-bg-light);
     animation: slideDown var(--calendar-transition-standard);
   }

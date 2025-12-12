@@ -118,6 +118,11 @@
   .service-section {
     padding: 1.5rem 0;
   }
+
+  .service-page {
+    background: linear-gradient(to bottom, #58a9ff 12%, #fff 12%, #fff);
+    padding-bottom: 300px !important;
+  }
 </style>
 
 

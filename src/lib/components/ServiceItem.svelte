@@ -20,9 +20,9 @@
       <div class="card service-card mb-3">
         <div class="card-body d-flex align-items-center px-md-3 px-0">
           {#if service.icon_name}
-            <i class="fas {service.icon_name} me-2"></i>
+            <i class="fas {service.icon_name} service-icon me-3"></i>
           {/if}
-          <p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
+          <p class="service-title my-0">{service.title}</p>
         </div>
       </div>
     </a>
@@ -30,11 +30,31 @@
     <div class="card service-card mb-3">
       <div class="card-body d-flex align-items-center px-md-3 px-0">
         {#if service.icon_name}
-          <i class="fas {service.icon_name} me-2"></i>
+          <i class="fas {service.icon_name} service-icon me-3"></i>
         {/if}
-        <p class="sm-fs-ml md-fs-l l-fs-xl my-0">{service.title}</p>
+        <p class="service-title my-0">{service.title}</p>
       </div>
     </div>
   {/if}
 </div>
+
+<style>
+  .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    background-color: #ececec;
+  }
+
+  .service-icon {
+    font-size: 1.5rem;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+  }
+</style>
 

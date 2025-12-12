@@ -1,0 +1,6 @@
+
+
+Kindermedizinische Praxis; fa-hands-holding-child
+Allgemeinmedizinische Praxis; fa-stethoscope
+Therapie; fa-comments
+Sport; fa-heart-pulse

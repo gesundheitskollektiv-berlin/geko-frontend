@@ -28,7 +28,7 @@
   <section style="background-color: #fff;">
     <div class="container py-4">
       <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-10">
+        <div class="col-lg-8 col-md-9 col-sm-11">
           <a href="/{locale}" class="btn btn-outline-dark">
             <i class="fas fa-arrow-left me-2"></i>
             Zurück zur Startseite
@@ -42,7 +42,7 @@
   <section class="hero-section">
     <div class="container py-5">
       <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-10">
+        <div class="col-lg-8 col-md-9 col-sm-11">
           <h2 class="pt-3 mb-4">
             {#if service.icon_name}
               <i class="fas {service.icon_name} me-3"></i>
@@ -69,7 +69,7 @@
     <section style="background-color: #fff15b;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Beschreibung</h3>
             <div class="service-content">
               {@html resolveRichText(service.description)}
@@ -85,7 +85,7 @@
     <section style="background-color: #fff;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Sprachen</h3>
             <p>{service.languages}</p>
           </div>
@@ -99,7 +99,7 @@
     <section style="background-color: #58a9ff;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Angebot</h3>
             <div class="service-content">
               {@html resolveRichText(service.offer)}
@@ -115,7 +115,7 @@
     <section style="background-color: #fff;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Wann</h3>
             <p>{service.when}</p>
           </div>
@@ -129,7 +129,7 @@
     <section style="background-color: #fff;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Für wen</h3>
             <div class="service-content">
               {@html resolveRichText(service.who)}
@@ -145,7 +145,7 @@
     <section style="background-color: #fff;">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10">
+          <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Wo</h3>
             <p>
               <i class="fas fa-map-marker-alt me-2"></i>

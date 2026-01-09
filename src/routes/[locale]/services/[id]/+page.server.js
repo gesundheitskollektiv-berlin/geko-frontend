@@ -1,25 +1,20 @@
-import { PUBLIC_STRAPI_URL } from '$env/static/public';
+import { getDetailsDataFromCMS } from '$lib/helpers/getDataFromCMS';
 import { getValidLocale } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params, fetch }) {
   const locale = getValidLocale(params.locale);
-  const { id } = params;
+  const { id: slug } = params;
 
   try {
-    // Fetch single service by documentId
-    const response = await fetch(
-      `${PUBLIC_STRAPI_URL}/api/geko-services/${id}?pLevel&locale=${locale}`
-    );
+    const result = await getDetailsDataFromCMS('geko-services', locale, slug);
 
-    if (!response.ok) {
+    if (!result?.data?.[0]) {
       throw error(404, 'Service not found');
     }
 
-    const result = await response.json();
-
     return {
-      service: result?.data || null,
+      service: result.data[0],
       locale
     };
   } catch (err) {

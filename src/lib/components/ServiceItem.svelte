@@ -5,7 +5,7 @@
   const linkUrl = $derived(
     isExternal 
       ? service.project_url 
-      : `/${locale}/services/${service.documentId || service.id}`
+      : `/${locale}/services/${service.slug || service.documentId || service.id}`
   );
 </script>
 

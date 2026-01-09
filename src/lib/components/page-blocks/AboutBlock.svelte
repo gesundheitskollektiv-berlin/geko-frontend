@@ -5,6 +5,7 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import JobDescription from '$lib/components/JobDescription.svelte';
   import MaterialDescription from '$lib/components/MaterialDescription.svelte';
+  import Newsletter from '$lib/components/Newsletter.svelte';
 
   export let data = {};
   export let jobs = [];
@@ -38,11 +39,13 @@
             </a>
           </div>
 
-          <!-- Newsletter section - TODO: implement newsletter component -->
-          <div class="mt-7"></div>
+          <!-- Newsletter section -->
+          <div class="my-5 mt-7">
+            <Newsletter />
+          </div>
 
           <!-- Job offers section -->
-          <div class="mt-7">
+          <div class="my-5 mt-7">
             <h3 id="job-offers" class="h3">{t(locale).jobOffers}</h3>
 
             {#if jobs.length > 0}

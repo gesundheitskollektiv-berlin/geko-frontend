@@ -2,6 +2,7 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import MaterialDescription from '$lib/components/MaterialDescription.svelte';
+  import Newsletter from '$lib/components/Newsletter.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
   import { t } from '$lib/helpers/translation';
@@ -43,6 +44,11 @@
             class="img-fluid rounded w-100 my-4"
           />
         {/if}
+
+        <!-- Newsletter section -->
+        <div class="my-5 mt-7">
+          <Newsletter />
+        </div>
 
         <!-- Materials section -->
         <div class="my-5 mt-7"></div>

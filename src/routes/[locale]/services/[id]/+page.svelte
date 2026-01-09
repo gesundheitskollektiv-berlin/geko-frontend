@@ -153,10 +153,20 @@
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
             <h3 class="h4 mb-3">Wo</h3>
-            <p>
+            <p class="mb-4">
               <i class="fas fa-map-marker-alt me-2"></i>
               {service.where_address}
             </p>
+            
+            <!-- Google Maps Embed -->
+            <div class="ratio ratio-16x9">
+              <iframe
+                src={`https://maps.google.com/maps?width=100%25&height=600&hl=de&q=${encodeURIComponent(service.where_address)}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+                allowfullscreen
+                loading="lazy"
+                title="Google Maps - {service.where_address}"
+              ></iframe>
+            </div>
           </div>
         </div>
       </div>

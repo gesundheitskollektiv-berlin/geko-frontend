@@ -31,6 +31,13 @@
             />
           {/if}
 
+          <!-- Link to About Us subpage -->
+          <div class="mt-5">
+            <a class="btn-geko bg-geko-blue text-white" href="/{locale}/ueber_uns">
+              Mehr über uns
+            </a>
+          </div>
+
           <!-- Newsletter section - TODO: implement newsletter component -->
           <div class="mt-7"></div>
 

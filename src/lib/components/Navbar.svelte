@@ -8,9 +8,9 @@
 
   let { landingBlocks = [], locale = 'de' } = $props();
 
-  // Check if we're on a service detail page
-  const isServiceDetailPage = $derived(
-    $page.url.pathname.match(/^\/[^/]+\/services\/[^/]+$/)
+  // Check if we're on a detail page (service detail or about page)
+  const isDetailPage = $derived(
+    $page.url.pathname.match(/^\/[^/]+\/(services\/[^/]+|ueber_uns)$/)
   );
 
   let isNavbarOpen = false;
@@ -110,8 +110,8 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        {#if isServiceDetailPage}
-          <!-- Back Button for service detail pages -->
+        {#if isDetailPage}
+          <!-- Back Button for detail pages (service detail and about page) -->
           <li class="nav-item">
             <a class="btn-geko bg-geko-yellow text-black mx-2" href="/{locale}">
               <i class="fas fa-arrow-left me-2"></i>

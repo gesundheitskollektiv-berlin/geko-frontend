@@ -17,6 +17,26 @@
   const footerBlock = $derived(
     landingBlocks.find(block => block?.__component === 'geko-page-blocks.footer')
   );
+
+  // Define section visibility and colors
+  const visibleSections = $derived(
+    [
+      { key: 'languages', visible: !!service.languages },
+      { key: 'when', visible: !!service.when },
+      { key: 'who', visible: !!service.who },
+      { key: 'where_address', visible: !!service.where_address }
+    ].filter(s => s.visible)
+  );
+
+  // All sections get white background
+  const sectionColors = $derived.by(() => {
+    const colors = {};
+    visibleSections.forEach((section) => {
+      colors[section.key] = 'bg-geko-white';
+    });
+    
+    return colors;
+  });
 </script>
 
 <svelte:head>
@@ -52,7 +72,7 @@
 
   <!-- Description -->
   {#if service.description}
-    <section style="background-color: #fff15b;">
+    <section class="bg-geko-yellow">
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
@@ -68,7 +88,7 @@
 
   <!-- Languages -->
   {#if service.languages}
-    <section style="background-color: #fff;">
+    <section class={sectionColors.languages}>
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
@@ -82,7 +102,7 @@
 
   <!-- Offer -->
   {#if service.offer}
-    <section style="background-color: #58a9ff;">
+    <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
@@ -98,7 +118,7 @@
 
   <!-- When -->
   {#if service.when}
-    <section style="background-color: #fff;">
+    <section class={sectionColors.when}>
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
@@ -112,7 +132,7 @@
 
   <!-- Who -->
   {#if service.who}
-    <section style="background-color: #fff;">
+    <section class={sectionColors.who}>
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">
@@ -128,7 +148,7 @@
 
   <!-- Where/Address -->
   {#if service.where_address}
-    <section style="background-color: #fff;">
+    <section class={sectionColors.where_address}>
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">

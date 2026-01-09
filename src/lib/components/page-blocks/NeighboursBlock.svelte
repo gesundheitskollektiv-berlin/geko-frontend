@@ -34,8 +34,8 @@
 		text-align: center;
 		text-decoration: none;
 		cursor: pointer;
-		background-color: white;
-		color: black;
+		background-color: #58a9ff;
+		color: white;
 	}
 
 	.neighbours-content :global(a:hover) {

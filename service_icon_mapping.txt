@@ -3,4 +3,9 @@
 Kindermedizinische Praxis; fa-hands-holding-child
 Allgemeinmedizinische Praxis; fa-stethoscope
 Therapie; fa-comments
-Sport; fa-heart-pulse
+Sport: fa-heart-pulse
+Beratung: fa-people-arrows
+Nachbarschaftsprojekte: fa-people-group
+Café: fa-mug-saucer
+Gesundheitsberatung: fa-circle-info
+Navigation: fa-satellite-dish

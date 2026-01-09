@@ -24,20 +24,6 @@
 </svelte:head>
 
 <div class="service-page">
-  <!-- Back button section -->
-  <section style="background-color: #fff;">
-    <div class="container py-4">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-9 col-sm-11">
-          <a href="/{locale}" class="btn btn-outline-dark">
-            <i class="fas fa-arrow-left me-2"></i>
-            Zurück zur Startseite
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Hero Section with Title and Image -->
   <section class="hero-section">
     <div class="container py-5">

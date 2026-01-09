@@ -1,11 +1,17 @@
 <script>
   import { browser } from '$app/environment';
+  import { page } from '$app/stores';
   import { slugify } from '$lib/helpers/landingBlocks';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { t, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 
   let { landingBlocks = [], locale = 'de' } = $props();
+
+  // Check if we're on a service detail page
+  const isServiceDetailPage = $derived(
+    $page.url.pathname.match(/^\/[^/]+\/services\/[^/]+$/)
+  );
 
   let isNavbarOpen = false;
   let isScrolled = $state(false);
@@ -104,14 +110,24 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <!-- Navigation Items -->
-        {#each navItems as item}
+        {#if isServiceDetailPage}
+          <!-- Back Button for service detail pages -->
           <li class="nav-item">
-            <a class="btn-geko bg-geko-yellow text-black mx-2" href={item.href} onclick={handleNavClick}>
-              {item.title}
+            <a class="btn-geko bg-geko-yellow text-black mx-2" href="/{locale}">
+              <i class="fas fa-arrow-left me-2"></i>
+              Zurück
             </a>
           </li>
-        {/each}
+        {:else}
+          <!-- Regular Navigation Items -->
+          {#each navItems as item}
+            <li class="nav-item">
+              <a class="btn-geko bg-geko-yellow text-black mx-2" href={item.href} onclick={handleNavClick}>
+                {item.title}
+              </a>
+            </li>
+          {/each}
+        {/if}
         
         <!-- Locale Selector Dropdown -->
         <li class="nav-item dropdown ms-4">

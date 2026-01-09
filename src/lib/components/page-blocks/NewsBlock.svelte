@@ -18,7 +18,7 @@
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-10 my-5">
+      <div class="col-lg-8 col-md-9 col-sm-11 my-5">
         <div class="row mb-4">
           <div class="col-12">
             <h2 class="fw-bold mb-0">{data.title}</h2>

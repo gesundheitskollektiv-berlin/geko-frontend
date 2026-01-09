@@ -14,7 +14,7 @@
 <section id={sectionId} class={`${backgroundClass} footer`}>
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-lg-10 col-md-10 mt-5">
+			<div class="col-lg-8 col-md-9 col-sm-11 mt-5">
 					<div class="row align-items-center">
 						<div class="col-md-12">
 							<h4>{t(locale).supportedBy}</h4>

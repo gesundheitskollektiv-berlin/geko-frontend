@@ -77,14 +77,6 @@
             {@html resolveRichText(announcement.content)}
           </div>
         {/if}
-
-        <!-- Back button -->
-        <div class="mt-5">
-          <a href="/{locale}" class="btn btn-outline-dark">
-            <i class="fas fa-arrow-left me-2"></i>
-            Zurück zur Startseite
-          </a>
-        </div>
       </div>
     </div>
   </div>

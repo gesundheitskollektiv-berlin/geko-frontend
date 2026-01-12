@@ -2,16 +2,22 @@
   let { service = {}, locale = 'de' } = $props();
 
   const isExternal = $derived(service.external_link_only);
-  const linkUrl = $derived(`/${locale}/services/${service.slug || service.documentId || service.id}`);
+  const linkUrl = $derived(
+    isExternal && service.project_url
+      ? service.project_url
+      : `/${locale}/services/${service.slug || service.documentId || service.id}`
+  );
 </script>
 
 <div class="col">
-  {#if !isExternal}
+  {#if linkUrl}
     <a
       href={linkUrl}
       class="text-decoration-none"
+      target={isExternal ? '_blank' : '_self'}
+      rel={isExternal ? 'noreferrer noopener' : undefined}
     >
-      <div class="card service-card mb-3 clickable">
+      <div class="card service-card mb-3 clickable border-0">
         <div class="card-body d-flex align-items-center px-md-3 px-0">
           {#if service.icon_name}
             <i class="fas {service.icon_name} service-icon me-3"></i>
@@ -21,7 +27,7 @@
       </div>
     </a>
   {:else}
-    <div class="card service-card mb-3 non-clickable">
+    <div class="card service-card mb-3 non-clickable border-0">
       <div class="card-body d-flex align-items-center px-md-3 px-0">
         {#if service.icon_name}
           <i class="fas {service.icon_name} service-icon me-3"></i>

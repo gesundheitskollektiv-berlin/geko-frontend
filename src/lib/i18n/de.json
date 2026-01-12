@@ -18,6 +18,7 @@
   "where": "Wo",
   "description": "Beschreibung",
   "noEvents": "Keine Veranstaltungen",
+  "noJobsAvailable": "Zurzeit sind keine Stellen bei uns verfügbar...",
   "legendBlueItem": "Im Geko Stadtteil-Gesundheits-Zentrum",
   "legendYellowItem": "Im Kiez",
   "languages": {

@@ -18,6 +18,7 @@
   "where": "Where",
   "description": "Description",
   "noEvents": "No events",
+  "noJobsAvailable": "Currently, there are no job openings available...",
   "legendBlueItem": "At Geko Community Health Center",
   "legendYellowItem": "In the Neighborhood",
   "languages": {

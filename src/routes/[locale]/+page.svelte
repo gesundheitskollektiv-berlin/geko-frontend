@@ -1,6 +1,8 @@
 <script>
   import WelcomeBlock from '$lib/components/page-blocks/WelcomeBlock.svelte';
   import AboutBlock from '$lib/components/page-blocks/AboutBlock.svelte';
+  import MaterialsBlock from '$lib/components/page-blocks/MaterialsBlock.svelte';
+  import JobsBlock from '$lib/components/page-blocks/JobsBlock.svelte';
   import CalendarBlock from '$lib/components/page-blocks/CalendarBlock.svelte';
   import NewsBlock from '$lib/components/page-blocks/NewsBlock.svelte';
   import ContactBlock from '$lib/components/page-blocks/ContactBlock.svelte';
@@ -41,7 +43,12 @@
   {#if block?.__component === 'geko-page-blocks.welcome'}
     <WelcomeBlock data={block} />
   {:else if block?.__component === 'geko-page-blocks.about'}
-    <AboutBlock data={block} {jobs} {materials} {locale} />
+    <AboutBlock data={block} {locale} />
+    {#if materials.length > 0}
+      <MaterialsBlock data={block} {materials} {locale} />
+    {/if}
+  {:else if block?.__component === 'geko-page-blocks.jobs'}
+    <JobsBlock data={block} {jobs} {locale} />
   {:else if block?.__component === 'geko-page-blocks.calendar'}
     <CalendarBlock data={block} events={calendarEvents} {locale} />
   {:else if block?.__component === 'geko-page-blocks.news'}

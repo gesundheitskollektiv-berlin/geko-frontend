@@ -1,14 +1,9 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
-  import { t } from '$lib/helpers/translation';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
-  import JobDescription from '$lib/components/JobDescription.svelte';
-  import MaterialDescription from '$lib/components/MaterialDescription.svelte';
 
   export let data = {};
-  export let jobs = [];
-  export let materials = [];
   export let locale = 'de';
 
   $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
@@ -36,28 +31,6 @@
             <a class="btn-geko bg-geko-blue text-white" href="/{locale}/ueber_uns">
               Mehr über uns
             </a>
-          </div>
-
-          <!-- Job offers section -->
-          <div class="my-5 mt-7">
-            <h3 id="job-offers" class="h3">{t(locale).jobOffers}</h3>
-
-            {#if jobs.length > 0}
-              {#each jobs as job (job.id)}
-                <JobDescription {job} {locale} />
-              {/each}
-            {/if}
-          </div>
-
-          <!-- Materials section -->
-          <div class="mt-7">
-            <h3 class="h3">{t(locale).materials}</h3>
-
-            {#if materials.length > 0}
-              {#each materials as material (material.id)}
-                <MaterialDescription {material} {locale} />
-              {/each}
-            {/if}
           </div>
         </div>
       </div>

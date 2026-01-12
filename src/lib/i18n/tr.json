@@ -18,6 +18,7 @@
   "where": "Nerede",
   "description": "Açıklama",
   "noEvents": "Etkinlik yok",
+  "noJobsAvailable": "Şu anda bizde müsait pozisyon bulunmamaktadır...",
   "legendBlueItem": "Geko Topluluk Sağlık Merkezi'nde",
   "legendYellowItem": "Mahallede",
   "languages": {

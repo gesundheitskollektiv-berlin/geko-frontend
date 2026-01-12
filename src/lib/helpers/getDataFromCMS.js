@@ -13,23 +13,10 @@ export async function getDataFromCMS(path, locale) {
     return await fetchAllPages(path, locale);
   }
 
-  // Special handling for landing page to populate CTA relations in dynamic zone
+  // Special handling for landing page to populate all relations including CTA and supporters
   if (path === 'geko-page-landing') {
-    // Build query params using URLSearchParams for proper encoding
-    const params = new URLSearchParams();
-    params.append('locale', locale);
-    params.append('populate[content][on][geko-page-blocks.welcome][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.about][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.calendar][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.news][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.contact][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.services][populate][geko_services][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.neighbours][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.supporters][populate][funding_projects][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.cta][populate][geko_cta][populate]', '*');
-    params.append('populate[content][on][geko-page-blocks.footer][populate]', '*');
-    
-    const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?${params.toString()}`;
+    // Use pLevel for deep population which handles all nested relations including supporters images
+    const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
     return await fetchData(queryUrl);
   }
 

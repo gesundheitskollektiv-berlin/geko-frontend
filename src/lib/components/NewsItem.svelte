@@ -17,6 +17,12 @@
         />
       {/if}
       <div class="card-body d-flex flex-column">
+        {#if item.publish_date || item.publishedAt}
+          <time class="publish-date small text-muted mb-2">
+            {formatDate(item.publish_date || item.publishedAt, locale)}
+          </time>
+        {/if}
+        
         {#if item.is_event && item.event_date}
           <time class="event-date small text-muted mb-2 d-block">
             <i class="fas fa-calendar me-1"></i>
@@ -24,7 +30,7 @@
           </time>
         {/if}
         
-        <h3 class="h5 mb-0">{item?.title}</h3>
+        <h3 class="h5 mb-0 fw-normal">{item?.title}</h3>
       </div>
     </div>
   </a>

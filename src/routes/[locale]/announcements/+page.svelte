@@ -10,6 +10,9 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
   
+  // Track visible items count for load more functionality
+  let visibleCount = $state(10);
+  
   // Get footer and supporters blocks from landing page blocks
   const landingPage = $derived(data['geko-page-landing']?.data ?? {});
   const landingBlocks = $derived(landingPage?.content ?? []);
@@ -19,6 +22,10 @@
   const supportersBlock = $derived(
     landingBlocks.find(block => block?.__component === 'geko-page-blocks.supporters')
   );
+  
+  function loadMore() {
+    visibleCount += 10;
+  }
 </script>
 
 <section class="bg-geko-yellow">
@@ -28,8 +35,18 @@
         <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{t(locale).allAnnouncements}</h2>
 
         <div class="mb-5">
-          <NewsItems {announcements} maxAnnouncements={0} {locale} />
+          <NewsItems {announcements} maxAnnouncements={visibleCount} {locale} />
         </div>
+        
+        {#if announcements.length > visibleCount}
+          <div class="row">
+            <div class="col-12 text-center">
+              <button class="btn-geko bg-geko-blue text-white" onclick={loadMore}>
+                Load More
+              </button>
+            </div>
+          </div>
+        {/if}
       </div>
     </div>
   </div>

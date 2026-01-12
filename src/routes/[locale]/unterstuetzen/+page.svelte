@@ -48,24 +48,13 @@
 
 <style>
 	.support-content :global(a) {
-		display: inline-block;
-		border-radius: 25px;
-		padding: 0.25rem 1.5rem;
-		font-family: "CerebriSansPro", system-ui, sans-serif;
-		font-weight: 700;
-		font-size: 1.25rem;
-		transition: all 0.2s ease-in-out;
-		border: none;
-		text-align: center;
-		text-decoration: none;
-		cursor: pointer;
-		background-color: #58a9ff;
-		color: white;
+		text-decoration: underline;
+		color: #000; /* geko-black */
+		font-size: 1.25rem; /* fs-20 */
+		font-weight: 700; /* fw-bold */
 	}
 
 	.support-content :global(a:hover) {
 		opacity: 0.85;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 	}
 </style>

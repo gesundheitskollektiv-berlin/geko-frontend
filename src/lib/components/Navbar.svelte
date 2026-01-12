@@ -127,6 +127,13 @@
               </a>
             </li>
           {/each}
+          
+          <!-- Unterstützen Link -->
+          <li class="nav-item">
+            <a class="btn-geko bg-geko-yellow text-black mx-2" href="/{locale}/unterstuetzen">
+              {t(locale).support}
+            </a>
+          </li>
         {/if}
         
         <!-- Locale Selector Dropdown -->

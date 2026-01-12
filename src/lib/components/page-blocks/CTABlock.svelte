@@ -29,12 +29,12 @@
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-md-between text-center text-md-start">
           <div class="flex-grow-1 mb-3 mb-md-0">
             {#if cta.call_text}
-              <p class="mb-0 fs-20 fw-bold">{cta.call_text}</p>
+              <p class="mb-0 fs-24 fw-bold cta-call-text">{cta.call_text}</p>
             {/if}
           </div>
           <div class="ms-md-4">
             {#if cta.link && cta.link_text}
-              <a href={linkUrl} class="btn-geko bg-geko-blue text-white">
+              <a href={linkUrl} class="btn-geko bg-geko-blue text-white cta-button">
                 {cta.link_text}
               </a>
             {/if}
@@ -44,3 +44,15 @@
     </div>
   </div>
 </section>
+
+<style>
+  .cta-button {
+    border: 1.5px solid #000 !important;
+  }
+
+  .cta-call-text {
+    -webkit-text-stroke: 0.75px #000;
+    paint-order: stroke fill;
+    font-weight: 700;
+  }
+</style>

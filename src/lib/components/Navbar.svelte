@@ -89,7 +89,7 @@
   });
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" class:py-3={!isScrolled} class:py-2={isScrolled}>
+<nav class="navbar navbar-expand-xl navbar-light bg-white sticky-top" class:py-3={!isScrolled} class:py-2={isScrolled}>
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
       <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" class="navbar-logo" class:navbar-logo-small={isScrolled} />

@@ -19,8 +19,8 @@
 <section id={sectionId} class={`${backgroundClass} py-0`}>
   <div class="container" id="contact">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11">
-        <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{data.title}</h2>
+      <div class="col-lg-8 col-md-9 col-sm-11 my-5">
+        <h2 class="mb-4">{data.title}</h2>
 
         <!-- Contact Information Row -->
         <div class="row mb-5">

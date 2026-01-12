@@ -11,6 +11,7 @@ export async function load({ params }) {
   const endpoints = [
     'geko-page-landing',
     'geko-page-about',
+    'geko-page-support',
     'geko-page-datenschutzerklaerung',
     'geko-page-impressum',
     'geko-meta',

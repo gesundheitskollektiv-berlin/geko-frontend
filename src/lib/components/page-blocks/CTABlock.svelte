@@ -3,6 +3,23 @@
   
   // Access the populated geko_cta relation
   const cta = $derived(data?.geko_cta || {});
+  
+  // Check if link is external (starts with http://, https://, //, mailto:, tel:, etc.)
+  function isExternalLink(link) {
+    if (!link) return false;
+    return /^(https?:\/\/|\/\/|mailto:|tel:|#)/i.test(link);
+  }
+  
+  // Get the processed link URL with locale prefix for local links
+  const linkUrl = $derived.by(() => {
+    if (!cta.link) return '';
+    if (isExternalLink(cta.link)) {
+      return cta.link;
+    }
+    // Local link - prefix with locale
+    const cleanLink = cta.link.startsWith('/') ? cta.link : `/${cta.link}`;
+    return `/${locale}${cleanLink}`;
+  });
 </script>
 
 <section class="bg-geko-red text-white py-5">
@@ -17,7 +34,7 @@
           </div>
           <div class="ms-md-4">
             {#if cta.link && cta.link_text}
-              <a href={cta.link} class="btn-geko bg-geko-blue text-white">
+              <a href={linkUrl} class="btn-geko bg-geko-blue text-white">
                 {cta.link_text}
               </a>
             {/if}

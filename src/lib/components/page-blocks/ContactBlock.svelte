@@ -35,15 +35,12 @@
           </div>
           <div class="col-md-5" id="contact-data">
             <!-- ADDRESS -->
-            <div class="card border-0 bg-transparent">
-              <div class="card-body">
-                <span class="fa fa-home" aria-hidden="true"></span>
-                &nbsp;
-                {meta?.street}, {meta?.postal} {meta?.city}
-              </div>
-            </div>
+            <p>
+              <span class="fa fa-home" aria-hidden="true"></span>
+              &nbsp;
+              {meta?.street}, {meta?.postal} {meta?.city}
+            </p>
 
-            <div class="mb-3"></div>
             <p>
               <a href="#contact" class="fw-bold">Alle Telefonnummern und E-Mail-Adressen findet ihr hier</a>
             </p>

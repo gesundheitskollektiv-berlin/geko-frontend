@@ -7,6 +7,7 @@
   import ServicesBlock from '$lib/components/page-blocks/ServicesBlock.svelte';
   import NeighboursBlock from '$lib/components/page-blocks/NeighboursBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
+  import CTABlock from '$lib/components/page-blocks/CTABlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   
@@ -49,18 +50,20 @@
     <ContactBlock data={block} {meta} />
   {:else if block?.__component === 'geko-page-blocks.services'}
     <ServicesBlock data={block} {services} {locale} />
-  {:else if block?.__component === 'geko-page-blocks.neighbours'}
-    <NeighboursBlock data={block} />
+  <!-- {:else if block?.__component === 'geko-page-blocks.neighbours'}
+    <NeighboursBlock data={block} /> -->
   {:else if block?.__component === 'geko-page-blocks.supporters'}
     <SupportersBlock data={block} {locale} />
+  {:else if block?.__component === 'geko-page-blocks.cta'}
+    <CTABlock data={block} {locale} />
   {:else if block?.__component === 'geko-page-blocks.footer'}
     <FooterBlock data={block} {meta} locale={data.locale} />
-  {:else}
+  <!-- {:else}
     {@const backgroundClass = block?.background_color ? `bg-geko-${block.background_color}` : 'bg-geko-white'}
     <section class={backgroundClass}>
       <div class="container">
         <p class="text-muted mb-0">Blocktyp {block?.__component} ist noch nicht implementiert.</p>
       </div>
-    </section>
+    </section> -->
   {/if}
 {/each}

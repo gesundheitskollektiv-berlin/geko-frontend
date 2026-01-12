@@ -13,6 +13,26 @@ export async function getDataFromCMS(path, locale) {
     return await fetchAllPages(path, locale);
   }
 
+  // Special handling for landing page to populate CTA relations in dynamic zone
+  if (path === 'geko-page-landing') {
+    // Build query params using URLSearchParams for proper encoding
+    const params = new URLSearchParams();
+    params.append('locale', locale);
+    params.append('populate[content][on][geko-page-blocks.welcome][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.about][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.calendar][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.news][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.contact][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.services][populate][geko_services][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.neighbours][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.supporters][populate][funding_projects][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.cta][populate][geko_cta][populate]', '*');
+    params.append('populate[content][on][geko-page-blocks.footer][populate]', '*');
+    
+    const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?${params.toString()}`;
+    return await fetchData(queryUrl);
+  }
+
   // For single entries or small collections, use original method
   const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
   return await fetchData(queryUrl);

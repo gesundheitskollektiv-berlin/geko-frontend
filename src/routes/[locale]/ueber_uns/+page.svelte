@@ -1,10 +1,9 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
-  import MaterialDescription from '$lib/components/MaterialDescription.svelte';
+  import MaterialsBlock from '$lib/components/page-blocks/MaterialsBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
-  import { t } from '$lib/helpers/translation';
 
   let { data } = $props();
 
@@ -43,20 +42,15 @@
             class="img-fluid rounded w-100 my-4"
           />
         {/if}
-
-        <!-- Materials section -->
-        <div class="my-5 mt-7"></div>
-        <h3 class="h3">{t(locale).materials}</h3>
-
-        {#if materials.length > 0}
-          {#each materials as material (material.id)}
-            <MaterialDescription {material} {locale} />
-          {/each}
-        {/if}
       </div>
     </div>
   </div>
 </section>
+
+<!-- Materials section -->
+{#if materials.length > 0}
+  <MaterialsBlock data={{ title: '', background_color: 'yellow' }} {materials} {locale} />
+{/if}
 
 <!-- Footer -->
 {#if footerBlock}

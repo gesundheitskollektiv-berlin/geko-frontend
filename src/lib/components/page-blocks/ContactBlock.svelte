@@ -149,4 +149,8 @@
     height: auto !important;
     box-sizing: border-box;
   }
+
+  .content-container :global(ul) {
+    padding-left: 1rem !important;
+  }
 </style>

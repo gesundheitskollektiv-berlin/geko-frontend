@@ -28,7 +28,7 @@
 
           <!-- Link to About Us subpage -->
           <div class="mt-5">
-            <a class="btn-geko bg-geko-blue text-white" href="/{locale}/ueber_uns">
+            <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/ueber_uns">
               Mehr über uns
             </a>
           </div>

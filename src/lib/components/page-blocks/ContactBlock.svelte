@@ -77,25 +77,27 @@
               </div>
             </div>
 
-            <!-- Map Toggle Buttons -->
+            <!-- Map Toggle Links -->
             <div id="show-google-map" class="py-5" class:d-none={showGoogleMap}>
-              <button
-                type="button"
-                class="toggle-map-view btn-geko bg-geko-blue text-white px-3"
-                onclick={toggleMap}
+              <a
+                href="#"
+                class="toggle-map-view text-decoration-underline text-geko-black fs-20 fw-bold"
+                onclick={(e) => { e.preventDefault(); toggleMap(); }}
+                style="cursor: pointer;"
               >
                 Zeige Google-Karte
-              </button>
+              </a>
             </div>
 
             <div id="show-simple-map" class="py-5" class:d-none={!showGoogleMap}>
-              <button
-                type="button"
-                class="toggle-map-view btn-geko bg-geko-blue text-white px-3"
-                onclick={toggleMap}
+              <a
+                href="#"
+                class="toggle-map-view text-decoration-underline text-geko-black fs-20 fw-bold"
+                onclick={(e) => { e.preventDefault(); toggleMap(); }}
+                style="cursor: pointer;"
               >
                 Zeige einfache Karte
-              </button>
+              </a>
             </div>
           </div>
 

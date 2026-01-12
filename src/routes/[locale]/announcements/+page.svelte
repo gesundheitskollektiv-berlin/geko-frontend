@@ -41,9 +41,9 @@
         {#if announcements.length > visibleCount}
           <div class="row">
             <div class="col-12 text-center">
-              <button class="btn-geko bg-geko-blue text-white" onclick={loadMore}>
+              <a href="#" class="text-decoration-underline text-geko-black fs-20 fw-bold" onclick={(e) => { e.preventDefault(); loadMore(); }} style="cursor: pointer;">
                 Load More
-              </button>
+              </a>
             </div>
           </div>
         {/if}

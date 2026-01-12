@@ -1,5 +1,6 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
+  import Newsletter from '$lib/components/Newsletter.svelte';
 
   export let data = {};
   export let meta = {};
@@ -105,6 +106,13 @@
         </p>
       </div>
     </div>
+
+        <!-- NEWSLETTER SECTION -->
+        <div class="row mt-5">
+          <div class="col-12">
+            <Newsletter />
+          </div>
+        </div>
       </div>
     </div>
   </div>

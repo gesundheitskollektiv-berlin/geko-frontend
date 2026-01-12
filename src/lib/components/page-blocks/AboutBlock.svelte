@@ -5,7 +5,6 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import JobDescription from '$lib/components/JobDescription.svelte';
   import MaterialDescription from '$lib/components/MaterialDescription.svelte';
-  import Newsletter from '$lib/components/Newsletter.svelte';
 
   export let data = {};
   export let jobs = [];
@@ -37,11 +36,6 @@
             <a class="btn-geko bg-geko-blue text-white" href="/{locale}/ueber_uns">
               Mehr über uns
             </a>
-          </div>
-
-          <!-- Newsletter section -->
-          <div class="my-5 mt-7">
-            <Newsletter />
           </div>
 
           <!-- Job offers section -->

@@ -8,9 +8,9 @@
 
   let { landingBlocks = [], locale = 'de' } = $props();
 
-  // Check if we're on a detail page (service detail, announcement detail, about page, or support page)
+  // Check if we're on a detail page (service detail, announcement detail, announcements listing, about page, or support page)
   const isDetailPage = $derived(
-    $page.url.pathname.match(/^\/[^/]+\/(services\/[^/]+|announcements\/[^/]+|ueber_uns|unterstuetzen)$/)
+    $page.url.pathname.match(/^\/[^/]+\/(services\/[^/]+|announcements\/[^/]+|announcements|ueber_uns|unterstuetzen)$/)
   );
 
   let isNavbarOpen = false;

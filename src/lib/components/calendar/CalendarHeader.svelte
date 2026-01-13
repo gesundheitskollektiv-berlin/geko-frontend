@@ -5,7 +5,7 @@
   let { weekRange = '', locale = 'de', isCurrentWeek = false, onPrevious, onNext, onToday } = $props();
 </script>
 
-<div class="calendar-header mt-5 mb-5">
+<div class="calendar-header">
   <div class="row header-content align-items-center">
     <!-- Week date range - left side -->
     <div class="col-auto">

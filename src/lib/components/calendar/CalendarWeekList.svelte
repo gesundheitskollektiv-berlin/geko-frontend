@@ -102,14 +102,16 @@
       {@const dateKey = date.toISOString().split('T')[0]}
       {@const dayEvents = groupedEvents[dateKey] || []}
       
-      <CalendarDay 
-        {date} 
-        events={dayEvents}
-        {locale} 
-        {expandedEventId}
-        onEventClick={handleEventClick}
-        isToday={isToday(date)}
-      />
+      {#if dayEvents.length > 0}
+        <CalendarDay 
+          {date} 
+          events={dayEvents}
+          {locale} 
+          {expandedEventId}
+          onEventClick={handleEventClick}
+          isToday={isToday(date)}
+        />
+      {/if}
     {/each}
   </div>
 </div>

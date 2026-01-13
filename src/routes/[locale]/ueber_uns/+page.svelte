@@ -27,7 +27,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-9 col-sm-11 my-5">
-        <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{aboutPage.title}</h2>
+        <h1 class="mb-4">{aboutPage.title}</h1>
 
         {#if aboutPage.content}
           <div class="rich-text">

@@ -32,7 +32,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-9 col-sm-11 my-5">
-        <h2 class="pt-3 pt-md-5 pt-lg-9 pb-3">{t(locale).allAnnouncements}</h2>
+        <h1 class="mb-4">{t(locale).allAnnouncements}</h1>
 
         <div class="mb-5">
           <NewsItems {announcements} maxAnnouncements={visibleCount} {locale} />

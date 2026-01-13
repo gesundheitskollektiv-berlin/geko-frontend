@@ -49,12 +49,12 @@
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-9 col-sm-11">
-          <h2 class="pt-3 mb-4">
+          <h1 class="mb-4">
             {#if service.icon_name}
               <i class="fas {service.icon_name} me-3"></i>
             {/if}
             {service.title}
-          </h2>
+          </h1>
 
           {#if service.image}
             <div class="image-container mb-4">

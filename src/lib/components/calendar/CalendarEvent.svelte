@@ -21,13 +21,13 @@
       }
     }}
   >
-    <div class="event-time">
+    <div class="event-time fw-semibold text-muted">
       {formatTime(event.start, locale)}
       {#if event.end && new Date(event.end).getTime() - new Date(event.start).getTime() > 60000}
         - {formatTime(event.end, locale)}
       {/if}
     </div>
-    <div class="event-title">{event.title}</div>
+    <div class="event-title h5 fw-normal">{event.title}</div>
     {#if event.location}
       <div class="event-location text-muted">
         📍 {event.location}
@@ -60,24 +60,12 @@
   }
 
   .event-time {
-    font-family: var(--calendar-font-family);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--calendar-text-muted);
     margin-bottom: 0.25rem;
   }
 
   .event-title {
-    font-family: var(--calendar-font-family);
-    font-size: 1rem;
-    font-weight: 600;
     color: var(--calendar-text-dark);
     margin-bottom: 0.25rem;
-  }
-
-  .event-location {
-    font-family: var(--calendar-font-family);
-    font-size: 0.875rem;
   }
 </style>
 

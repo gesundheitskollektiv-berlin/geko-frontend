@@ -85,7 +85,7 @@
 
   .event-detail {
     font-family: var(--calendar-font-family);
-    font-size: 1rem;
+    /* Inherit font-size from body text - no explicit size needed */
     display: flex;
     align-items: flex-start;
   }
@@ -93,7 +93,7 @@
   .event-detail i {
     flex-shrink: 0;
     color: var(--calendar-text-muted);
-    font-size: 1rem;
+    /* Inherit font-size from parent */
     margin-top: 0.25rem;
   }
 

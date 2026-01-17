@@ -7,6 +7,10 @@
 
   let { event, locale = 'de', isExpanded = false, color = '#58a9ff' } = $props();
 
+  const accordionColorClass = $derived(
+    color === '#58a9ff' ? 'color-blue' : color === '#fff15b' ? 'color-yellow' : 'color-default'
+  );
+
   // Parsed description
   const parsedDescription = $derived(() => {
     if (!browser || !isExpanded || !event?.description) return '';
@@ -29,7 +33,7 @@
 </script>
 
 {#if isExpanded}
-  <div class="event-details-accordion mb-1" style="border-left: 8px solid {color};">
+  <div class="event-details-accordion mb-1 {accordionColorClass}">
     <!-- Description -->
     {#if event.description}
       <div class="event-detail">
@@ -53,7 +57,7 @@
             src={mapUrl()}
             width="100%"
             height="300"
-            style="border:0;"
+            class="map-iframe"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -70,6 +74,19 @@
     padding: 1rem;
     background-color: var(--calendar-bg-light);
     animation: slideDown var(--calendar-transition-standard);
+    border-left: 8px solid var(--calendar-primary);
+  }
+
+  .event-details-accordion.color-blue {
+    border-left-color: #58a9ff;
+  }
+
+  .event-details-accordion.color-yellow {
+    border-left-color: #fff15b;
+  }
+
+  .event-details-accordion.color-default {
+    border-left-color: var(--calendar-primary);
   }
 
   @keyframes slideDown {
@@ -140,6 +157,10 @@
 
   .map-container iframe {
     display: block;
+  }
+
+  .map-iframe {
+    border: 0;
   }
 
   @media (max-width: 768px) {

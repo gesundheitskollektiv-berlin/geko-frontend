@@ -4,13 +4,16 @@
   import './calendar.scss';
 
   let { event, locale = 'de', isExpanded = false, onClick } = $props();
+
+  const colorClass = $derived(
+    event.color === '#58a9ff' ? 'color-blue' : event.color === '#fff15b' ? 'color-yellow' : 'color-default'
+  );
 </script>
 
 <div class="event-wrapper">
   <div 
-    class="event-item mt-1" 
+    class="event-item mt-1 {colorClass}" 
     class:expanded={isExpanded}
-    style="border-left: 8px solid {event.color};"
     onclick={onClick}
     role="button"
     tabindex="0"
@@ -45,6 +48,19 @@
     background-color: var(--calendar-white);
     cursor: pointer;
     transition: background-color var(--calendar-transition-standard);
+    border-left: 8px solid var(--calendar-primary);
+  }
+
+  .event-item.color-blue {
+    border-left-color: #58a9ff;
+  }
+
+  .event-item.color-yellow {
+    border-left-color: #fff15b;
+  }
+
+  .event-item.color-default {
+    border-left-color: var(--calendar-primary);
   }
 
   .event-item:hover {

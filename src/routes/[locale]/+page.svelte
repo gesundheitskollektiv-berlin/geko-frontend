@@ -24,6 +24,24 @@
   const jobs = $derived(data['geko-jobs']?.data ?? []);
   const calendarEvents = $derived(data.calendarEvents ?? []);
   const locale = $derived(data.locale);
+
+  // Count CTA blocks for alternating layouts
+  const ctaBlocks = $derived(
+    landingBlocks.filter(block => block?.__component === 'geko-page-blocks.cta')
+  );
+  
+  // Create a map of block IDs to their CTA index
+  const ctaIndexMap = $derived.by(() => {
+    const map = new Map();
+    let ctaIndex = 0;
+    landingBlocks.forEach(block => {
+      if (block?.__component === 'geko-page-blocks.cta') {
+        const key = `${block?.__component ?? 'unknown'}-${block?.id ?? ctaIndex}`;
+        map.set(key, ctaIndex++);
+      }
+    });
+    return map;
+  });
 </script>
 
 {#if meta?.page_banner}
@@ -57,7 +75,9 @@
   {:else if block?.__component === 'geko-page-blocks.supporters'}
     <SupportersBlock data={block} {locale} />
   {:else if block?.__component === 'geko-page-blocks.cta'}
-    <CTABlock data={block} {locale} />
+    {@const blockKey = `${block?.__component ?? 'unknown'}-${block?.id ?? idx}`}
+    {@const currentCtaIndex = ctaIndexMap.get(blockKey) ?? 0}
+    <CTABlock data={block} {locale} index={currentCtaIndex} />
   {:else if block?.__component === 'geko-page-blocks.footer'}
     <FooterBlock data={block} {meta} locale={data.locale} />
   <!-- {:else}

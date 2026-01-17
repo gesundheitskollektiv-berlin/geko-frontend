@@ -1,7 +1,7 @@
 <script>
   import CTAContent from './CTAContent.svelte';
   
-  let { data = {}, locale = 'de' } = $props();
+  let { data = {}, locale = 'de', index = 0 } = $props();
   
   // Access the populated geko_cta relation
   const cta = $derived(data?.geko_cta || {});
@@ -38,7 +38,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-9 col-sm-11">
-        <CTAContent {cta} {linkUrl} />
+        <CTAContent {cta} {linkUrl} {index} />
       </div>
     </div>
   </div>

@@ -1,5 +1,8 @@
 <script>
-  let { cta, linkUrl } = $props();
+  let { cta, linkUrl, index = 0 } = $props();
+
+  // Determine if order should be reversed (even indices: 0, 2, 4...)
+  const isReversed = $derived(index % 2 === 0);
 </script>
 
 <!-- Mobile Layout -->
@@ -19,19 +22,36 @@
 </div>
 
 <!-- Desktop Layout -->
-<div class="cta-desktop d-none d-md-flex align-items-center justify-content-center">
-  <div class="me-4">
-    {#if cta.call_text}
-      <p class="mb-0 fs-24 fw-bold cta-call-text">{cta.call_text}</p>
-    {/if}
-  </div>
-  <div>
-    {#if cta.link && cta.link_text}
-      <a href={linkUrl} class="btn-geko bg-geko-blue text-white cta-button">
-        {cta.link_text}
-      </a>
-    {/if}
-  </div>
+<div class="cta-desktop d-none d-md-flex align-items-center justify-content-center" class:reversed={isReversed}>
+  {#if isReversed}
+    <!-- Reversed order: Button first, then text -->
+    <div>
+      {#if cta.link && cta.link_text}
+        <a href={linkUrl} class="btn-geko bg-geko-blue text-white cta-button">
+          {cta.link_text}
+        </a>
+      {/if}
+    </div>
+    <div class="ms-4">
+      {#if cta.call_text}
+        <p class="mb-0 fs-24 fw-bold cta-call-text">{cta.call_text}</p>
+      {/if}
+    </div>
+  {:else}
+    <!-- Normal order: Text first, then button -->
+    <div class="me-4">
+      {#if cta.call_text}
+        <p class="mb-0 fs-24 fw-bold cta-call-text">{cta.call_text}</p>
+      {/if}
+    </div>
+    <div>
+      {#if cta.link && cta.link_text}
+        <a href={linkUrl} class="btn-geko bg-geko-blue text-white cta-button">
+          {cta.link_text}
+        </a>
+      {/if}
+    </div>
+  {/if}
 </div>
 
 <style>

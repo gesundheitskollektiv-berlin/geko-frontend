@@ -72,7 +72,7 @@
 
   <!-- Description -->
   {#if service.description}
-    <section class="bg-geko-yellow">
+    <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-9 col-sm-11">

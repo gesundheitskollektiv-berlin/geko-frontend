@@ -28,7 +28,7 @@
   }
 </script>
 
-<section class="bg-geko-yellow">
+<section class="bg-geko-white">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-9 col-sm-11 my-5">

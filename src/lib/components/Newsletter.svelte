@@ -18,7 +18,7 @@
 </script>
 
 <div class="newsletter-section">
-  <h3 class="h3 newsletter-title">Willst du den Newsletter abonnieren?</h3>
+  <h3 class="h3 newsletter-title mb-4">Willst du den Newsletter abonnieren?</h3>
   <p class="newsletter-text">
     Melde dich bei unserem Newsletter an, um aktuelle Informationen vom Gesundheitskollektiv Berlin zu bekommen. 
     Wir berichten in unregelmäßigen Abständen über aktuelle Angebote, neue Pläne und anstehende Veranstaltungen.

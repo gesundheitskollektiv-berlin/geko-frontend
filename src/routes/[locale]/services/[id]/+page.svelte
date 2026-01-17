@@ -61,7 +61,7 @@
               <StrapiImage
                 asset={service.image}
                 alt={service.image.alternativeText || service.title}
-                class="img-fluid rounded"
+                class="img-fluid geko-image-rounded"
               />
             </div>
           {/if}
@@ -211,8 +211,8 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .image-container :global(img) {
-    border-radius: 0.25rem;
+  :global(.geko-image-rounded) {
+    border-radius: 0.5rem;
   }
 </style>
 

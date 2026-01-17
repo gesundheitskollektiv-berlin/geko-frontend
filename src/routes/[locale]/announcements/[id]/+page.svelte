@@ -33,7 +33,7 @@
             <StrapiImage
               asset={announcement.image}
               alt={announcement.image.alternativeText || announcement.title}
-              class="img-fluid rounded featured-image"
+              class="img-fluid featured-image geko-image-rounded"
             />
           </div>
         {/if}
@@ -100,6 +100,10 @@
 
   .event-details {
     border-left: 4px solid #0d6efd;
+  }
+
+  :global(.geko-image-rounded) {
+    border-radius: 0.5rem;
   }
 </style>
 

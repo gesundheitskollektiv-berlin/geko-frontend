@@ -29,7 +29,7 @@
               <img
                 src="/assets/img/geko_eingang.jpeg"
                 alt="Geko Eingang"
-                class="img-fluid rounded"
+                class="img-fluid geko-image-rounded"
               />
             </div>
           </div>
@@ -57,7 +57,7 @@
                 <img
                   src="/assets/img/Geko_einfacheKarte_gross.png"
                   alt="Einfache Karte"
-                  class="img-fluid rounded"
+                  class="img-fluid geko-image-rounded"
                 />
               </div>
             </div>
@@ -149,5 +149,9 @@
 
   .content-container :global(ul) {
     padding-left: 1rem !important;
+  }
+
+  :global(.geko-image-rounded) {
+    border-radius: 0.5rem;
   }
 </style>

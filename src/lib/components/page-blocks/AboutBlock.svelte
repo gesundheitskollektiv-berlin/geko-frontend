@@ -22,7 +22,7 @@
             <StrapiImage
               asset={data.team_image}
               alt={data.team_image.alternativeText || 'Team'}
-              class="img-fluid my-4"
+              class="img-fluid my-4 geko-image-rounded"
             />
           {/if}
 
@@ -36,3 +36,9 @@
       </div>
     </div>
 </section>
+
+<style>
+  :global(.geko-image-rounded) {
+    border-radius: 0.5rem;
+  }
+</style>

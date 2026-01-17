@@ -34,7 +34,7 @@
           <StrapiImage
             asset={aboutPage.team_image}
             alt={aboutPage.team_image.alternativeText || 'Team'}
-            class="img-fluid rounded w-100 my-4"
+            class="img-fluid w-100 my-4 geko-image-rounded"
           />
         {/if}
 

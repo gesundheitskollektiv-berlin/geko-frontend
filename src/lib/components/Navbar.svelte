@@ -187,7 +187,7 @@
     background-color: white;
     color: black;
     border: 1px solid #dee2e6;
-    border-radius: 25px;
+    border-radius: 0.5rem;
     padding: 0.25rem 1.0rem;
     font-family: "CerebriSansPro", system-ui, sans-serif;
     font-weight: 700;

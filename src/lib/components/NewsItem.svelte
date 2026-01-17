@@ -38,6 +38,7 @@
 
 <style>
   .card {
+    border-radius: 0.5rem;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
 

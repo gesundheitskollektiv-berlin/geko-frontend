@@ -18,6 +18,7 @@
   "where": "Nerede",
   "description": "Açıklama",
   "noEvents": "Etkinlik yok",
+  "noEventsThisWeek": "Bu hafta hiçbir etkinlik düzenlenmiyor",
   "noJobsAvailable": "Şu anda bizde müsait pozisyon bulunmamaktadır...",
   "support": "Destekle",
   "legendBlueItem": "Geko Topluluk Sağlık Merkezi'nde",

@@ -1,5 +1,6 @@
 <script>
   import { getWeekStart, getWeekEnd, filterEventsByWeek, groupEventsByDay, getWeekRangeText, isValidHttpUrl } from '$lib/helpers/calendar';
+  import { t } from '$lib/helpers/translation';
   import CalendarLegend from './CalendarLegend.svelte';
   import CalendarHeader from './CalendarHeader.svelte';
   import CalendarDay from './CalendarDay.svelte';
@@ -96,6 +97,13 @@
     onToday={goToToday}
   />
 
+  <!-- Empty state message -->
+  {#if weekEvents.length === 0}
+    <div class="calendar-empty-state mt-5">
+      <div class="h5 fw-normal">{t(locale).noEventsThisWeek}</div>
+    </div>
+  {/if}
+
   <!-- Event list -->
   <div class="calendar-events">
     {#each getWeekDates() as date}
@@ -123,6 +131,20 @@
 
   .calendar-events {
     overflow: hidden;
+  }
+
+  .calendar-empty-state {
+    background-color: var(--calendar-bg-light);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 0 0 0.5rem 0.5rem;
+    box-shadow: var(--calendar-shadow-standard);
+    font-family: var(--calendar-font-family);
+  }
+
+  .calendar-empty-state .h5 {
+    margin: 0;
+    color: var(--calendar-text-dark);
   }
 </style>
 

@@ -14,18 +14,18 @@
       <div class="col-lg-8 col-md-9 col-sm-11 my-5">
           <h1>{data.title}</h1>
 
-          <div class="d-flex">
+          <div class="row">
             {#if data?.content}
-              <div class="d-inline-block" style="flex: 1">
+              <div class="col-lg-8">
                 {@html resolveRichText(data.content)}
               </div>
             {/if}
-            <img
-              class="d-none d-lg-inline-block"
-              style="flex: 1; transform: scale(0.75);"
-              src="/assets/img/Icons/Sprechblasen-neu.svg"
-              alt=""
-            />
+            <div class="col-lg-4 d-none d-lg-block">
+              <img
+                src="/assets/img/Icons/Sprechblasen-neu.svg"
+                alt=""
+              />
+            </div>
           </div>
         </div>
       </div>

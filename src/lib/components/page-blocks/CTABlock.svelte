@@ -47,11 +47,16 @@
 
 <style>
   .cta-button {
-    border: 1.5px solid #000 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-button:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   }
 
   .cta-call-text {
-    -webkit-text-stroke: 0.75px #000;
+    -webkit-text-stroke: 1.5px #000;
     paint-order: stroke fill;
     font-weight: 700;
   }

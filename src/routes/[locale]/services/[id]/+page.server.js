@@ -1,11 +1,11 @@
 import { getDataFromCMS, getDetailsDataFromCMS } from '$lib/helpers/getDataFromCMS';
-import { getValidLocale, SUPPORTED_LOCALES } from '$lib/helpers/translation';
+import { getValidLocale, PRERENDER_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
 
 export async function entries() {
 	const entries = [];
 	
-	for (const locale of SUPPORTED_LOCALES) {
+	for (const locale of PRERENDER_LOCALES) {
 		try {
 			const result = await getDataFromCMS('geko-services', locale);
 			if (result?.data) {

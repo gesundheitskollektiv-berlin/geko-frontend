@@ -1,8 +1,8 @@
 import { fetchCalendarEvents } from '$lib/server/calendar';
-import { SUPPORTED_LOCALES } from '$lib/helpers/translation';
+import { PRERENDER_LOCALES } from '$lib/helpers/translation';
 
 export async function entries() {
-	return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+	return PRERENDER_LOCALES.map((locale) => ({ locale }));
 }
 
 /** @type {import('./$types').PageServerLoad} */

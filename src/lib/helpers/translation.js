@@ -8,6 +8,9 @@ import translation_tr from '$lib/i18n/tr.json';
 // Supported locales
 export const SUPPORTED_LOCALES = ['de', 'en', 'ar', 'fr', 'ro', 'tr'];
 
+// Locales to prerender during build (subset of SUPPORTED_LOCALES for faster builds)
+export const PRERENDER_LOCALES = ['de', 'en'];
+
 // Default locale
 export const DEFAULT_LOCALE = 'de';
 

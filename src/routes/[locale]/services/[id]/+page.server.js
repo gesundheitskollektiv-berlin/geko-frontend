@@ -1,6 +1,27 @@
-import { getDetailsDataFromCMS } from '$lib/helpers/getDataFromCMS';
-import { getValidLocale } from '$lib/helpers/translation';
+import { getDataFromCMS, getDetailsDataFromCMS } from '$lib/helpers/getDataFromCMS';
+import { getValidLocale, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
+
+export async function entries() {
+	const entries = [];
+	
+	for (const locale of SUPPORTED_LOCALES) {
+		try {
+			const result = await getDataFromCMS('geko-services', locale);
+			if (result?.data) {
+				for (const service of result.data) {
+					if (service.slug) {
+						entries.push({ locale, id: service.slug });
+					}
+				}
+			}
+		} catch (err) {
+			console.error(`Failed to fetch services for locale ${locale}:`, err);
+		}
+	}
+	
+	return entries;
+}
 
 export async function load({ params, fetch }) {
   const locale = getValidLocale(params.locale);

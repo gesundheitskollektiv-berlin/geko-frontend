@@ -1,6 +1,28 @@
 import { PUBLIC_STRAPI_URL } from '$env/static/public';
-import { getValidLocale } from '$lib/helpers/translation';
+import { getDataFromCMS } from '$lib/helpers/getDataFromCMS';
+import { getValidLocale, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
+
+export async function entries() {
+	const entries = [];
+	
+	for (const locale of SUPPORTED_LOCALES) {
+		try {
+			const result = await getDataFromCMS('geko-announcements', locale);
+			if (result?.data) {
+				for (const announcement of result.data) {
+					if (announcement.documentId) {
+						entries.push({ locale, id: announcement.documentId });
+					}
+				}
+			}
+		} catch (err) {
+			console.error(`Failed to fetch announcements for locale ${locale}:`, err);
+		}
+	}
+	
+	return entries;
+}
 
 export async function load({ params, fetch }) {
   const locale = getValidLocale(params.locale);

@@ -1,4 +1,9 @@
 import { fetchCalendarEvents } from '$lib/server/calendar';
+import { SUPPORTED_LOCALES } from '$lib/helpers/translation';
+
+export async function entries() {
+	return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+}
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {

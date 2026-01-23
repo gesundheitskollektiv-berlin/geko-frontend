@@ -1,7 +1,7 @@
 import { getDataFromCMS } from '$lib/helpers/getDataFromCMS';
 import { getValidLocale } from '$lib/helpers/translation';
 
-export async function load({ params }) {
+export async function load({ params, fetch }) {
   // Validate and get locale
   const locale = getValidLocale(params.locale);
 
@@ -21,9 +21,9 @@ export async function load({ params }) {
     'geko-materials'
   ];
 
-  // Fetch data from all endpoints
+  // Fetch data from all endpoints (pass fetch for request deduplication during prerendering)
   for (const endpoint of endpoints) {
-    data[endpoint] = await getDataFromCMS(endpoint, locale);
+    data[endpoint] = await getDataFromCMS(endpoint, locale, fetch);
   }
 
   // Add locale to data

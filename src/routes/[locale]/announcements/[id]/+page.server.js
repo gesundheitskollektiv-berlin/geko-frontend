@@ -8,6 +8,7 @@ export async function entries() {
 	
 	for (const locale of PRERENDER_LOCALES) {
 		try {
+			// entries() doesn't receive fetch, so use global fetch
 			const result = await getDataFromCMS('geko-announcements', locale);
 			if (result?.data) {
 				for (const announcement of result.data) {

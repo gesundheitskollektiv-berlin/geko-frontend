@@ -1,38 +1,51 @@
 import { PUBLIC_STRAPI_URL } from '$env/static/public';
 
-const fetchData = async (url) => {
-  const response = await fetch(url);
-  return await response.json();
+// Cache for build-time request deduplication
+const cache = new Map();
+
+const fetchData = async (url, fetchFn = fetch) => {
+  // Check cache first (for build-time deduplication)
+  if (cache.has(url)) {
+    return cache.get(url);
+  }
+
+  const response = await fetchFn(url);
+  const data = await response.json();
+  
+  // Cache the response (only during build/prerendering)
+  cache.set(url, data);
+  
+  return data;
 };
 
-export async function getDataFromCMS(path, locale) {
+export async function getDataFromCMS(path, locale, fetchFn = fetch) {
   // For collections that might have pagination, fetch all pages
   const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs', 'geko-materials'];
 
   if (shouldFetchAllPages.includes(path)) {
-    return await fetchAllPages(path, locale);
+    return await fetchAllPages(path, locale, fetchFn);
   }
 
   // Special handling for landing page to populate all relations including CTA and supporters
   if (path === 'geko-page-landing') {
     // Use pLevel for deep population which handles all nested relations including supporters images
     const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
-    return await fetchData(queryUrl);
+    return await fetchData(queryUrl, fetchFn);
   }
 
   // For single entries or small collections, use original method
   const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
-  return await fetchData(queryUrl);
+  return await fetchData(queryUrl, fetchFn);
 }
 
-async function fetchAllPages(path, locale) {
+async function fetchAllPages(path, locale, fetchFn = fetch) {
   let allData = [];
   let currentPage = 1;
   let totalPages = 1;
 
   do {
     const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
-    const result = await fetchData(queryUrl);
+    const result = await fetchData(queryUrl, fetchFn);
 
     if (result?.data) {
       allData = allData.concat(result.data);
@@ -59,7 +72,7 @@ async function fetchAllPages(path, locale) {
   };
 }
 
-export async function getDetailsDataFromCMS(path, locale, slug) {
+export async function getDetailsDataFromCMS(path, locale, slug, fetchFn = fetch) {
   const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&pLevel`;
-  return await fetchData(queryUrl);
+  return await fetchData(queryUrl, fetchFn);
 }

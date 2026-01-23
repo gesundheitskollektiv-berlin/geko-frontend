@@ -7,6 +7,7 @@ export async function entries() {
 	
 	for (const locale of PRERENDER_LOCALES) {
 		try {
+			// entries() doesn't receive fetch, so use global fetch
 			const result = await getDataFromCMS('geko-services', locale);
 			if (result?.data) {
 				for (const service of result.data) {
@@ -28,7 +29,8 @@ export async function load({ params, fetch }) {
   const { id: slug } = params;
 
   try {
-    const result = await getDetailsDataFromCMS('geko-services', locale, slug);
+    // Pass fetch for request deduplication during prerendering
+    const result = await getDetailsDataFromCMS('geko-services', locale, slug, fetch);
 
     if (!result?.data?.[0]) {
       throw error(404, 'Service not found');

@@ -3,6 +3,7 @@ import { env } from '$env/dynamic/public';
 import { env as privateEnv } from '$env/dynamic/private';
 import { getStrapiPublicUrl } from '$lib/helpers/strapiPublicUrl';
 
+// Cache for build-time request deduplication (static builds only; not preview/dev)
 const cache = new Map();
 
 const shouldUseCache = () => building && env.PUBLIC_PREVIEW_MODE !== 'true';
@@ -36,11 +37,9 @@ const fetchData = async (url, fetchFn = fetch) => {
   }
 
   const data = await response.json();
-
   if (shouldUseCache()) {
     cache.set(url, data);
   }
-
   return data;
 };
 

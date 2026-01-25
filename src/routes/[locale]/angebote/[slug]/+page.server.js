@@ -1,32 +1,38 @@
 import { getDataFromCMS } from '$lib/helpers/getDataFromCMS';
 import { getValidLocale, PRERENDER_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
+import { env } from '$env/dynamic/public';
 
 export async function entries() {
-	const entries = [];
-	
-	for (const locale of PRERENDER_LOCALES) {
-		try {
-			const result = await getDataFromCMS('geko-services', locale);
-			if (result?.data) {
-				const bySlug = new Map();
-				for (const service of result.data) {
-					if (!service.slug) continue;
-					const cur = bySlug.get(service.slug);
-					if (!cur || (service.image && !cur.image)) {
-						bySlug.set(service.slug, service);
-					}
-				}
-				for (const service of bySlug.values()) {
-					entries.push({ locale, slug: service.slug });
-				}
-			}
-		} catch (err) {
-			console.error(`Failed to fetch services for locale ${locale}:`, err);
-		}
-	}
-	
-	return entries;
+  // Skip entries in preview mode (SSR) - pages are rendered on-demand
+  if (env.PUBLIC_PREVIEW_MODE === 'true') {
+    return [];
+  }
+
+  const entries = [];
+
+  for (const locale of PRERENDER_LOCALES) {
+    try {
+      const result = await getDataFromCMS('geko-services', locale);
+      if (result?.data) {
+        const bySlug = new Map();
+        for (const service of result.data) {
+          if (!service.slug) continue;
+          const cur = bySlug.get(service.slug);
+          if (!cur || (service.image && !cur.image)) {
+            bySlug.set(service.slug, service);
+          }
+        }
+        for (const service of bySlug.values()) {
+          entries.push({ locale, slug: service.slug });
+        }
+      }
+    } catch (err) {
+      console.error(`Failed to fetch services for locale ${locale}:`, err);
+    }
+  }
+
+  return entries;
 }
 
 export async function load({ params, fetch }) {
@@ -46,7 +52,3 @@ export async function load({ params, fetch }) {
 
   return { service, locale };
 }
-
-
-
-

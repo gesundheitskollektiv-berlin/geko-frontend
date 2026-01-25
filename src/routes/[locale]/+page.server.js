@@ -1,7 +1,12 @@
 import { fetchCalendarEvents } from '$lib/server/calendar';
 import { PRERENDER_LOCALES } from '$lib/helpers/translation';
+import { env } from '$env/dynamic/public';
 
 export async function entries() {
+	// Skip entries in preview mode (SSR) - pages are rendered on-demand
+	if (env.PUBLIC_PREVIEW_MODE === 'true') {
+		return [];
+	}
 	return PRERENDER_LOCALES.map((locale) => ({ locale }));
 }
 

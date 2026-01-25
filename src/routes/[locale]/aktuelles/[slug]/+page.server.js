@@ -1,8 +1,14 @@
 import { getDataFromCMS, getDetailsDataFromCMS } from '$lib/helpers/getDataFromCMS';
 import { getValidLocale, PRERENDER_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
+import { env } from '$env/dynamic/public';
 
 export async function entries() {
+	// Skip entries in preview mode (SSR) - pages are rendered on-demand
+	if (env.PUBLIC_PREVIEW_MODE === 'true') {
+		return [];
+	}
+	
 	const entries = [];
 	
 	for (const locale of PRERENDER_LOCALES) {

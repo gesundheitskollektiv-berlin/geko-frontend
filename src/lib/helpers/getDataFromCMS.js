@@ -1,19 +1,26 @@
 import { PUBLIC_STRAPI_URL } from '$env/static/public';
+import { building } from '$app/environment';
+import { env } from '$env/dynamic/public';
 
-// Cache for build-time request deduplication
+// Cache for build-time request deduplication (only used during static builds)
 const cache = new Map();
 
+// Check if we should use cache (only during static builds, not in preview/dev mode)
+const shouldUseCache = () => building && env.PUBLIC_PREVIEW_MODE !== 'true';
+
 const fetchData = async (url, fetchFn = fetch) => {
-  // Check cache first (for build-time deduplication)
-  if (cache.has(url)) {
+  // Check cache first (only for build-time deduplication during static builds)
+  if (shouldUseCache() && cache.has(url)) {
     return cache.get(url);
   }
 
   const response = await fetchFn(url);
   const data = await response.json();
   
-  // Cache the response (only during build/prerendering)
-  cache.set(url, data);
+  // Cache the response only during static builds
+  if (shouldUseCache()) {
+    cache.set(url, data);
+  }
   
   return data;
 };

@@ -19,7 +19,7 @@
 <section id={sectionId} class={`${backgroundClass} py-0`}>
   <div class="container" id="contact">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11 my-5">
+      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
         <h2 class="mb-4">{data.title}</h2>
 
         <!-- Contact Information Row -->

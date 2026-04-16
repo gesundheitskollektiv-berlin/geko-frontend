@@ -38,7 +38,7 @@
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11 my-5">
+      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
         <h2 class="mb-4">{data.title || t(locale).calendar}</h2>
 
         {#if todayEvents.length > 0}

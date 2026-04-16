@@ -13,7 +13,7 @@
 <section id={sectionId} class={backgroundClass}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-9 col-md-10 col-sm-11 my-5">
+      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
         <div class="row">
           <div class="col-md-5">
             <h2>{data.title}</h2>

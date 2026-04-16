@@ -1,22 +1,15 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
-  import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
+  import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
 
   let { data } = $props();
 
   const service = $derived(data.service || {});
   const locale = $derived(data.locale || 'de');
-  const landingBlocks = $derived(data['geko-page-landing']?.data?.content ?? []);
   const meta = $derived(data['geko-meta']?.data ?? {});
 
-  const supportersBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.supporters')
-  );
-  const footerBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.footer')
-  );
 
   // Define section visibility and colors
   const visibleSections = $derived(
@@ -173,16 +166,11 @@
     </section>
   {/if}
 
-  <!-- Footer -->
-  {#if footerBlock}
-    <FooterBlock data={footerBlock} {meta} {locale} />
-  {/if}
-
-  <!-- Supporters -->
-  {#if supportersBlock}
-    <SupportersBlock data={supportersBlock} {locale} />
-  {/if}
 </div>
+
+<NewsletterBlock />
+
+<FooterBlock {meta} {locale} />
 
 <style>
   .service-page {

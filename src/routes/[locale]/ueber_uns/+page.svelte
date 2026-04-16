@@ -4,7 +4,7 @@
   import MaterialsBlock from '$lib/components/page-blocks/MaterialsBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
-  import Newsletter from '$lib/components/Newsletter.svelte';
+  import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
 
   let { data } = $props();
 
@@ -53,16 +53,7 @@
   <MaterialsBlock data={{ title: '', background_color: 'yellow' }} {materials} {locale} />
 {/if}
 
-<!-- Newsletter section -->
-<section id="newsletter" class="bg-geko-blue py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11">
-        <Newsletter />
-      </div>
-    </div>
-  </div>
-</section>
+<NewsletterBlock />
 
 <!-- Footer -->
 {#if footerBlock}

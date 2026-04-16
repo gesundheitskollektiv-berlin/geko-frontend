@@ -9,7 +9,7 @@
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
   import CTABlock from '$lib/components/page-blocks/CTABlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
-  import Newsletter from '$lib/components/Newsletter.svelte';
+  import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   
   let { data } = $props();
@@ -56,14 +56,6 @@
   {/if}
 {/each}
 
-<section id="newsletter" class="bg-geko-grey py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11">
-        <Newsletter />
-      </div>
-    </div>
-  </div>
-</section>
+<NewsletterBlock />
 
 <FooterBlock {meta} {locale} />

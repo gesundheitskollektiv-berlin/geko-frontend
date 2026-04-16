@@ -2,11 +2,14 @@
   import { formatDate } from '$lib/helpers/formatDate';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
+  import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
 
   let { data } = $props();
 
   const announcement = $derived(data.announcement || {});
   const locale = $derived(data.locale || 'de');
+  const meta = $derived(data['geko-meta']?.data ?? {});
 </script>
 
 <svelte:head>
@@ -81,6 +84,10 @@
     </div>
   </div>
 </section>
+
+<NewsletterBlock />
+
+<FooterBlock {meta} {locale} />
 
 <style>
   .featured-image {

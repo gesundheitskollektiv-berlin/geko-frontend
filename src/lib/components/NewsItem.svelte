@@ -7,7 +7,7 @@
 
 <div class="col-md-6 col-lg-4">
   <a href="/{locale}/announcements/{item.documentId || item.id}" class="text-decoration-none text-dark">
-    <div class="card h-100 border">
+    <div class="card h-100 border" class:highlight={item.highlight}>
       {#if item?.image}
         <StrapiImage
           asset={item.image}
@@ -18,19 +18,16 @@
       {/if}
       <div class="card-body d-flex flex-column">
         {#if item.publish_date || item.publishedAt}
-          <time class="publish-date small text-muted mb-2">
+          <time class="small text-muted mb-2">
             {formatDate(item.publish_date || item.publishedAt, locale)}
           </time>
         {/if}
-        
-        {#if item.is_event && item.event_date}
-          <time class="event-date small text-muted mb-2 d-block">
-            <i class="fas fa-calendar me-1"></i>
-            {formatDate(item.event_date, locale)}
-          </time>
-        {/if}
-        
-        <h3 class="h5 mb-0 fw-normal">{item?.title}</h3>
+        <h3 class="h5 mb-3 fw-normal">{item?.title}</h3>
+        <div class="mt-auto">
+          <span class="btn-geko bg-geko-blue text-white d-block text-center">
+            Mehr erfahren
+          </span>
+        </div>
       </div>
     </div>
   </a>
@@ -47,9 +44,8 @@
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
   }
 
-  .event-date {
-    font-size: 0.875rem;
-    font-style: italic;
+  .card.highlight {
+    border-top: 3px solid var(--geko-blue, #3366ff);
   }
 </style>
 

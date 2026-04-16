@@ -30,12 +30,11 @@
           <NewsItems {announcements} {maxAnnouncements} {locale} />
         </div>
 
-        <!-- View all link -->
         {#if announcements?.length > maxAnnouncements}
-          <div class="row">
-            <div class="col-12">
-              <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/announcements">{t(locale).allAnnouncements}</a>
-            </div>
+          <div class="text-center mt-4">
+            <a class="btn-geko bg-geko-blue text-white" href="/{locale}/announcements">
+              {t(locale).allAnnouncements}
+            </a>
           </div>
         {/if}
       </div>

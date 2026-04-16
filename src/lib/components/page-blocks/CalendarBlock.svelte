@@ -1,13 +1,38 @@
 <script>
   import { slugify } from '$lib/helpers/landingBlocks';
   import { t } from '$lib/helpers/translation';
-  import CalendarWeekList from '$lib/components/calendar/CalendarWeekList.svelte';
+  import { isValidHttpUrl } from '$lib/helpers/calendar';
+  import CalendarDay from '$lib/components/calendar/CalendarDay.svelte';
 
   let { data = {}, events = [], locale = 'de' } = $props();
 
-  // Derived reactive values
   const backgroundClass = 'bg-geko-white';
   const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar');
+
+  const today = new Date();
+
+  const todayEvents = $derived(
+    events
+      .filter(event => {
+        if (!event.start) return false;
+        const d = new Date(event.start);
+        return d.getDate() === today.getDate()
+          && d.getMonth() === today.getMonth()
+          && d.getFullYear() === today.getFullYear();
+      })
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+  );
+
+  let expandedEventId = $state(null);
+
+  function handleEventClick(event) {
+    const firstLine = (event.description || '').split('\n')[0].trim();
+    if (isValidHttpUrl(firstLine)) {
+      window.open(firstLine, '_blank');
+      return;
+    }
+    expandedEventId = expandedEventId === event.uid ? null : event.uid;
+  }
 </script>
 
 <section id={sectionId} class={backgroundClass}>
@@ -15,10 +40,25 @@
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-9 col-sm-11 my-5">
         <h2 class="mb-4">{data.title || t(locale).calendar}</h2>
-        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p> -->
 
-        <!-- Calendar week list component -->
-        <CalendarWeekList {events} {locale} />
+        {#if todayEvents.length > 0}
+          <CalendarDay
+            date={today}
+            events={todayEvents}
+            {locale}
+            {expandedEventId}
+            onEventClick={handleEventClick}
+            isToday={true}
+          />
+        {:else}
+          <p class="text-muted">{t(locale).noEvents}</p>
+        {/if}
+
+        <div class="text-center mt-4">
+          <a class="btn-geko bg-geko-blue text-white" href="/{locale}/veranstaltungen">
+            Alle Veranstaltungen ansehen
+          </a>
+        </div>
       </div>
     </div>
   </div>

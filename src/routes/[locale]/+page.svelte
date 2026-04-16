@@ -25,19 +25,6 @@
   const calendarEvents = $derived(data.calendarEvents ?? []);
   const locale = $derived(data.locale);
 
-  // Create a map of block IDs to their CTA index
-  const ctaIndexMap = $derived.by(() => {
-    const map = new Map();
-    let ctaIndex = 0;
-    landingBlocks.forEach(block => {
-      if (block?.__component === 'geko-page-blocks.cta') {
-        const key = `${block?.__component ?? 'unknown'}-${block?.id ?? ctaIndex}`;
-        map.set(key, ctaIndex++);
-      }
-    });
-    return map;
-  });
-
   const blockMap = {
     'geko-page-blocks.welcome':    { component: WelcomeBlock,    getProps: (block) => ({ data: block }) },
     'geko-page-blocks.about':      { component: AboutBlock,      getProps: (block) => ({ data: block, locale }) },
@@ -47,10 +34,7 @@
     'geko-page-blocks.contact':    { component: ContactBlock,    getProps: (block) => ({ data: block, meta }) },
     'geko-page-blocks.services':   { component: ServicesBlock,   getProps: (block) => ({ data: block, services, locale }) },
     'geko-page-blocks.supporters': { component: SupportersBlock, getProps: (block) => ({ data: block, locale }) },
-    'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block, idx) => {
-      const blockKey = `${block?.__component ?? 'unknown'}-${block?.id ?? idx}`;
-      return { data: block, locale, index: ctaIndexMap.get(blockKey) ?? 0 };
-    }},
+    'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block) => ({ data: block, locale }) },
   };
 </script>
 

@@ -1,5 +1,5 @@
-import { PUBLIC_STRAPI_URL } from '$env/static/public';
 import { getDataFromCMS } from '$lib/helpers/getDataFromCMS';
+import { getStrapiPublicUrl } from '$lib/helpers/strapiPublicUrl';
 import { getValidLocale, PRERENDER_LOCALES } from '$lib/helpers/translation';
 import { error } from '@sveltejs/kit';
 
@@ -30,9 +30,12 @@ export async function load({ params, fetch }) {
   const { id } = params;
 
   try {
-    // Fetch single announcement by documentId
+    const base = getStrapiPublicUrl();
+    if (!base) {
+      throw error(500, 'CMS URL not configured');
+    }
     const response = await fetch(
-      `${PUBLIC_STRAPI_URL}/api/geko-announcements/${id}?pLevel&locale=${locale}`
+      `${base}/api/geko-announcements/${id}?pLevel&locale=${locale}`
     );
 
     if (!response.ok) {

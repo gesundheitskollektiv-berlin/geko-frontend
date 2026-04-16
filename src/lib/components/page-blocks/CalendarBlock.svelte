@@ -6,7 +6,7 @@
   let { data = {}, events = [], locale = 'de' } = $props();
 
   // Derived reactive values
-  const backgroundClass = $derived(data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white');
+  const backgroundClass = 'bg-geko-white';
   const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar');
 </script>
 

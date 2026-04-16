@@ -11,7 +11,7 @@
     ? data.geko_services 
     : services;
 
-  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: backgroundClass = 'bg-geko-yellow';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'services';
 </script>
 

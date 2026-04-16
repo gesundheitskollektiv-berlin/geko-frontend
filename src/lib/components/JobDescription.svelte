@@ -1,6 +1,6 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
-  import { PUBLIC_STRAPI_URL } from '$env/static/public';
+  import { getStrapiPublicUrl } from '$lib/helpers/strapiPublicUrl';
   import { t } from '$lib/helpers/translation';
 
   let { job = {}, locale = 'de', isExpanded = false, onToggle } = $props();
@@ -8,7 +8,7 @@
   const getDownloadUrl = (file) => {
     if (!file?.url) return '';
     if (file.url.startsWith('http')) return file.url;
-    return `${PUBLIC_STRAPI_URL}${file.url}`;
+    return `${getStrapiPublicUrl()}${file.url}`;
   };
 
   const downloads = $derived(job?.downlads ?? []);

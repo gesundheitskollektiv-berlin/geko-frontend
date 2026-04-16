@@ -6,7 +6,7 @@
   export let data = {};
   export let locale = 'de';
 
-  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
+  $: backgroundClass = 'bg-geko-grey';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'about';
 </script>
 

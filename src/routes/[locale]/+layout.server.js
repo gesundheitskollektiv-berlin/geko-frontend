@@ -21,9 +21,13 @@ export async function load({ params, fetch }) {
     'geko-materials'
   ];
 
-  // Fetch data from all endpoints (pass fetch for request deduplication during prerendering)
   for (const endpoint of endpoints) {
-    data[endpoint] = await getDataFromCMS(endpoint, locale, fetch);
+    try {
+      data[endpoint] = await getDataFromCMS(endpoint, locale, fetch);
+    } catch (err) {
+      console.error(`[layout.server] Failed to fetch ${endpoint}:`, err);
+      data[endpoint] = { data: null };
+    }
   }
 
   // Add locale to data

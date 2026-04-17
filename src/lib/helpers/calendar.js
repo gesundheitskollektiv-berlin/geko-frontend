@@ -56,6 +56,15 @@ export function filterEventsByWeek(events, weekStart) {
   });
 }
 
+/** Local calendar YYYY-MM-DD (avoids UTC shift from toISOString) */
+export function toLocalDateKey(date) {
+  const d = date instanceof Date ? date : new Date(date);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 /**
  * Groups events by day
  * @param {Array} events - Array of event objects
@@ -68,7 +77,7 @@ export function groupEventsByDay(events) {
     if (!event.start) continue;
     
     const date = new Date(event.start);
-    const dateKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
+    const dateKey = toLocalDateKey(date);
     
     if (!grouped[dateKey]) {
       grouped[dateKey] = [];
@@ -161,5 +170,55 @@ export function getWeekRangeText(weekStart, locale = 'de') {
   };
   
   return `${formatNumericDate(weekStart)} - ${formatNumericDate(weekEnd)}`;
+}
+
+/** Start of local calendar day as timestamp */
+export function startOfLocalDay(date) {
+  const d = date instanceof Date ? date : new Date(date);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+}
+
+export function isSameLocalCalendarDay(a, b) {
+  return startOfLocalDay(a) === startOfLocalDay(b);
+}
+
+/** True if `date` is strictly before today (local). */
+export function isLocalDateBeforeToday(date) {
+  return startOfLocalDay(date) < startOfLocalDay(new Date());
+}
+
+/**
+ * Dates to show: only days that have events. When `landingFromToday`, range starts at
+ * today (local) through Sunday of `weekStart`'s week (not earlier in the week).
+ */
+export function getVisibleCalendarDates(weekStart, groupedByDay, options = {}) {
+  const { landingFromToday = false } = options;
+  const weekEnd = getWeekEnd(new Date(weekStart.getTime()));
+
+  let d = new Date(weekStart);
+  d.setHours(0, 0, 0, 0);
+
+  if (landingFromToday) {
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    if (todayStart.getTime() > d.getTime()) {
+      d = todayStart;
+    }
+  }
+
+  const end = new Date(weekEnd);
+  end.setHours(23, 59, 59, 999);
+
+  const out = [];
+  const cursor = new Date(d);
+  while (cursor.getTime() <= end.getTime()) {
+    const key = toLocalDateKey(cursor);
+    const ev = groupedByDay[key];
+    if (ev?.length > 0) {
+      out.push(new Date(cursor));
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return out;
 }
 

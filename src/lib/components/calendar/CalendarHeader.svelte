@@ -7,10 +7,8 @@
     weekDates = [],
     locale = 'de',
     showNavigation = true,
-    isCurrentWeek = false,
     onPrevious,
     onNext,
-    onToday,
   } = $props();
 
   const intlLocale = $derived(locale === 'ar' ? 'ar' : locale);
@@ -58,15 +56,6 @@
   {#if showNavigation}
     <button
       type="button"
-      class="calendar-week-strip__nav calendar-week-strip__nav--today"
-      onclick={onToday}
-      disabled={isCurrentWeek}
-      aria-label={t(locale).today}
-    >
-      {t(locale).today}
-    </button>
-    <button
-      type="button"
       class="calendar-week-strip__nav"
       onclick={onNext}
       aria-label={t(locale).next}
@@ -81,26 +70,27 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 0.5rem;
-    padding: 0.7rem 0.85rem;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
     background: var(--calendar-week-strip-bg);
     border-radius: 0.5rem 0.5rem 0 0;
-    box-shadow: var(--calendar-shadow-sm);
+    box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.15);
     font-family: var(--calendar-font-family);
     overflow-x: auto;
   }
 
   .calendar-week-strip__days {
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
     justify-content: center;
     align-items: stretch;
-    gap: clamp(0.3rem, 2.2vw, 0.65rem);
+    gap: clamp(0.5rem, 2.6vw, 0.95rem);
   }
 
   .calendar-week-strip__days--full {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
   }
 
   .calendar-week-strip__cell {
@@ -167,15 +157,6 @@
   .calendar-week-strip__nav:disabled {
     opacity: 0.35;
     cursor: not-allowed;
-  }
-
-  .calendar-week-strip__nav--today {
-    width: auto;
-    min-width: 2.75rem;
-    padding: 0 0.65rem;
-    border-radius: 1.35rem;
-    font-size: 0.8125rem;
-    font-weight: 700;
   }
 
 </style>

@@ -39,19 +39,10 @@
     return dates;
   });
 
-  const isCurrentWeek = $derived.by(() => {
-    const todayWeekStart = getWeekStart(new Date());
-    return currentWeekStart.getTime() === todayWeekStart.getTime();
-  });
-
   function goToPreviousWeek() {
     const newDate = new Date(currentWeekStart);
     newDate.setDate(newDate.getDate() - 7);
     currentWeekStart = newDate;
-  }
-
-  function goToToday() {
-    currentWeekStart = getWeekStart(new Date());
   }
 
   function goToNextWeek() {
@@ -89,10 +80,8 @@
     weekDates={stripDates}
     {locale}
     {showNavigation}
-    isCurrentWeek={isCurrentWeek}
     onPrevious={goToPreviousWeek}
     onNext={goToNextWeek}
-    onToday={goToToday}
   />
 
   {#if visibleDates.length === 0}

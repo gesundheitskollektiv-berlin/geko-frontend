@@ -25,7 +25,7 @@
   }
 
   const longDateLine = $derived(
-    formatDate(date, locale, { weekday: 'long', day: 'numeric', month: 'long' })
+    formatDate(date, locale, { weekday: 'long', day: '2-digit', month: '2-digit' })
   );
 
   const prefix = $derived(relativeDayPrefix());
@@ -62,14 +62,13 @@
     margin-bottom: 0;
   }
 
-  .calendar-day.today .day-header {
-    box-shadow: inset 0 0 0 1px #000;
+  :global(.calendar-day + .calendar-day) {
+    margin-top: 0.35rem;
   }
 
   .day-header {
     background-color: var(--calendar-day-header-bg);
     padding: 0.85rem 1.25rem;
-    margin-top: 0.35rem;
   }
 
   .day-date {

@@ -4,7 +4,7 @@
 
   export let data = {};
 
-  $: backgroundClass = 'bg-geko-grey';
+  $: backgroundClass = 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'welcome';
 </script>
 
@@ -15,17 +15,12 @@
           <h1>{data.title}</h1>
 
           <div class="row">
+            <div class="col-lg-4 d-none d-lg-block"></div>
             {#if data?.content}
               <div class="col-lg-8">
                 {@html resolveRichText(data.content)}
               </div>
             {/if}
-            <div class="col-lg-4 d-none d-lg-block">
-              <img
-                src="/assets/img/Icons/Sprechblasen-neu.svg"
-                alt=""
-              />
-            </div>
           </div>
         </div>
       </div>

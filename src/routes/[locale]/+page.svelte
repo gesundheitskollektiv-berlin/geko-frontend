@@ -38,7 +38,9 @@
   };
 </script>
 
-<!-- {#if meta?.page_banner}
+{@debug meta}
+
+{#if meta?.page_banner}
   <div class="w-100">
     <StrapiImage
       asset={meta.page_banner}
@@ -47,7 +49,7 @@
       style="display: block;"
     />
   </div>
-{/if} -->
+{/if}
 
 {#each landingBlocks as block, idx (`${block?.__component ?? 'unknown'}-${block?.id ?? idx}`)}
   {@const entry = blockMap[block?.__component]}

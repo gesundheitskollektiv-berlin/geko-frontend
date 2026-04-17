@@ -4,15 +4,22 @@
   let { services = [], locale = 'de' } = $props();
 </script>
 
-<div class="row row-cols-1">
+<div class="services-items-cloud">
   {#if services?.length}
-    {#each services as service (service.id)}
+    {#each services as service (service.documentId ?? service.id)}
       <ServiceItem {service} {locale} />
     {/each}
   {:else}
-    <div class="col">
-      <p class="text-muted">Keine Dienste verfügbar.</p>
-    </div>
+    <p class="text-muted">Keine Dienste verfügbar.</p>
   {/if}
 </div>
 
+<style>
+  .services-items-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px 24px;
+  }
+</style>

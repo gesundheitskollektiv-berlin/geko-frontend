@@ -6,14 +6,16 @@
 $geko-white: #fff;
 $geko-black: #000;
 $geko-yellow: #fff15b;
-$geko-lilac: #dbd0ff;
+$geko-lilac: #c89edd;
+$geko-lilac-light: #eacef8;
 $geko-green: #71cf9a;
 $geko-grey-green: #b8e7cc;
 $geko-turquoise: #80ddd2;
 $geko-dark-grey: #2e2e2e;
 $geko-light-grey: #ececec;
-$geko-blue: #58a9ff;
+$geko-blue: #7fb5dd;
 $geko-red: #ff521c;
+$geko-orange: #ff9100;
 $geko-text-dark: #34495e;
 
 // Override Bootstrap theme colors and add custom geko colors
@@ -36,6 +38,8 @@ $theme-colors: (
   'geko-blue': $geko-blue,
   'geko-green': $geko-green,
   'geko-lilac': $geko-lilac,
+  'geko-lilac-light': $geko-lilac-light,
+  'geko-orange': $geko-orange,
   'geko-grey-green': $geko-grey-green,
   'geko-turquoise': $geko-turquoise,
   'geko-dark-grey': $geko-dark-grey,

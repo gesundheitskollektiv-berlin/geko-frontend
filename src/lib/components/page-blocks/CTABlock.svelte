@@ -3,7 +3,7 @@
 
   let { data = {}, locale = 'de' } = $props();
 
-  const colorMap = { blue: '#58a9ff', purple: '#dbd0ff' };
+  const colorMap = { blue: 'var(--bs-geko-blue)', purple: 'var(--bs-geko-lilac)' };
 
   const cta = $derived(data?.geko_cta || {});
   const bgColor = $derived(colorMap[cta.background_color] ?? colorMap.purple);

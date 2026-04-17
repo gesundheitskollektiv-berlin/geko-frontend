@@ -2,6 +2,7 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import { t } from '$lib/helpers/translation';
 
   export let data = {};
   export let locale = 'de';
@@ -19,8 +20,8 @@
             <h2>{data.title}</h2>
             {@html resolveRichText(data.content)}
             <div class="mt-4">
-              <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/ueber_uns">
-                Mehr über uns
+              <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/ueber_uns">
+                {t(locale).aboutUs}
               </a>
             </div>
           </div>

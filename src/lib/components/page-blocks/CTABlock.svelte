@@ -42,7 +42,7 @@
             {#if cta.link && cta.link_text}
               <div class="mt-4">
                 <a href={linkUrl} class="btn-geko bg-geko-yellow text-black">
-                  {cta.link_text}
+                  {cta.link_text} →
                 </a>
               </div>
             {/if}

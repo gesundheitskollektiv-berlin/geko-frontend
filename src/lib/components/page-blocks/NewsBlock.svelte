@@ -8,7 +8,7 @@
   export let announcements = [];
   export let locale = 'de';
 
-  $: backgroundClass = 'bg-geko-grey';
+  $: backgroundClass = 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'news';
 
   // Calculate max announcements from environment
@@ -20,23 +20,21 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11 my-5">
         <div class="row mb-4">
-          <div class="col-12">
-            <h2 class="fw-bold mb-0">{data.title}</h2>
-            <p class="mb-0 text-muted">{t(locale).currentNews}</p>
+          <div class="col-12 text-center">
+            <h2 class="geko-headline-canvas fw-bold mb-0">{data.title}</h2>
+            <p class="mb-0 mt-2 text-muted">{t(locale).currentNews}</p>
           </div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-4">
           <NewsItems {announcements} {maxAnnouncements} {locale} />
         </div>
 
-        {#if announcements?.length > maxAnnouncements}
-          <div class="text-center mt-4">
-            <a class="btn-geko bg-geko-blue text-white" href="/{locale}/announcements">
-              {t(locale).allAnnouncements}
-            </a>
-          </div>
-        {/if}
+        <div class="text-center mt-2">
+          <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/announcements">
+            {t(locale).allAnnouncements}
+          </a>
+        </div>
       </div>
     </div>
   </div>

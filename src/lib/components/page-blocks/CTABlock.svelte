@@ -1,7 +1,12 @@
 <script>
+  import StrapiImage from '$lib/components/StrapiImage.svelte';
+
   let { data = {}, locale = 'de' } = $props();
 
+  const colorMap = { blue: '#58a9ff', purple: '#dbd0ff' };
+
   const cta = $derived(data?.geko_cta || {});
+  const bgColor = $derived(colorMap[cta.background_color] ?? colorMap.purple);
 
   function isExternalLink(link) {
     if (!link) return false;
@@ -16,24 +21,44 @@
   });
 </script>
 
-<section class="bg-geko-blue py-5">
+<section class="cta-section py-5" style:--cta-color={bgColor}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        {#if cta.cta_name}
-          <h2 class="fw-bold">{cta.cta_name}</h2>
-        {/if}
-        {#if cta.call_text}
-          <p>{cta.call_text}</p>
-        {/if}
-        {#if cta.link && cta.link_text}
-          <div class="text-center mt-4">
-            <a href={linkUrl} class="btn-geko bg-geko-blue text-white cta-button">
-              {cta.link_text}
-            </a>
+        <div class="row">
+          <div class="col-lg-4">
+            {#if cta.logo}
+              <StrapiImage
+                asset={cta.logo}
+                alt={cta.logo.alternativeText || ''}
+                class="img-fluid cta-logo"
+              />
+            {/if}
           </div>
-        {/if}
+          <div class="col-lg-8">
+            {#if cta.call_text}
+              <h2 class="fw-bold">{cta.call_text}</h2>
+            {/if}
+            {#if cta.link && cta.link_text}
+              <div class="mt-4">
+                <a href={linkUrl} class="btn-geko bg-geko-yellow text-black">
+                  {cta.link_text}
+                </a>
+              </div>
+            {/if}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .cta-section {
+    background: linear-gradient(to bottom, #ffffff 0%, var(--cta-color) 60%);
+  }
+
+  .cta-section :global(.cta-logo) {
+    max-width: 150px;
+  }
+</style>

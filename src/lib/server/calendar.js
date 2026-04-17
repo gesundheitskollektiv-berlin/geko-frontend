@@ -3,10 +3,10 @@ import ICAL from 'ical.js';
 /**
  * Fetches and parses iCal feed from a URL
  * @param {string} url - The ICS feed URL
- * @param {string} color - The color to assign to events from this feed
+ * @param {string} feedId - Stable id for this feed (used for UI labels, not color)
  * @returns {Promise<Array>} Array of parsed event objects
  */
-export async function fetchCalendarFeed(url, color) {
+export async function fetchCalendarFeed(url, feedId) {
   try {
     const response = await fetch(url);
     
@@ -16,7 +16,7 @@ export async function fetchCalendarFeed(url, color) {
     }
 
     const icsData = await response.text();
-    const events = parseICalData(icsData, color);
+    const events = parseICalData(icsData, feedId);
     
     return events;
   } catch (error) {
@@ -28,10 +28,10 @@ export async function fetchCalendarFeed(url, color) {
 /**
  * Parses iCal data string into event objects
  * @param {string} icsData - Raw ICS data
- * @param {string} color - Color to assign to events
+ * @param {string} feedId - Feed id stored on each event for display labels
  * @returns {Array} Array of event objects
  */
-function parseICalData(icsData, color) {
+function parseICalData(icsData, feedId) {
   try {
     const jcalData = ICAL.parse(icsData);
     const comp = new ICAL.Component(jcalData);
@@ -77,7 +77,7 @@ function parseICalData(icsData, color) {
             location,
             start: startDate,
             end: endDate,
-            color,
+            feedId,
             isRecurring: true,
             uid: `${event.uid}-${index}`
           });
@@ -101,7 +101,7 @@ function parseICalData(icsData, color) {
           location,
           start: startDate,
           end: endDate,
-          color,
+          feedId,
           isRecurring: false,
           uid: event.uid
         });
@@ -169,14 +169,14 @@ function expandRecurringEvent(vevent, rangeStart, rangeEnd) {
 
 /**
  * Fetches all calendar events from multiple feeds
- * @param {Array} calendarUrls - Array of {url, color} objects
+ * @param {Array} calendarUrls - Array of { url, feedId } objects
  * @returns {Promise<Array>} Combined array of all events
  */
 export async function fetchCalendarEvents(calendarUrls) {
   try {
     // Fetch all calendars in parallel
-    const feedPromises = calendarUrls.map(({ url, color }) => 
-      fetchCalendarFeed(url, color)
+    const feedPromises = calendarUrls.map(({ url, feedId }) =>
+      fetchCalendarFeed(url, feedId)
     );
     
     const feedResults = await Promise.all(feedPromises);

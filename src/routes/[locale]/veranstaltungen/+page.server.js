@@ -10,11 +10,11 @@ export async function load() {
   const calendarUrls = [
     {
       url: 'https://intern.geko-berlin.de/remote.php/dav/public-calendars/a7bymwRGr9jgxcBH?export',
-      color: '#7fb5dd',
+      feedId: 'gekoCenter',
     },
     {
       url: 'https://intern.geko-berlin.de/remote.php/dav/public-calendars/8B6TbF2QSSB2BeKP?export',
-      color: '#fff15b',
+      feedId: 'kiez',
     },
   ];
 

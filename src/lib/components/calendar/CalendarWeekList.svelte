@@ -4,7 +4,7 @@
     filterEventsByWeek,
     groupEventsByDay,
     getVisibleCalendarDates,
-    isValidHttpUrl,
+    getCalendarEventExternalUrl,
     toLocalDateKey,
   } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
@@ -61,11 +61,9 @@
   }
 
   function handleEventClick(event) {
-    const description = event.description || '';
-    const firstLine = description.split('\n')[0].trim();
-
-    if (isValidHttpUrl(firstLine)) {
-      window.open(firstLine, '_blank');
+    const externalUrl = getCalendarEventExternalUrl(event);
+    if (externalUrl) {
+      window.open(externalUrl, '_blank');
       return;
     }
 

@@ -2,14 +2,9 @@
   import { browser } from '$app/environment';
   import { marked } from 'marked';
   import DOMPurify from 'dompurify';
-  import { t } from '$lib/helpers/translation';
   import './calendar.scss';
 
-  let { event, locale = 'de', isExpanded = false, color = '#58a9ff' } = $props();
-
-  const accordionColorClass = $derived(
-    color === '#58a9ff' ? 'color-blue' : color === '#fff15b' ? 'color-yellow' : 'color-default'
-  );
+  let { event, locale = 'de', isExpanded = false } = $props();
 
   // Parsed description
   const parsedDescription = $derived(() => {
@@ -33,7 +28,7 @@
 </script>
 
 {#if isExpanded}
-  <div class="event-details-accordion mb-1 {accordionColorClass}">
+  <div class="event-details-accordion mb-1">
     <!-- Description -->
     {#if event.description}
       <div class="event-detail">
@@ -74,19 +69,7 @@
     padding: 1rem;
     background-color: var(--calendar-bg-light);
     animation: slideDown var(--calendar-transition-standard);
-    border-left: 8px solid var(--calendar-primary);
-  }
-
-  .event-details-accordion.color-blue {
-    border-left-color: #58a9ff;
-  }
-
-  .event-details-accordion.color-yellow {
-    border-left-color: #fff15b;
-  }
-
-  .event-details-accordion.color-default {
-    border-left-color: var(--calendar-primary);
+    border-left: 3px solid var(--calendar-border-gray);
   }
 
   @keyframes slideDown {

@@ -38,8 +38,6 @@
   };
 </script>
 
-{@debug meta}
-
 {#if meta?.page_banner}
   <div class="w-100">
     <StrapiImage

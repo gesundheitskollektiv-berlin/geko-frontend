@@ -1,18 +1,19 @@
 <script>
-  import { formatTime } from '$lib/helpers/calendar';
+  import { formatTime, getCalendarEventExternalUrl } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import CalendarEventAccordion from './CalendarEventAccordion.svelte';
   import './calendar.scss';
 
   let { event, locale = 'de', isExpanded = false, onClick } = $props();
 
-  const colorClass = $derived(
-    event.color === '#58a9ff' || event.color === '#7fb5dd'
-      ? 'color-blue'
-      : event.color === '#fff15b'
-        ? 'color-yellow'
-        : 'color-default'
-  );
+  const calendarName = $derived.by(() => {
+    const strings = t(locale);
+    if (event.feedId === 'gekoCenter') return strings.legendBlueItem;
+    if (event.feedId === 'kiez') return strings.legendYellowItem;
+    return '';
+  });
+
+  const opensExternal = $derived(getCalendarEventExternalUrl(event) !== null);
 
   function handleKeydown(e) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -24,7 +25,7 @@
 
 <div class="event-wrapper">
   <div
-    class="event-item {colorClass}"
+    class="event-item"
     class:expanded={isExpanded}
     onclick={onClick}
     onkeydown={handleKeydown}
@@ -39,19 +40,27 @@
         {/if}
       </div>
       <div class="event-title">{event.title}</div>
-      {#if event.location}
+      {#if calendarName}
         <div class="event-location text-muted">
           <i class="fa-solid fa-location-dot me-1" aria-hidden="true"></i>
-          {t(locale).eventLocation} {event.location}
+          {calendarName}
         </div>
       {/if}
     </div>
-    <span class="event-item__plus" aria-hidden="true">
-      <i class="fa-solid fa-plus"></i>
+    <span
+      class="event-item__action"
+      class:event-item__action--external={opensExternal}
+      aria-hidden="true"
+    >
+      {#if opensExternal}
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      {:else}
+        <i class="fa-solid fa-plus"></i>
+      {/if}
     </span>
   </div>
 
-  <CalendarEventAccordion {event} {locale} {isExpanded} color={event.color} />
+  <CalendarEventAccordion {event} {locale} {isExpanded} />
 </div>
 
 <style>
@@ -66,19 +75,7 @@
     cursor: pointer;
     transition: background-color var(--calendar-transition-standard);
     border-bottom: 1px solid var(--calendar-border-gray);
-    border-left: 4px solid var(--calendar-primary);
-  }
-
-  .event-item.color-blue {
-    border-left-color: #7fb5dd;
-  }
-
-  .event-item.color-yellow {
-    border-left-color: #fff15b;
-  }
-
-  .event-item.color-default {
-    border-left-color: var(--calendar-primary);
+    border-left: 3px solid var(--calendar-border-gray);
   }
 
   .event-item:hover {
@@ -100,7 +97,7 @@
     text-align: left;
   }
 
-  .event-item__plus {
+  .event-item__action {
     flex-shrink: 0;
     width: 2.25rem;
     height: 2.25rem;
@@ -111,6 +108,10 @@
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
+  }
+
+  .event-item__action--external {
+    font-size: 0.78rem;
   }
 
   .event-time {

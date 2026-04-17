@@ -13,6 +13,17 @@ export function isValidHttpUrl(string) {
 }
 
 /**
+ * If the first line of the event description is an http(s) URL, returns it (same rule as row click → new tab).
+ * @param {{ description?: string } | null | undefined} event
+ * @returns {string | null}
+ */
+export function getCalendarEventExternalUrl(event) {
+  const firstLine = (event?.description ?? '').split('\n')[0].trim();
+  if (!isValidHttpUrl(firstLine)) return null;
+  return firstLine;
+}
+
+/**
  * Gets the start of the week for a given date (Monday)
  * @param {Date} date - The reference date
  * @returns {Date} Start of the week

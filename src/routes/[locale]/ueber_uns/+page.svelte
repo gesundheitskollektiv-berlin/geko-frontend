@@ -53,7 +53,7 @@
   <MaterialsBlock data={{ title: '', background_color: 'yellow' }} {materials} {locale} />
 {/if}
 
-<NewsletterBlock />
+<NewsletterBlock {locale} />
 
 <!-- Footer -->
 {#if footerBlock}

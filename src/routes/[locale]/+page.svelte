@@ -56,6 +56,6 @@
   {/if}
 {/each}
 
-<NewsletterBlock />
+<NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />

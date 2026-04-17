@@ -85,7 +85,7 @@
   </div>
 </section>
 
-<NewsletterBlock />
+<NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />
 

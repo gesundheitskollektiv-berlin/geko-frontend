@@ -159,7 +159,7 @@
 
 </div>
 
-<NewsletterBlock />
+<NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />
 

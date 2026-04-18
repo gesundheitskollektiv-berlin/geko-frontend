@@ -11,6 +11,7 @@
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import WelcomeMarquee from '$lib/components/WelcomeMarquee.svelte';
   
   let { data } = $props();
 
@@ -37,6 +38,8 @@
     'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block) => ({ data: block, locale }) },
   };
 </script>
+
+<WelcomeMarquee />
 
 {#if meta?.page_banner}
   <div class="w-100">

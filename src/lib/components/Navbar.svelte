@@ -8,6 +8,7 @@
   let isNavbarOpen = false;
 
   const navItems = $derived([
+    { label: t(locale).atTheCenter,   href: `/${locale}/angebote` },
     { label: t(locale).announcements, href: `/${locale}/aktuelles` },
     { label: t(locale).events,        href: `/${locale}/veranstaltungen` },
     { label: t(locale).aboutUs,       href: `/${locale}/ueber_uns` },

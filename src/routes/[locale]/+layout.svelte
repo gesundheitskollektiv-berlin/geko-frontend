@@ -8,9 +8,6 @@
 
   let { children, data } = $props();
 
-  const landingPage = $derived(data['geko-page-landing']?.data ?? {});
-  const landingBlocks = $derived(landingPage?.content ?? []);
-
   onMount(async () => {
     if (!browser) return;
     await import('bootstrap');
@@ -22,7 +19,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<Navbar {landingBlocks} locale={data.locale} />
+<Navbar locale={data.locale} />
 <div class="bg-light min-vh-100">
 {@render children()}
 </div>

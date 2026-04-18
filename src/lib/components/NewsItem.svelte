@@ -11,7 +11,7 @@
 </script>
 
 <div class="col-md-6 col-lg-4">
-  <a href="/{locale}/announcements/{item.slug}" class="text-decoration-none text-dark">
+  <a href="/{locale}/aktuelles/{item.slug}" class="text-decoration-none text-dark">
     <div class="card h-100 border news-card" class:highlight={item.highlight}>
       {#if item?.image}
         <StrapiImage

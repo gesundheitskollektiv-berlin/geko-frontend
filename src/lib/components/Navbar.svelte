@@ -53,7 +53,7 @@
   });
 </script>
 
-<nav class="navbar navbar-expand-xl navbar-light bg-white py-3">
+<nav class="navbar navbar-expand-xl navbar-light bg-geko-yellow py-3">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/{locale}">
       <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" class="navbar-logo" />
@@ -76,7 +76,7 @@
       <ul class="navbar-nav ms-auto">
         {#each navItems as item}
           <li class="nav-item">
-            <a class="btn-geko bg-geko-yellow text-black mx-2" href={item.href} onclick={collapseNavbar}>
+            <a class="btn-geko bg-white text-black mx-2" href={item.href} onclick={collapseNavbar}>
               {item.label}
             </a>
           </li>
@@ -84,7 +84,7 @@
 
         <li class="nav-item dropdown ms-4">
           <button
-            class="btn btn-white text-black dropdown-toggle"
+            class="btn-geko btn-locale dropdown-toggle mx-2"
             type="button"
             id="localeDropdown"
             data-bs-toggle="dropdown"
@@ -121,19 +121,23 @@
     width: auto;
   }
 
-  .btn-white {
-    background-color: white;
-    color: black;
-    border: 1px solid #dee2e6;
-    border-radius: 0.5rem;
-    padding: 0.25rem 1.0rem;
-    font-family: "CerebriSansPro", system-ui, sans-serif;
-    font-weight: 700;
+  .navbar :global(.btn-geko) {
+    padding: 4px 12px;
+    gap: 10px;
+    border-radius: 24px;
     font-size: 1.25rem;
+    line-height: 1.4;
   }
 
-  .btn-white:hover {
-    background-color: #f8f9fa;
+  .btn-locale {
+    background-color: #000;
+    color: var(--bs-geko-yellow);
+  }
+
+  .btn-locale:hover,
+  .btn-locale:focus {
+    background-color: #000;
+    color: var(--bs-geko-yellow);
   }
 
   .dropdown-item.active {

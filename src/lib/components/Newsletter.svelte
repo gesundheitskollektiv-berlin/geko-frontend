@@ -4,13 +4,34 @@
 
   let { locale = 'de' } = $props();
 
+  let iframeEl;
+
   onMount(() => {
     const script = document.createElement('script');
     script.src = 'https://app.mailjet.com/pas-nc-embedded-v1.js';
     script.type = 'text/javascript';
     document.body.appendChild(script);
 
+    // Listen for Mailjet widget postMessage resize events and apply exactly,
+    // so the iframe is never taller than its form content.
+    function onMessage(event) {
+      if (!iframeEl) return;
+      if (event.source !== iframeEl.contentWindow) return;
+      const data = event.data;
+      const height =
+        typeof data === 'number'
+          ? data
+          : data && typeof data === 'object'
+            ? data.height ?? data.iframeHeight ?? data?.payload?.height
+            : null;
+      if (typeof height === 'number' && height > 0) {
+        iframeEl.style.height = `${height}px`;
+      }
+    }
+    window.addEventListener('message', onMessage);
+
     return () => {
+      window.removeEventListener('message', onMessage);
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
@@ -24,6 +45,7 @@
 
     <div class="newsletter-iframe-wrapper">
       <iframe
+        bind:this={iframeEl}
         data-w-type="embedded"
         frameborder="0"
         scrolling="no"
@@ -31,7 +53,6 @@
         marginwidth="0"
         src="https://x983w.mjt.lu/wgt/x983w/vrn/form?c=4f94931a"
         width="100%"
-        style="height: 232px; overflow: hidden;"
         title="Newsletter Anmeldung"
       ></iframe>
     </div>
@@ -53,13 +74,26 @@
     line-height: 1.15;
   }
 
+  /* Constrain form width so its content wraps consistently across breakpoints
+     and the iframe height stays predictable. */
   .newsletter-iframe-wrapper {
     width: 100%;
+    max-width: 520px;
   }
 
   .newsletter-iframe-wrapper iframe {
     display: block;
+    width: 100%;
     max-width: 100%;
+    min-height: 320px;
+    border: 0;
+  }
+
+  /* Very narrow screens where 520px cap is irrelevant and text wraps more. */
+  @media (max-width: 575.98px) {
+    .newsletter-iframe-wrapper iframe {
+      min-height: 380px;
+    }
   }
 
   .newsletter-logo {

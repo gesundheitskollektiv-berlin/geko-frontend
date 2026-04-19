@@ -36,25 +36,32 @@ export async function getDataFromCMS(path, locale, fetchFn = fetch) {
 
   // pLevel (strapi-v5-plugin-populate-deep) doesn't populate media fields on
   // these single-types reliably, so fall back to populate=* which does.
-  const useStarPopulate = [
-    'geko-page-about',
-    'geko-page-support',
-    'geko-page-kontakt',
-    'geko-page-angebote'
-  ];
   const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
 
   const queryUrl = `${base}/api/${path}?${populateParam}&locale=${locale}`;
   return await fetchData(queryUrl, fetchFn);
 }
 
+// Collections / single-types whose media fields aren't populated by pLevel —
+// we use populate=* for those.
+const useStarPopulate = [
+  'geko-page-about',
+  'geko-page-support',
+  'geko-page-kontakt',
+  'geko-page-angebote',
+  'geko-materials',
+  'geko-supporters'
+];
+
 async function fetchAllPages(path, locale, fetchFn = fetch, baseUrl = getStrapiPublicUrl()) {
   let allData = [];
   let currentPage = 1;
   let totalPages = 1;
 
+  const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
+
   do {
-    const queryUrl = `${baseUrl}/api/${path}?pLevel&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
+    const queryUrl = `${baseUrl}/api/${path}?${populateParam}&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
     const result = await fetchData(queryUrl, fetchFn);
 
     if (result?.data) {

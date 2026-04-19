@@ -17,6 +17,10 @@
     return new Intl.DateTimeFormat(intlLocale, { weekday: 'short' }).format(d);
   }
 
+  function dayMonth(d) {
+    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+  }
+
   function isTodayCell(d) {
     return isSameLocalCalendarDay(d, new Date());
   }
@@ -48,7 +52,7 @@
         class:calendar-week-strip__cell--past={pastCell && !todayCell}
       >
         <span class="calendar-week-strip__weekday">{weekdayShort(d)}</span>
-        <span class="calendar-week-strip__daynum">{d.getDate()}</span>
+        <span class="calendar-week-strip__daynum">{dayMonth(d)}</span>
       </div>
     {/each}
   </div>
@@ -117,9 +121,9 @@
     background: #000;
     color: #fff;
     border-radius: 999px;
-    min-width: 2.65rem;
+    min-width: 3.4rem;
     min-height: 2.65rem;
-    padding: 0.4rem 0.35rem;
+    padding: 0.4rem 0.65rem;
     align-self: center;
     justify-content: center;
   }

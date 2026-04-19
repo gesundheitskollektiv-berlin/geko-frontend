@@ -13,6 +13,7 @@
     { label: t(locale).events,        href: `/${locale}/veranstaltungen` },
     { label: t(locale).aboutUs,       href: `/${locale}/ueber_uns` },
     { label: t(locale).support,       href: `/${locale}/unterstuetzen` },
+    { label: t(locale).kontakt,       href: `/${locale}/kontakt` },
   ]);
 
   function toggleNavbar() {
@@ -125,7 +126,7 @@
     padding: 4px 12px;
     gap: 10px;
     border-radius: 24px;
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1.4;
   }
 

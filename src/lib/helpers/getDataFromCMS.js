@@ -34,7 +34,17 @@ export async function getDataFromCMS(path, locale, fetchFn = fetch) {
     return await fetchAllPages(path, locale, fetchFn, base);
   }
 
-  const queryUrl = `${base}/api/${path}?pLevel&locale=${locale}`;
+  // pLevel (strapi-v5-plugin-populate-deep) doesn't populate media fields on
+  // these single-types reliably, so fall back to populate=* which does.
+  const useStarPopulate = [
+    'geko-page-about',
+    'geko-page-support',
+    'geko-page-kontakt',
+    'geko-page-angebote'
+  ];
+  const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
+
+  const queryUrl = `${base}/api/${path}?${populateParam}&locale=${locale}`;
   return await fetchData(queryUrl, fetchFn);
 }
 

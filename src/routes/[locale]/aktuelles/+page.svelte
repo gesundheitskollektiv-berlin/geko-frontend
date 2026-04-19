@@ -1,5 +1,6 @@
 <script>
   import NewsItems from '$lib/components/NewsItems.svelte';
+  import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
   import { t } from '$lib/helpers/translation';
@@ -9,20 +10,14 @@
   const announcements = $derived(data['geko-announcements']?.data ?? []);
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
-  
-  // Track visible items count for load more functionality
+
   let visibleCount = $state(10);
-  
-  // Get footer and supporters blocks from landing page blocks
-  const landingPage = $derived(data['geko-page-landing']?.data ?? {});
-  const landingBlocks = $derived(landingPage?.content ?? []);
-  const footerBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.footer')
-  );
+
+  const landingBlocks = $derived(data['geko-page-landing']?.data?.content ?? []);
   const supportersBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.supporters')
+    landingBlocks.find((block) => block?.__component === 'geko-page-blocks.supporters')
   );
-  
+
   function loadMore() {
     visibleCount += 10;
   }
@@ -37,7 +32,7 @@
         <div class="mb-5">
           <NewsItems {announcements} maxAnnouncements={visibleCount} {locale} />
         </div>
-        
+
         {#if announcements.length > visibleCount}
           <div class="row">
             <div class="col-12 text-center">
@@ -52,12 +47,10 @@
   </div>
 </section>
 
-<!-- Footer -->
-{#if footerBlock}
-  <FooterBlock data={footerBlock} {meta} {locale} />
-{/if}
+<NewsletterBlock {locale} />
 
-<!-- Supporters section -->
+<FooterBlock {meta} {locale} />
+
 {#if supportersBlock}
   <SupportersBlock data={supportersBlock} {locale} />
 {/if}

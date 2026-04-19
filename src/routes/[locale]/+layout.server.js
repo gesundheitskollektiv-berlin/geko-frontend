@@ -12,6 +12,8 @@ export async function load({ params, fetch }) {
     'geko-page-landing',
     'geko-page-about',
     'geko-page-support',
+    'geko-page-kontakt',
+    'geko-page-angebote',
     'geko-page-datenschutzerklaerung',
     'geko-page-impressum',
     'geko-meta',

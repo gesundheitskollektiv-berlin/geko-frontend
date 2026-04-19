@@ -3,6 +3,7 @@
   import ServicesBlock from '$lib/components/page-blocks/ServicesBlock.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
+  import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
 
   let { data } = $props();
 
@@ -24,3 +25,5 @@
 <NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />
+
+<SupportersBlock {locale} />

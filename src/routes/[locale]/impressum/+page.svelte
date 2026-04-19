@@ -15,9 +15,6 @@
   const footerBlock = $derived(
     landingBlocks.find(block => block?.__component === 'geko-page-blocks.footer')
   );
-  const supportersBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.supporters')
-  );
 </script>
 
 <section class="bg-geko-white">
@@ -42,6 +39,4 @@
 {/if}
 
 <!-- Supporters section -->
-{#if supportersBlock}
-  <SupportersBlock data={supportersBlock} {locale} />
-{/if}
+<SupportersBlock {locale} />

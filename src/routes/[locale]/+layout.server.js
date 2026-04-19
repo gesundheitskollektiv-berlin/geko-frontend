@@ -20,7 +20,8 @@ export async function load({ params, fetch }) {
     'geko-announcements',
     'geko-services',
     'geko-jobs',
-    'geko-materials'
+    'geko-materials',
+    'geko-supporters'
   ];
 
   for (const endpoint of endpoints) {

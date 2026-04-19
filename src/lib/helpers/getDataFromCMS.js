@@ -28,7 +28,7 @@ export async function getDataFromCMS(path, locale, fetchFn = fetch) {
     return { data: null };
   }
 
-  const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs', 'geko-materials'];
+  const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs', 'geko-materials', 'geko-supporters'];
 
   if (shouldFetchAllPages.includes(path)) {
     return await fetchAllPages(path, locale, fetchFn, base);

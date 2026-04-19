@@ -7,7 +7,7 @@
   export let data = {};
   export let locale = 'de';
 
-  $: backgroundClass = 'bg-geko-grey';
+  $: backgroundClass = 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'about';
 </script>
 

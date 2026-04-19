@@ -34,7 +34,6 @@
     'geko-page-blocks.news':       { component: NewsBlock,       getProps: (block) => ({ data: block, announcements, locale }) },
     'geko-page-blocks.contact':    { component: ContactBlock,    getProps: (block) => ({ data: block, meta }) },
     'geko-page-blocks.services':   { component: ServicesBlock,   getProps: (block) => ({ data: block, services, locale }) },
-    'geko-page-blocks.supporters': { component: SupportersBlock, getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block) => ({ data: block, locale }) },
   };
 </script>
@@ -62,3 +61,5 @@
 <NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />
+
+<SupportersBlock {locale} />

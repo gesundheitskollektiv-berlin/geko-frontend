@@ -10,10 +10,6 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
 
-  const landingBlocks = $derived(data['geko-page-landing']?.data?.content ?? []);
-  const supportersBlock = $derived(
-    landingBlocks.find((block) => block?.__component === 'geko-page-blocks.supporters')
-  );
 </script>
 
 <SubpageContent page={supportPage} />
@@ -22,6 +18,4 @@
 
 <FooterBlock {meta} {locale} />
 
-{#if supportersBlock}
-  <SupportersBlock data={supportersBlock} {locale} />
-{/if}
+<SupportersBlock {locale} />

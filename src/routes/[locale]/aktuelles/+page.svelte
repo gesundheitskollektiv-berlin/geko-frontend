@@ -30,11 +30,6 @@
       : announcements.filter((a) => a.geko_announcement_tag?.id === selectedTagId)
   );
 
-  const landingBlocks = $derived(data['geko-page-landing']?.data?.content ?? []);
-  const supportersBlock = $derived(
-    landingBlocks.find((block) => block?.__component === 'geko-page-blocks.supporters')
-  );
-
   function loadMore() {
     visibleCount += 10;
   }
@@ -70,6 +65,4 @@
 
 <FooterBlock {meta} {locale} />
 
-{#if supportersBlock}
-  <SupportersBlock data={supportersBlock} {locale} />
-{/if}
+<SupportersBlock {locale} />

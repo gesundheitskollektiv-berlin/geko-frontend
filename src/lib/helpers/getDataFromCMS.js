@@ -53,15 +53,23 @@ const useStarPopulate = [
   'geko-supporters'
 ];
 
+// Per-path caps and server-side sorts. Only listed paths get the treatment;
+// everything else goes through fetchAllPages untouched.
+const maxItemsByPath = { 'geko-announcements': 500 };
+const sortByPath = { 'geko-announcements': 'publish_date:desc' };
+
 async function fetchAllPages(path, locale, fetchFn = fetch, baseUrl = getStrapiPublicUrl()) {
   let allData = [];
   let currentPage = 1;
   let totalPages = 1;
 
   const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
+  const maxItems = maxItemsByPath[path];
+  const sort = sortByPath[path];
+  const sortParam = sort ? `&sort[0]=${sort}` : '';
 
   do {
-    const queryUrl = `${baseUrl}/api/${path}?${populateParam}&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
+    const queryUrl = `${baseUrl}/api/${path}?${populateParam}&locale=${locale}${sortParam}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
     const result = await fetchData(queryUrl, fetchFn);
 
     if (result?.data) {
@@ -70,6 +78,11 @@ async function fetchAllPages(path, locale, fetchFn = fetch, baseUrl = getStrapiP
       if (result.meta?.pagination) {
         totalPages = result.meta.pagination.pageCount;
       }
+    }
+
+    if (maxItems !== undefined && allData.length >= maxItems) {
+      allData = allData.slice(0, maxItems);
+      break;
     }
 
     currentPage++;

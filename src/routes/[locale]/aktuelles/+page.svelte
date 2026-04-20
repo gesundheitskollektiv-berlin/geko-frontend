@@ -12,7 +12,7 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
 
-  let visibleCount = $state(10);
+  let visibleCount = $state(20);
   let selectedTagId = $state(null);
 
   const tags = $derived.by(() => {
@@ -51,7 +51,7 @@
           <div class="row">
             <div class="col-12 text-center">
               <a href="#" class="text-decoration-underline text-geko-black fs-20 fw-bold" onclick={(e) => { e.preventDefault(); loadMore(); }} style="cursor: pointer;">
-                Load More
+                {t(locale).loadMore}
               </a>
             </div>
           </div>

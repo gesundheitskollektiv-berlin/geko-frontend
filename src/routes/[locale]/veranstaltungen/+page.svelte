@@ -19,9 +19,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <div class="text-center mb-4">
-          <h1 class="geko-headline-canvas fw-bold mb-0">{t(locale).calendar}</h1>
-        </div>
+        <h1 class="text-center mb-4">{t(locale).calendar}</h1>
         <CalendarWeekList {events} {locale} showNavigation={true} />
       </div>
     </div>

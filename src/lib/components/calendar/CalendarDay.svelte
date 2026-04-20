@@ -63,7 +63,7 @@
   }
 
   :global(.calendar-day + .calendar-day) {
-    margin-top: 0.35rem;
+    margin-top: 0;
   }
 
   .day-header {
@@ -86,6 +86,7 @@
     padding: 0;
     border-left: 1px solid var(--calendar-border-gray);
     border-right: 1px solid var(--calendar-border-gray);
+    border-bottom: 1px solid var(--calendar-border-gray);
   }
 
   .no-events {

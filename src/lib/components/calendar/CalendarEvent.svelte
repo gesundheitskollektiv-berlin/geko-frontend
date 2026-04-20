@@ -74,8 +74,8 @@
     background-color: var(--calendar-event-row-bg);
     cursor: pointer;
     transition: background-color var(--calendar-transition-standard);
-    border-bottom: 1px solid var(--calendar-border-gray);
     border-left: 3px solid var(--calendar-border-gray);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.1);
   }
 
   .event-item:hover {

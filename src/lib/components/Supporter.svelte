@@ -9,13 +9,13 @@
 	);
 </script>
 
-<div class={`${columnClass} mb-4`}>
+<div class={`${columnClass} mb-4 d-flex align-items-center justify-content-center`}>
 	{#if supporter?.project_url}
 		<a
 			href={supporter.project_url}
 			target="_blank"
 			rel="noreferrer"
-			class="supporter-link d-block text-center"
+			class="supporter-link text-center"
 		>
 			{#if supporter?.image}
 				<StrapiImage
@@ -28,7 +28,7 @@
 			{/if}
 		</a>
 	{:else}
-		<div class="supporter-link d-block text-center">
+		<div class="supporter-link text-center">
 			{#if supporter?.image}
 				<StrapiImage
 					asset={supporter.image}
@@ -50,10 +50,7 @@
 	}
 
 	.supporter-link {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: inline-block;
 	}
 
 	.supporter-link:hover :global(img) {

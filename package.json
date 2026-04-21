@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
     "migrate:announcements": "node --env-file=.env migrations/migrate-announcements.js",
-    "migrate:services": "node --env-file=.env migrations/migrate-services.js"
+    "migrate:services": "node --env-file=.env migrations/migrate-services.js",
+    "migrate:supporters": "node --env-file=.env migrations/migrate-supporters.js"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.0",

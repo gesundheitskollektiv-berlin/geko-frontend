@@ -21,7 +21,7 @@
 
         <div class="text-center mt-4">
           <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/veranstaltungen">
-            Alle Veranstaltungen ansehen
+            {t(locale).allEvents}
           </a>
         </div>
       </div>

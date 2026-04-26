@@ -21,7 +21,7 @@
   });
 </script>
 
-<section class="cta-section py-5" style:--cta-color={bgColor}>
+<section class="cta-section py-7" style:--cta-color={bgColor}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-11 col-sm-11">
@@ -37,7 +37,7 @@
           {/if}
           <div class="cta-text">
             {#if cta.call_text}
-              <h2 class="fw-bold">{cta.call_text}</h2>
+              <h2 class="fw-bold mb-3 mb-lg-5">{cta.call_text}</h2>
             {/if}
             {#if cta.link && cta.link_text}
               <div class="mt-4">

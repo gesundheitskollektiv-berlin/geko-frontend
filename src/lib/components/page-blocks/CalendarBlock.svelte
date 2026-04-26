@@ -9,12 +9,12 @@
   const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'calendar');
 </script>
 
-<section id={sectionId} class={backgroundClass}>
+<section id={sectionId} class="{backgroundClass} py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
-        <div class="text-center mb-4">
-          <h2 class="geko-headline-canvas fw-bold mb-0">{data.title || t(locale).calendar}</h2>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <div class="text-center">
+          <h2 class="geko-headline-canvas fw-bold mb-3 mb-lg-5">{data.title || t(locale).calendar}</h2>
         </div>
 
         <CalendarWeekList {events} {locale} showNavigation={false} />

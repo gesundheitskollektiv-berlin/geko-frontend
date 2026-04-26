@@ -8,7 +8,7 @@
   $: baseUrl = `/${locale}`;
 </script>
 
-<footer id="footer" class="bg-geko-yellow py-5">
+<footer id="footer" class="bg-geko-yellow py-9">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">

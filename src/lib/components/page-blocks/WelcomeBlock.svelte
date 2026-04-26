@@ -8,11 +8,11 @@
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'welcome';
 </script>
 
-<section id={sectionId} class={backgroundClass}>
+<section id={sectionId} class="{backgroundClass} py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
-          <h1>{data.title}</h1>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+          <h1 class="mb-3 mb-lg-5">{data.title}</h1>
 
           <div class="row">
             <div class="col-lg-4 d-none d-lg-block"></div>

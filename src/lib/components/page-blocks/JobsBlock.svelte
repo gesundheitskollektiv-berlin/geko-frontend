@@ -19,11 +19,11 @@
   const sectionId = $derived(data?.navbar_link_title ? slugify(data.navbar_link_title) : 'jobs');
 </script>
 
-<section id={sectionId} class={backgroundClass}>
+<section id={sectionId} class={`${backgroundClass} py-5`}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
-        <h2>{data.title}</h2>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <h2 class="mb-3 mb-lg-5">{data.title}</h2>
 
         {#if jobs.length > 0}
           <p class="mt-4">

@@ -11,17 +11,19 @@
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'about';
 </script>
 
-<section id={sectionId} class={backgroundClass}>
+<section id={sectionId} class="{backgroundClass} py-7 pb-9">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <div class="text-center">
+          <h2 class="geko-headline-canvas fw-bold mb-3 mb-lg-5">{data.title}</h2>
+        </div>
         <div class="row">
           <div class="col-md-5">
-            <h2>{data.title}</h2>
             {@html resolveRichText(data.content)}
             <div class="mt-4">
               <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/ueber_uns">
-                {t(locale).aboutUs}
+                {t(locale).aboutUs} ->
               </a>
             </div>
           </div>

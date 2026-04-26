@@ -15,11 +15,11 @@
   $: maxAnnouncements = parseInt(env.PUBLIC_LANDING_MAX_ANNOUNCEMENTS || '6', 10);
 </script>
 
-<section id={sectionId} class={backgroundClass}>
+<section id={sectionId} class="{backgroundClass} py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 my-5">
-        <div class="row mb-4">
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <div class="row mb-3 mb-lg-5">
           <div class="col-12 text-center">
             <h2 class="geko-headline-canvas fw-bold mb-0">{data.title}</h2>
             <p class="mb-0 mt-2 text-muted">{t(locale).currentNews}</p>

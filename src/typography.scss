@@ -120,3 +120,23 @@ h4 {
   font-weight: 400;
   line-height: 1;
 }
+
+// Figma "body-small" — footer contact (address, phone, email)
+.body-small {
+  font-size: 1rem; // 16px
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+// Figma "button-small" — footer legal links (typography; no default underline)
+.button-small {
+  font-family: 'CerebriSansPro', system-ui, sans-serif;
+  font-size: 1.125rem; // 18px
+  font-weight: 800;
+  line-height: 1.875rem; // 30px (Figma fixed)
+  text-decoration: none;
+}
+
+.button-small:hover {
+  text-decoration: underline;
+}

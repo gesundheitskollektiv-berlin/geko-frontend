@@ -17,10 +17,11 @@
           {t(locale).footerCarriedBy}
         </p>
 
-        <div class="row gy-4">
-
+        <div
+          class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start gap-4"
+        >
           <!-- 1. LOGO -->
-          <div class="col-lg-3 col-md-6 col-12 d-flex align-items-start">
+          <div>
             <a href={baseUrl} aria-label="Geko Startseite">
               <img
                 src="/assets/img/Logo_Kollektiv.svg"
@@ -31,7 +32,7 @@
           </div>
 
           <!-- 2. CONTACT -->
-          <div class="col-lg-3 col-md-6 col-12 footer-col">
+          <div class="footer-col body-small">
             {#if meta?.street || meta?.postal || meta?.city}
               <p class="mb-1">
                 <i class="fa fa-home me-2" aria-hidden="true"></i>
@@ -54,18 +55,18 @@
           </div>
 
           <!-- 3. LEGAL LINKS -->
-          <div class="col-lg-3 col-md-6 col-12 footer-col">
+          <div class="footer-col">
             <p class="mb-1">
-              <a href={`${baseUrl}/impressum`} class="footer-link">{t(locale).imprint}</a>
+              <a href={`${baseUrl}/impressum`} class="button-small text-black">{t(locale).imprint}</a>
             </p>
             <p class="mb-0">
-              <a href={`${baseUrl}/datenschutz`} class="footer-link">{t(locale).privacyPolicy}</a>
+              <a href={`${baseUrl}/datenschutz`} class="button-small text-black">{t(locale).privacyPolicy}</a>
             </p>
           </div>
 
           <!-- 4. INSTAGRAM -->
           {#if meta?.instagram}
-            <div class="col-lg-3 col-md-6 col-12 d-flex align-items-start">
+            <div>
               <a
                 href={meta.instagram}
                 target="_blank"
@@ -77,7 +78,6 @@
               </a>
             </div>
           {/if}
-
         </div>
       </div>
     </div>

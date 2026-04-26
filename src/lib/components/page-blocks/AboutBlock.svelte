@@ -18,8 +18,8 @@
         <div class="text-center">
           <h2 class="geko-headline-canvas mb-5">{data.title}</h2>
         </div>
-        <div class="row">
-          <div class="col-md-5">
+        <div class="row align-items-start">
+          <div class="col-md-7">
             {@html resolveRichText(data.content)}
             <div class="mt-4">
               <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/ueber_uns">
@@ -28,7 +28,7 @@
             </div>
           </div>
           {#if data?.team_image}
-            <div class="col-md-7 d-flex align-items-center">
+            <div class="col-md-5">
               <StrapiImage
                 asset={data.team_image}
                 alt={data.team_image.alternativeText || 'Team'}

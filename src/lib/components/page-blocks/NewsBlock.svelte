@@ -21,7 +21,7 @@
       <div class="col-lg-10 col-md-11 col-sm-11">
         <div class="row mb-5">
           <div class="col-12 text-center">
-            <h2 class="geko-headline-canvas fw-bold mb-0">{data.title}</h2>
+            <h2 class="geko-headline-canvas mb-0">{data.title}</h2>
             <p class="mb-0 mt-2 text-muted">{t(locale).currentNews}</p>
           </div>
         </div>

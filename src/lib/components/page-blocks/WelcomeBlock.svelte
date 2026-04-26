@@ -18,7 +18,9 @@
             <div class="col-lg-4 d-none d-lg-block"></div>
             {#if data?.content}
               <div class="col-lg-8">
-                {@html resolveRichText(data.content)}
+                <div class="body-big">
+                  {@html resolveRichText(data.content)}
+                </div>
               </div>
             {/if}
           </div>

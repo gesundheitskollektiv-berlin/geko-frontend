@@ -14,7 +14,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
         <div class="text-center">
-          <h2 class="geko-headline-canvas fw-bold mb-5">{data.title || t(locale).calendar}</h2>
+          <h2 class="geko-headline-canvas mb-5">{data.title || t(locale).calendar}</h2>
         </div>
 
         <CalendarWeekList {events} {locale} showNavigation={false} />

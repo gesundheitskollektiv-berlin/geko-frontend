@@ -37,7 +37,7 @@
           {/if}
           <div class="cta-text">
             {#if cta.call_text}
-              <h2 class="mb-5">{cta.call_text}</h2>
+              <h3 class="mb-5">{cta.call_text}</h3>
             {/if}
             {#if cta.link && cta.link_text}
               <div class="mt-4">

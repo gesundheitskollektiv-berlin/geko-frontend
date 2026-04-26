@@ -14,12 +14,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
         <div class="text-center">
-          <h2 class="geko-headline-canvas fw-bold mb-3 mb-lg-5">{data.title || t(locale).calendar}</h2>
+          <h2 class="geko-headline-canvas fw-bold mb-5">{data.title || t(locale).calendar}</h2>
         </div>
 
         <CalendarWeekList {events} {locale} showNavigation={false} />
 
-        <div class="text-center mt-4">
+        <div class="text-center mt-3 mt-lg-5">
           <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/veranstaltungen">
             {t(locale).allEvents}
           </a>

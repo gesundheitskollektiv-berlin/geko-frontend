@@ -17,7 +17,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <h2 class="text-center mb-3 mb-lg-5">{data.title}</h2>
+        <h2 class="text-center mb-5">{data.title}</h2>
 
         <div class="pt-4">
           <ServicesItems services={effectiveServices} {locale} />

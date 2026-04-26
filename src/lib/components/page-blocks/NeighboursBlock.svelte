@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-8 col-md-9 col-sm-11 my-5">
-					<h2>{data.title}</h2>
+					<h2 class="mb-5">{data.title}</h2>
 					<div class="neighbours-content">
 						{@html resolveRichText(data.content)}
 					</div>

@@ -20,7 +20,7 @@
   <div class="container" id="contact">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <h2 class="mb-3 mb-lg-5">{data.title}</h2>
+        <h2 class="mb-5">{data.title}</h2>
 
         <!-- Contact Information Row -->
         <div class="row mb-5">

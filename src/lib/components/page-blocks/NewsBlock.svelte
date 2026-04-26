@@ -19,7 +19,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <div class="row mb-3 mb-lg-5">
+        <div class="row mb-5">
           <div class="col-12 text-center">
             <h2 class="geko-headline-canvas fw-bold mb-0">{data.title}</h2>
             <p class="mb-0 mt-2 text-muted">{t(locale).currentNews}</p>
@@ -30,7 +30,7 @@
           <NewsItems {announcements} {maxAnnouncements} {locale} />
         </div>
 
-        <div class="text-center mt-2">
+        <div class="text-center mt-4 mt-lg-5">
           <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/aktuelles">
             {t(locale).allAnnouncements}
           </a>

@@ -9,6 +9,16 @@
   );
 </script>
 
+{#snippet pillContent()}
+  {#if service.icon_name}
+    <i class="fa-solid {service.icon_name} service-icon"></i>
+  {/if}
+  <span class="service-title service-pill-title">{service.title}</span>
+  {#if isExternal}
+    <i class="fa-solid fa-arrow-up-right-from-square service-external-icon" aria-hidden="true"></i>
+  {/if}
+{/snippet}
+
 <div class="service-item-wrapper">
   {#if linkUrl}
     <a
@@ -17,23 +27,11 @@
       target={isExternal ? '_blank' : '_self'}
       rel={isExternal ? 'noreferrer noopener' : undefined}
     >
-      {#if service.icon_name}
-        <i class="fa-solid {service.icon_name} service-icon"></i>
-      {/if}
-      <span class="service-title fw-bold">{service.title}</span>
-      {#if isExternal}
-        <i class="fa-solid fa-arrow-up-right-from-square service-external-icon" aria-hidden="true"></i>
-      {/if}
+      {@render pillContent()}
     </a>
   {:else}
     <div class="service-pill service-pill--static text-black">
-      {#if service.icon_name}
-        <i class="fa-solid {service.icon_name} service-icon"></i>
-      {/if}
-      <span class="service-title fw-bold">{service.title}</span>
-      {#if isExternal}
-        <i class="fa-solid fa-arrow-up-right-from-square service-external-icon" aria-hidden="true"></i>
-      {/if}
+      {@render pillContent()}
     </div>
   {/if}
 </div>
@@ -41,7 +39,6 @@
 <style>
   .service-item-wrapper {
     flex: 0 1 auto;
-    max-width: min(672px, 100%);
   }
 
   .service-pill {
@@ -53,7 +50,6 @@
     padding: 20px;
     gap: 16px;
     width: fit-content;
-    max-width: min(672px, 100%);
     min-height: 60px;
     background: var(--bs-white, #fff);
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
@@ -79,8 +75,6 @@
 
   .service-title {
     flex: 1 1 auto;
-    font-size: 1.25rem;
-    line-height: 1.3;
     text-align: left;
   }
 

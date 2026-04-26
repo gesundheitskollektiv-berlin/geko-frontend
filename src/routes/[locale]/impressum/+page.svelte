@@ -17,11 +17,11 @@
   );
 </script>
 
-<section class="bg-geko-white">
+<section class="bg-geko-white py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11 my-5">
-        <h1 class="mb-4">{impressumPage.title || 'Impressum'}</h1>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <h1 class="mb-3 mb-lg-5">{impressumPage.title || 'Impressum'}</h1>
 
         {#if impressumPage.content}
           <div class="rich-text">

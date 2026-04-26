@@ -39,8 +39,10 @@
   });
 </script>
 
-<div class="row align-items-center">
-  <div class="col-lg-7">
+<div
+  class="newsletter-layout d-flex flex-column flex-lg-row align-items-lg-center gap-4 gap-lg-5"
+>
+  <div class="newsletter-content">
     <h2 class="newsletter-heading mb-4">{t(locale).newsletterHeading}</h2>
 
     <div class="newsletter-iframe-wrapper">
@@ -58,9 +60,9 @@
     </div>
   </div>
 
-  <div class="col-lg-5 d-none d-lg-flex justify-content-center align-items-center">
+  <div class="newsletter-graphic d-none d-lg-flex justify-content-center align-items-center">
     <img
-      src="/assets/img/logo_arrow_swing.svg"
+      src="/assets/img/Logo_Geko-Newsletter-Icon.svg"
       alt=""
       aria-hidden="true"
       class="newsletter-logo"
@@ -72,6 +74,13 @@
   .newsletter-heading {
     font-weight: 800;
     line-height: 1.15;
+  }
+
+  /* Cap the whole content column to the form width so the heading and form
+     share the same right edge and the graphic sits flush against them. */
+  .newsletter-content {
+    width: 100%;
+    max-width: 520px;
   }
 
   /* Constrain form width so its content wraps consistently across breakpoints

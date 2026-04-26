@@ -31,11 +31,11 @@
 
 <SubpageContent page={aboutPage} />
 
-<section class="bg-geko-white">
+<section class="bg-geko-white py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11 pb-5">
-        <h2 class="mb-3">{t(locale).jobOffers}</h2>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <h2 class="mb-3 mb-lg-5">{t(locale).jobOffers}</h2>
         <p class="mb-0">
           {t(locale).jobOffersIntro}
           <a href="/{locale}/aktuelles">{t(locale).announcements}</a>.
@@ -46,11 +46,11 @@
 </section>
 
 {#if materials.length > 0}
-  <section class="bg-geko-white">
+  <section class="bg-geko-white py-5">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-11 col-sm-11 pb-5">
-          <h2 class="mb-4">{t(locale).materialsHeading}</h2>
+        <div class="col-lg-10 col-md-11 col-sm-11">
+          <h2 class="mb-3 mb-lg-5">{t(locale).materialsHeading}</h2>
 
           {#each materials as material (material.id)}
             <div class="row align-items-start mt-5">

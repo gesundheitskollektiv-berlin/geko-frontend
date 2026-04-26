@@ -61,6 +61,15 @@ $spacers: (
   9: 90px
 );
 
+// Wider content cap on huge screens; smaller breakpoints stay default
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1600px
+);
+
 // Font sizes for responsive utilities
 $font-sizes: (
   12: 0.75rem,

@@ -24,7 +24,7 @@
 <section class="announcement-page bg-geko-white">
   <div class="container py-5">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-10">
+      <div class="col-lg-10 col-md-11 col-sm-11">
         <nav class="breadcrumb-nav mb-4" aria-label="breadcrumb">
           <a href="/{locale}/aktuelles" class="breadcrumb-link">{t(locale).announcements}</a>
           {#if displayDate}

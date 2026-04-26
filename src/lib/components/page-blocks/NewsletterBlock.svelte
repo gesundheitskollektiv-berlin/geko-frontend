@@ -7,7 +7,7 @@
 <section id="newsletter" class="newsletter-block py-5">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11">
+      <div class="col-lg-8 offset-lg-2 col-md-11 col-sm-11">
         <Newsletter {locale} />
       </div>
     </div>

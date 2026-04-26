@@ -24,18 +24,18 @@
 <section class="cta-section py-5" style:--cta-color={bgColor}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10 col-md-11 col-sm-11">
-        <div class="row">
-          <div class="col-lg-4">
-            {#if cta.logo}
+      <div class="col-lg-8 col-md-11 col-sm-11">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-5 gap-lg-7">
+          {#if cta.logo}
+            <div class="cta-logo-wrap flex-shrink-0">
               <StrapiImage
                 asset={cta.logo}
                 alt={cta.logo.alternativeText || ''}
                 class="img-fluid cta-logo"
               />
-            {/if}
-          </div>
-          <div class="col-lg-8">
+            </div>
+          {/if}
+          <div class="cta-text">
             {#if cta.call_text}
               <h2 class="fw-bold">{cta.call_text}</h2>
             {/if}
@@ -59,6 +59,6 @@
   }
 
   .cta-section :global(.cta-logo) {
-    max-width: 150px;
+    max-width: 220px;
   }
 </style>

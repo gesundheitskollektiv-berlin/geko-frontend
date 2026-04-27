@@ -7,33 +7,49 @@
   let iframeEl;
 
   onMount(() => {
-    const script = document.createElement('script');
-    script.src = 'https://app.mailjet.com/pas-nc-embedded-v1.js';
-    script.type = 'text/javascript';
-    document.body.appendChild(script);
+    const SCRIPT_SRC = 'https://app.mailjet.com/pas-nc-embedded-v2.js';
 
-    // Listen for Mailjet widget postMessage resize events and apply exactly,
-    // so the iframe is never taller than its form content.
-    function onMessage(event) {
-      if (!iframeEl) return;
-      if (event.source !== iframeEl.contentWindow) return;
-      const data = event.data;
-      const height =
-        typeof data === 'number'
-          ? data
-          : data && typeof data === 'object'
-            ? data.height ?? data.iframeHeight ?? data?.payload?.height
-            : null;
-      if (typeof height === 'number' && height > 0) {
-        iframeEl.style.height = `${height}px`;
-      }
+    // The Mailjet v2 widget self-initializes from a `window.load` listener.
+    // When this component mounts after the page has already loaded
+    // (e.g. on client-side navigation), that listener never fires, so we
+    // call iframe-resizer ourselves once the script is available.
+    function initWidget() {
+      if (!iframeEl || typeof window.iFrameResize !== 'function') return;
+      window.iFrameResize({ checkOrigin: false }, iframeEl);
     }
-    window.addEventListener('message', onMessage);
+
+    function onCaptchaMessage(event) {
+      if (!iframeEl) return;
+      const type = event?.data?.type;
+      if (type === 'CAPTCHA_OPEN') iframeEl.style.minHeight = '650px';
+      if (type === 'CAPTCHA_CLOSE') iframeEl.style.minHeight = '0px';
+    }
+
+    let script = document.querySelector('script[data-mailjet-embed-v2]');
+    if (!script) {
+      script = document.createElement('script');
+      script.src = SCRIPT_SRC;
+      script.type = 'text/javascript';
+      script.async = true;
+      script.dataset.mailjetEmbedV2 = '';
+      document.body.appendChild(script);
+    }
+
+    if (typeof window.iFrameResize === 'function') {
+      initWidget();
+    } else {
+      script.addEventListener('load', initWidget, { once: true });
+    }
+
+    window.addEventListener('message', onCaptchaMessage);
 
     return () => {
-      window.removeEventListener('message', onMessage);
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+      window.removeEventListener('message', onCaptchaMessage);
+      script.removeEventListener('load', initWidget);
+      try {
+        iframeEl?.iFrameResizer?.removeListeners?.();
+      } catch {
+        // no-op
       }
     };
   });
@@ -53,8 +69,9 @@
         scrolling="no"
         marginheight="0"
         marginwidth="0"
-        src="https://x983w.mjt.lu/wgt/x983w/vrn/form?c=4f94931a"
+        src="https://x983w.mjt.lu/wgt/x983w/0j7k/form?c=392471ef"
         width="100%"
+        style="height: 0;"
         title="Newsletter Anmeldung"
       ></iframe>
     </div>
@@ -74,35 +91,29 @@
   .newsletter-heading {
     font-weight: 800;
     line-height: 1.15;
+    /* Avoid mid-word hyphenation that shows up on narrower viewports. */
+    hyphens: manual;
+    overflow-wrap: break-word;
   }
 
-  /* Cap the whole content column to the form width so the heading and form
-     share the same right edge and the graphic sits flush against them. */
+  /* Let the form column grow into the available row so we don't leave a
+     gap before the graphic, and so the embedded Mailjet widget gets enough
+     width to switch into its horizontal layout. */
   .newsletter-content {
     width: 100%;
-    max-width: 520px;
+    flex: 1 1 0;
+    min-width: 0;
   }
 
-  /* Constrain form width so its content wraps consistently across breakpoints
-     and the iframe height stays predictable. */
   .newsletter-iframe-wrapper {
     width: 100%;
-    max-width: 520px;
   }
 
   .newsletter-iframe-wrapper iframe {
     display: block;
     width: 100%;
     max-width: 100%;
-    min-height: 320px;
     border: 0;
-  }
-
-  /* Very narrow screens where 520px cap is irrelevant and text wraps more. */
-  @media (max-width: 575.98px) {
-    .newsletter-iframe-wrapper iframe {
-      min-height: 380px;
-    }
   }
 
   .newsletter-logo {

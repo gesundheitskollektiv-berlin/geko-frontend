@@ -7,26 +7,33 @@
   export let locale = 'de';
 
   // Use geko_services relation from block data if available, otherwise fall back to collection services
-  $: effectiveServices = data?.geko_services && data.geko_services.length > 0 
-    ? data.geko_services 
-    : services;
+  $: effectiveServices =
+    data?.geko_services && data.geko_services.length > 0 ? data.geko_services : services;
 
-  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'services';
 </script>
 
-<section id={sectionId} class={backgroundClass}>
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-8 col-md-9 col-sm-11 my-5">
-					<h2>{data.title}</h2>
+<section id={sectionId} class="services-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <h2 class="text-center mb-5">{data.title}</h2>
+      </div>
+    </div>
 
-					<div class="card shadow-none border-0">
-						<div class={`card-body py-4 px-0 ${backgroundClass}`}>
-							<ServicesItems services={effectiveServices} {locale} />
-						</div>
-					</div>
-			</div>
-		</div>
-	</div>
+    <div class="pt-4">
+      <ServicesItems services={effectiveServices} {locale} />
+    </div>
+  </div>
 </section>
+
+<style>
+  .services-section {
+    background: linear-gradient(
+      to bottom,
+      var(--bs-geko-yellow) 0%,
+      var(--bs-geko-yellow) 78%,
+      #ffffff 100%
+    );
+  }
+</style>

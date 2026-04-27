@@ -1,50 +1,75 @@
-import { PUBLIC_STRAPI_URL } from '$env/static/public';
+import { building } from '$app/environment';
+import { env } from '$env/dynamic/public';
+import { getStrapiPublicUrl } from '$lib/helpers/strapiPublicUrl';
 
-// Cache for build-time request deduplication
 const cache = new Map();
 
+const shouldUseCache = () => building && env.PUBLIC_PREVIEW_MODE !== 'true';
+
 const fetchData = async (url, fetchFn = fetch) => {
-  // Check cache first (for build-time deduplication)
-  if (cache.has(url)) {
+  if (shouldUseCache() && cache.has(url)) {
     return cache.get(url);
   }
 
   const response = await fetchFn(url);
   const data = await response.json();
-  
-  // Cache the response (only during build/prerendering)
-  cache.set(url, data);
-  
+
+  if (shouldUseCache()) {
+    cache.set(url, data);
+  }
+
   return data;
 };
 
 export async function getDataFromCMS(path, locale, fetchFn = fetch) {
-  // For collections that might have pagination, fetch all pages
-  const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs', 'geko-materials'];
+  const base = getStrapiPublicUrl();
+  if (!base) {
+    console.error('[getDataFromCMS] PUBLIC_STRAPI_URL is missing');
+    return { data: null };
+  }
+
+  const shouldFetchAllPages = ['geko-announcements', 'geko-services', 'geko-jobs', 'geko-materials', 'geko-supporters'];
 
   if (shouldFetchAllPages.includes(path)) {
-    return await fetchAllPages(path, locale, fetchFn);
+    return await fetchAllPages(path, locale, fetchFn, base);
   }
 
-  // Special handling for landing page to populate all relations including CTA and supporters
-  if (path === 'geko-page-landing') {
-    // Use pLevel for deep population which handles all nested relations including supporters images
-    const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
-    return await fetchData(queryUrl, fetchFn);
-  }
+  // pLevel (strapi-v5-plugin-populate-deep) doesn't populate media fields on
+  // these single-types reliably, so fall back to populate=* which does.
+  const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
 
-  // For single entries or small collections, use original method
-  const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}`;
+  const queryUrl = `${base}/api/${path}?${populateParam}&locale=${locale}`;
   return await fetchData(queryUrl, fetchFn);
 }
 
-async function fetchAllPages(path, locale, fetchFn = fetch) {
+// Collections / single-types whose media fields aren't populated by pLevel —
+// we use populate=* for those.
+const useStarPopulate = [
+  'geko-page-about',
+  'geko-page-support',
+  'geko-page-kontakt',
+  'geko-page-angebote',
+  'geko-materials',
+  'geko-supporters'
+];
+
+// Per-path caps and server-side sorts. Only listed paths get the treatment;
+// everything else goes through fetchAllPages untouched.
+const maxItemsByPath = { 'geko-announcements': 500 };
+const sortByPath = { 'geko-announcements': 'publish_date:desc' };
+
+async function fetchAllPages(path, locale, fetchFn = fetch, baseUrl = getStrapiPublicUrl()) {
   let allData = [];
   let currentPage = 1;
   let totalPages = 1;
 
+  const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
+  const maxItems = maxItemsByPath[path];
+  const sort = sortByPath[path];
+  const sortParam = sort ? `&sort[0]=${sort}` : '';
+
   do {
-    const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?pLevel&locale=${locale}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
+    const queryUrl = `${baseUrl}/api/${path}?${populateParam}&locale=${locale}${sortParam}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
     const result = await fetchData(queryUrl, fetchFn);
 
     if (result?.data) {
@@ -55,10 +80,14 @@ async function fetchAllPages(path, locale, fetchFn = fetch) {
       }
     }
 
+    if (maxItems !== undefined && allData.length >= maxItems) {
+      allData = allData.slice(0, maxItems);
+      break;
+    }
+
     currentPage++;
   } while (currentPage <= totalPages);
 
-  // Return in the same format as the original API
   return {
     data: allData,
     meta: {
@@ -73,6 +102,11 @@ async function fetchAllPages(path, locale, fetchFn = fetch) {
 }
 
 export async function getDetailsDataFromCMS(path, locale, slug, fetchFn = fetch) {
-  const queryUrl = `${PUBLIC_STRAPI_URL}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&pLevel`;
+  const base = getStrapiPublicUrl();
+  if (!base) {
+    console.error('[getDetailsDataFromCMS] PUBLIC_STRAPI_URL is missing');
+    return { data: null };
+  }
+  const queryUrl = `${base}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&pLevel`;
   return await fetchData(queryUrl, fetchFn);
 }

@@ -9,7 +9,7 @@
 @font-face {
   font-family: 'CerebriSansPro';
   src: url('$lib/assets/fonts/CerebriSansPro-Bold.woff2') format('woff2');
-  font-weight: 600;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -17,23 +17,38 @@
 @font-face {
   font-family: 'CerebriSansPro';
   src: url('$lib/assets/fonts/CerebriSansPro-ExtraBold.woff2') format('woff2');
-  font-weight: 700;
+  font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 
-// Additional typography rules
+// Headings: Figma uses ExtraBold (800) for h1–h3; no Heavy (900) font file shipped — h1 uses 800.
 h1,
 h2,
 h3,
-h4,
-strong {
+h4 {
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
   padding-top: 0;
   margin-top: 0;
-  font-weight: 600; // Use Bold font weight for better distinction from body text
+}
+
+strong {
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 800;
+}
+
+// Smaller headings: Bold (700), not ExtraBold
+h4,
+h5,
+h6 {
+  font-weight: 700;
 }
 
 .font-xs {
@@ -45,43 +60,83 @@ strong {
   font-size: 1.125rem; // 18px
 }
 
-// Responsive heading sizes (matching old Jekyll site)
-// Default (mobile/tablet-portrait): h1=42px, h2=30px, h3=21px, h4=18px
+// Mobile / default: legacy ladder; line-heights per Figma ratios
+// h1=42px, h2=30px, h3=21px, h4=18px
 h1 {
   font-size: 2.625rem; // 42px
+  line-height: 1.2;
 }
 
 h2 {
   font-size: 1.875rem; // 30px
+  line-height: 1.1;
 }
 
 h3 {
   font-size: 1.3125rem; // 21px
+  line-height: 1;
 }
 
 h4 {
   font-size: 1.125rem; // 18px
 }
 
-// Large screens (tablet-landscape and up, ≥992px): h1=60px, h2=42px, h3=30px, h4=21px
+// Large screens (≥992px): Figma desktop sizes + body 21px / 125%
 @include media-breakpoint-up(lg) {
   body {
     font-size: 1.3125rem; // 21px
+    line-height: 1.25;
   }
 
   h1 {
     font-size: 3.75rem; // 60px
+    line-height: 1.2;
   }
 
   h2 {
-    font-size: 2.625rem; // 42px
+    font-size: 3rem; // 48px
+    line-height: 1.1;
   }
 
   h3 {
-    font-size: 1.875rem; // 30px
+    font-size: 2.5rem; // 40px
+    line-height: 1;
   }
 
   h4 {
     font-size: 1.3125rem; // 21px
   }
+}
+
+// Figma "body-big" — Welcome block rich text (landing intro)
+.body-big {
+  font-size: 1.5rem; // 24px
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.service-pill-title {
+  font-size: 2.25rem; // 36px
+  font-weight: 400;
+  line-height: 1;
+}
+
+// Figma "body-small" — footer contact (address, phone, email)
+.body-small {
+  font-size: 1rem; // 16px
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+// Figma "button-small" — footer legal links (typography; no default underline)
+.button-small {
+  font-family: 'CerebriSansPro', system-ui, sans-serif;
+  font-size: 1.125rem; // 18px
+  font-weight: 800;
+  line-height: 1.875rem; // 30px (Figma fixed)
+  text-decoration: none;
+}
+
+.button-small:hover {
+  text-decoration: underline;
 }

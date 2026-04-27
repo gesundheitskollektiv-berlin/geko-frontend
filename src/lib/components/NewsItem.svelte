@@ -3,56 +3,72 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
   let { item = {}, locale = 'de' } = $props();
+
+  const tag = $derived(item?.geko_announcement_tag);
+  const hasTagOrDate = $derived(
+    Boolean(tag?.name || item?.publish_date || item?.publishedAt)
+  );
 </script>
 
 <div class="col-md-6 col-lg-4">
-  <a href="/{locale}/announcements/{item.documentId || item.id}" class="text-decoration-none text-dark">
-    <div class="card h-100 border">
+  <a href="/{locale}/aktuelles/{item.slug}" class="text-decoration-none text-dark">
+    <div class="card h-100 border news-card" class:highlight={item.highlight}>
       {#if item?.image}
         <StrapiImage
           asset={item.image}
           alt={item.image.alternativeText || item.title}
-          class="card-img-top"
-          style="aspect-ratio: 16/9; object-fit: cover;"
+          class="card-img-top news-card-image"
         />
       {/if}
-      <div class="card-body d-flex flex-column">
-        {#if item.publish_date || item.publishedAt}
-          <time class="publish-date small text-muted mb-2">
-            {formatDate(item.publish_date || item.publishedAt, locale)}
-          </time>
+      <div class="card-body d-flex flex-column bg-geko-light-grey flex-grow-1">
+        {#if hasTagOrDate}
+          <div class="d-flex justify-content-between align-items-baseline gap-2 small text-muted mb-4">
+            <span class="text-start text-truncate">
+              {#if tag?.name}
+                {tag.name}
+              {:else}
+                <span class="invisible" aria-hidden="true">&nbsp;</span>
+              {/if}
+            </span>
+            {#if item.publish_date || item.publishedAt}
+              <time class="text-end flex-shrink-0">
+                {formatDate(item.publish_date || item.publishedAt, locale)}
+              </time>
+            {/if}
+          </div>
         {/if}
-        
-        {#if item.is_event && item.event_date}
-          <time class="event-date small text-muted mb-2 d-block">
-            <i class="fas fa-calendar me-1"></i>
-            {formatDate(item.event_date, locale)}
-          </time>
+        <h3 class="h5 mb-2 fw-bold">{item?.title}</h3>
+        {#if item.teaser_text}
+          <p class="mb-0 flex-grow-1">{item.teaser_text}</p>
+        {:else}
+          <div class="flex-grow-1"></div>
         {/if}
-        
-        <h3 class="h5 mb-0 fw-normal">{item?.title}</h3>
+        <div class="mt-auto pt-3 d-flex justify-content-center">
+          <span class="btn-geko bg-geko-white text-black">Mehr Lesen →</span>
+        </div>
       </div>
     </div>
   </a>
 </div>
 
 <style>
-  .card {
-    border-radius: 0.5rem;
+  .news-card {
+    border-radius: 1.75rem;
+    overflow: hidden;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
 
-  .card:hover {
+  .news-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
   }
 
-  .event-date {
-    font-size: 0.875rem;
-    font-style: italic;
+  .news-card.highlight {
+    border-top: 3px solid var(--bs-geko-blue);
+  }
+
+  :global(.news-card-image) {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
 </style>
-
-
-
-

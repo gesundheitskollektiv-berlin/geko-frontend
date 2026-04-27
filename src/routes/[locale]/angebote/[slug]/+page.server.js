@@ -12,7 +12,7 @@ export async function entries() {
 			if (result?.data) {
 				for (const service of result.data) {
 					if (service.slug) {
-						entries.push({ locale, id: service.slug });
+						entries.push({ locale, slug: service.slug });
 					}
 				}
 			}
@@ -26,7 +26,7 @@ export async function entries() {
 
 export async function load({ params, fetch }) {
   const locale = getValidLocale(params.locale);
-  const { id: slug } = params;
+  const { slug } = params;
 
   try {
     // Pass fetch for request deduplication during prerendering

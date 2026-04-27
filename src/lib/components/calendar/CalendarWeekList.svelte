@@ -1,38 +1,48 @@
 <script>
-  import { getWeekStart, getWeekEnd, filterEventsByWeek, groupEventsByDay, getWeekRangeText, isValidHttpUrl } from '$lib/helpers/calendar';
+  import {
+    getWeekStart,
+    filterEventsByWeek,
+    groupEventsByDay,
+    getVisibleCalendarDates,
+    getCalendarEventExternalUrl,
+    toLocalDateKey,
+  } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
-  import CalendarLegend from './CalendarLegend.svelte';
   import CalendarHeader from './CalendarHeader.svelte';
   import CalendarDay from './CalendarDay.svelte';
   import './calendar.scss';
 
-  let { events = [], locale = 'de' } = $props();
+  let { events = [], locale = 'de', showNavigation = true } = $props();
 
-  // State for current week
   let currentWeekStart = $state(getWeekStart(new Date()));
-  
-  // State for expanded event accordion
+
   let expandedEventId = $state(null);
 
-  // Derived week events
   const weekEvents = $derived(filterEventsByWeek(events, currentWeekStart));
   const groupedEvents = $derived(groupEventsByDay(weekEvents));
-  const weekRange = $derived(getWeekRangeText(currentWeekStart, locale));
-  
-  // Check if current week is being displayed
-  const isCurrentWeek = $derived(() => {
-    const today = getWeekStart(new Date());
-    return currentWeekStart.getTime() === today.getTime();
+
+  const visibleDates = $derived(
+    getVisibleCalendarDates(currentWeekStart, groupedEvents, {
+      landingFromToday: !showNavigation,
+    })
+  );
+
+  /** Mon–Sun for the purple week strip (always 7 cells). */
+  const stripDates = $derived.by(() => {
+    const dates = [];
+    const start = new Date(currentWeekStart);
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
   });
 
   function goToPreviousWeek() {
     const newDate = new Date(currentWeekStart);
     newDate.setDate(newDate.getDate() - 7);
     currentWeekStart = newDate;
-  }
-
-  function goToToday() {
-    currentWeekStart = getWeekStart(new Date());
   }
 
   function goToNextWeek() {
@@ -42,86 +52,58 @@
   }
 
   function handleEventClick(event) {
-    // Check if description is just a URL
-    const description = event.description || '';
-    const firstLine = description.split('\n')[0].trim();
-
-    if (isValidHttpUrl(firstLine)) {
-      // Open external URL in new tab
-      window.open(firstLine, '_blank');
+    const externalUrl = getCalendarEventExternalUrl(event);
+    if (externalUrl) {
+      window.open(externalUrl, '_blank');
       return;
     }
 
-    // Toggle accordion
     if (expandedEventId === event.uid) {
-      expandedEventId = null; // Close if already open
+      expandedEventId = null;
     } else {
-      expandedEventId = event.uid; // Open this one
+      expandedEventId = event.uid;
     }
   }
 
-  // Get all dates for the current week (even if no events)
-  function getWeekDates() {
-    const dates = [];
-    const start = new Date(currentWeekStart);
-    
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      dates.push(date);
-    }
-    
-    return dates;
-  }
-
-  // Check if a date is today
   function isToday(date) {
     const today = new Date();
-    return date.getDate() === today.getDate() &&
-           date.getMonth() === today.getMonth() &&
-           date.getFullYear() === today.getFullYear();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 </script>
 
 <div class="calendar-week-list">
-  <!-- Legend -->
-  <!-- <CalendarLegend {locale} /> -->
-
-  <!-- Header with navigation -->
-  <CalendarHeader 
-    {weekRange} 
-    {locale} 
-    isCurrentWeek={isCurrentWeek()}
+  <CalendarHeader
+    weekDates={stripDates}
+    {locale}
+    {showNavigation}
     onPrevious={goToPreviousWeek}
     onNext={goToNextWeek}
-    onToday={goToToday}
   />
 
-  <!-- Empty state message -->
-  {#if weekEvents.length === 0}
-    <div class="calendar-empty-state mt-5">
-      <div class="h5 fw-normal">{t(locale).noEventsThisWeek}</div>
+  {#if visibleDates.length === 0}
+    <div class="calendar-empty-state">
+      <div class="h6 fw-normal mb-0 text-muted">{t(locale).noEventsThisWeek}</div>
     </div>
-  {/if}
-
-  <!-- Event list -->
-  <div class="calendar-events">
-    {#each getWeekDates() as date}
-      {@const dateKey = date.toISOString().split('T')[0]}
-      {@const dayEvents = groupedEvents[dateKey] || []}
-      
-      {#if dayEvents.length > 0}
-        <CalendarDay 
-          {date} 
+  {:else}
+    <div class="calendar-events">
+      {#each visibleDates as date (toLocalDateKey(date))}
+        {@const dateKey = toLocalDateKey(date)}
+        {@const dayEvents = groupedEvents[dateKey] || []}
+        <CalendarDay
+          {date}
           events={dayEvents}
-          {locale} 
+          {locale}
           {expandedEventId}
           onEventClick={handleEventClick}
           isToday={isToday(date)}
         />
-      {/if}
-    {/each}
-  </div>
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -134,17 +116,11 @@
   }
 
   .calendar-empty-state {
-    background-color: var(--calendar-bg-light);
-    padding: 1.5rem;
+    padding: 1.5rem 1.25rem;
     text-align: center;
-    border-radius: 0 0 0.5rem 0.5rem;
-    box-shadow: var(--calendar-shadow-standard);
     font-family: var(--calendar-font-family);
-  }
-
-  .calendar-empty-state .h5 {
-    margin: 0;
-    color: var(--calendar-text-dark);
+    border: 1px solid var(--calendar-border-gray);
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
   }
 </style>
-

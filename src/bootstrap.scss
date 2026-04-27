@@ -6,14 +6,16 @@
 $geko-white: #fff;
 $geko-black: #000;
 $geko-yellow: #fff15b;
-$geko-lilac: #dbd0ff;
+$geko-lilac: #c89edd;
+$geko-lilac-light: #eacef8;
 $geko-green: #71cf9a;
 $geko-grey-green: #b8e7cc;
 $geko-turquoise: #80ddd2;
 $geko-dark-grey: #2e2e2e;
-$geko-light-grey: #ececec;
-$geko-blue: #58a9ff;
+$geko-light-grey: #f8f8f3; // cream1
+$geko-blue: #99d8de;
 $geko-red: #ff521c;
+$geko-orange: #ff9100;
 $geko-text-dark: #34495e;
 
 // Override Bootstrap theme colors and add custom geko colors
@@ -36,6 +38,8 @@ $theme-colors: (
   'geko-blue': $geko-blue,
   'geko-green': $geko-green,
   'geko-lilac': $geko-lilac,
+  'geko-lilac-light': $geko-lilac-light,
+  'geko-orange': $geko-orange,
   'geko-grey-green': $geko-grey-green,
   'geko-turquoise': $geko-turquoise,
   'geko-dark-grey': $geko-dark-grey,
@@ -57,6 +61,15 @@ $spacers: (
   9: 90px
 );
 
+// Wider content cap on huge screens; smaller breakpoints stay default
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1600px
+);
+
 // Font sizes for responsive utilities
 $font-sizes: (
   12: 0.75rem,
@@ -70,6 +83,7 @@ $font-sizes: (
   28: 1.75rem,
   30: 1.875rem,
   32: 2rem,
+  36: 2.25rem,
   42: 2.625rem,
   60: 3.75rem
 );
@@ -79,8 +93,9 @@ $enable-rfs: false;
 // Typography overrides - must be before @import 'bootstrap/scss/type'
 $font-family-base: 'CerebriSansPro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-size-base: 1.125rem; // 18px
+$line-height-base: 1.25; // Figma body 125%
 $headings-font-family: 'CerebriSansPro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$headings-font-weight: 600;
+$headings-font-weight: 800;
 $headings-color: $geko-black;
 $headings-line-height: 1.2;
 $headings-margin-bottom: 0;
@@ -91,7 +106,7 @@ $link-font-weight: bold;
 @import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/utilities';
 
-// Extend utilities with custom font sizes and widths
+// Extend utilities with custom font sizes, font weights, and widths
 $utilities: map-merge(
   $utilities,
   (
@@ -100,6 +115,17 @@ $utilities: map-merge(
         (
           values: $font-sizes,
           responsive: true
+        )
+      ),
+    'font-weight': map-merge(
+        map-get($utilities, 'font-weight'),
+        (
+          values: map-merge(
+              map-get(map-get($utilities, 'font-weight'), 'values'),
+              (
+                extrabold: 800
+              )
+            )
         )
       ),
     'width': map-merge(
@@ -151,3 +177,8 @@ $utilities: map-merge(
 @import 'bootstrap/scss/placeholders';
 @import 'bootstrap/scss/helpers';
 @import 'bootstrap/scss/utilities/api';
+
+// Design-token alias (matches Figma / legacy naming)
+:root {
+  --cream1: #{$geko-light-grey};
+}

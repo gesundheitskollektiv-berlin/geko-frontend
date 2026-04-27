@@ -9,7 +9,11 @@
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "format": "prettier --write .",
-    "lint": "prettier --check . && eslint ."
+    "lint": "prettier --check . && eslint .",
+    "migrate:announcements": "node --env-file=.env migrations/migrate-announcements.js",
+    "migrate:services": "node --env-file=.env migrations/migrate-services.js",
+    "migrate:supporters": "node --env-file=.env migrations/migrate-supporters.js",
+    "migrate:ctas": "node --env-file=.env migrations/migrate-ctas.js"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.0",

@@ -1,45 +1,64 @@
 <script>
-  import CTAContent from './CTAContent.svelte';
-  
-  let { data = {}, locale = 'de', index = 0 } = $props();
-  
-  // Access the populated geko_cta relation
+  import StrapiImage from '$lib/components/StrapiImage.svelte';
+
+  let { data = {}, locale = 'de' } = $props();
+
+  const colorMap = { blue: 'var(--bs-geko-blue)', purple: 'var(--bs-geko-lilac)' };
+
   const cta = $derived(data?.geko_cta || {});
-  
-  // Dynamic background color with fallback to red
-  // Check both cta.background_color and data.background_color (for backward compatibility)
-  const backgroundClass = $derived(
-    cta?.background_color 
-      ? `bg-geko-${cta.background_color}` 
-      : data?.background_color 
-        ? `bg-geko-${data.background_color}` 
-        : 'bg-geko-red'
-  );
-  
-  // Check if link is external (starts with http://, https://, //, mailto:, tel:, etc.)
+  const bgColor = $derived(colorMap[cta.background_color] ?? colorMap.purple);
+
   function isExternalLink(link) {
     if (!link) return false;
     return /^(https?:\/\/|\/\/|mailto:|tel:|#)/i.test(link);
   }
-  
-  // Get the processed link URL with locale prefix for local links
+
   const linkUrl = $derived.by(() => {
     if (!cta.link) return '';
-    if (isExternalLink(cta.link)) {
-      return cta.link;
-    }
-    // Local link - prefix with locale
+    if (isExternalLink(cta.link)) return cta.link;
     const cleanLink = cta.link.startsWith('/') ? cta.link : `/${cta.link}`;
     return `/${locale}${cleanLink}`;
   });
 </script>
 
-<section class="{backgroundClass} text-white py-5">
+<section class="cta-section py-7" style:--cta-color={bgColor}>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11">
-        <CTAContent {cta} {linkUrl} {index} />
+      <div class="col-lg-8 col-md-11 col-sm-11">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-5 gap-lg-7">
+          {#if cta.logo}
+            <div class="cta-logo-wrap flex-shrink-0">
+              <StrapiImage
+                asset={cta.logo}
+                alt={cta.logo.alternativeText || ''}
+                class="img-fluid cta-logo"
+              />
+            </div>
+          {/if}
+          <div class="cta-text">
+            {#if cta.call_text}
+              <h3 class="mb-5">{cta.call_text}</h3>
+            {/if}
+            {#if cta.link && cta.link_text}
+              <div class="mt-4">
+                <a href={linkUrl} class="btn-geko bg-geko-yellow text-black">
+                  {cta.link_text} →
+                </a>
+              </div>
+            {/if}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .cta-section {
+    background: linear-gradient(to bottom, #ffffff 0%, var(--cta-color) 60%);
+  }
+
+  .cta-section :global(.cta-logo) {
+    max-width: 220px;
+  }
+</style>

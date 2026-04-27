@@ -1,112 +1,129 @@
 <script>
-  import { slugify } from '$lib/helpers/landingBlocks';
+  import { t } from '$lib/helpers/translation';
 
-  export let data = {};
+  export const data = {};
   export let meta = {};
   export let locale = 'de';
 
-  $: backgroundClass = data?.background_color ? `bg-geko-${data.background_color}` : 'bg-geko-green';
-  $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'footer';
   $: baseUrl = `/${locale}`;
 </script>
 
-<footer id={sectionId} class={`${backgroundClass} py-5`}>
-  <div class="container fs-5" id="footer">
+<footer id="footer" class="bg-geko-yellow py-9">
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-9 col-sm-11">
-        <!-- LOGO SECTION -->
-        <div class="row">
-          <div class="col-12">
-            <div class="mb-5"></div>
-            <p class="mb-4">Geko - Stadtteil-Gesundheits-Zentrum Neukölln<br>Wird getragen von</p>
-            <a href={baseUrl}>
-              <figure id="logo-kollektiv" class="mb-0 py-3 text-start">
-                <img src="/assets/img/Logo_Kollektiv.svg" alt="Logo" style="height: 80px; width: auto;" />
-              </figure>
+      <div class="col-lg-10 col-md-11 col-sm-11">
+        <p class="footer-intro mb-4">
+          {t(locale).footerTagline}<br>
+          {t(locale).footerCarriedBy}
+        </p>
+
+        <div
+          class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start gap-4"
+        >
+          <!-- 1. LOGO -->
+          <div>
+            <a href={baseUrl} aria-label="Geko Startseite">
+              <img
+                src="/assets/img/Logo_Kollektiv.svg"
+                alt="Geko Logo"
+                class="footer-logo"
+              />
             </a>
           </div>
+
+          <!-- 2. CONTACT -->
+          <div class="footer-col body-small">
+            {#if meta?.street || meta?.postal || meta?.city}
+              <p class="mb-1">
+                <i class="fa fa-home me-2" aria-hidden="true"></i>
+                {meta?.street}{meta?.street && (meta?.postal || meta?.city) ? ',' : ''}
+                {meta?.postal ?? ''} {meta?.city ?? ''}
+              </p>
+            {/if}
+            {#if meta?.phone}
+              <p class="mb-1">
+                <i class="fa fa-phone me-2" aria-hidden="true"></i>
+                <a href={`tel:${meta.phone}`} class="footer-link">{meta.phone}</a>
+              </p>
+            {/if}
+            {#if meta?.email}
+              <p class="mb-0">
+                <i class="fa fa-at me-2" aria-hidden="true"></i>
+                <a href={`mailto:${meta.email}`} class="footer-link">{meta.email}</a>
+              </p>
+            {/if}
+          </div>
+
+          <!-- 3. LEGAL LINKS -->
+          <div class="footer-col">
+            <p class="mb-1">
+              <a href={`${baseUrl}/impressum`} class="button-small text-black">{t(locale).imprint}</a>
+            </p>
+            <p class="mb-0">
+              <a href={`${baseUrl}/datenschutz`} class="button-small text-black">{t(locale).privacyPolicy}</a>
+            </p>
+          </div>
+
+          <!-- 4. INSTAGRAM -->
+          {#if meta?.instagram}
+            <div>
+              <a
+                href={meta.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="footer-social-circle"
+                aria-label="Instagram"
+              >
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+            </div>
+          {/if}
         </div>
-
-        <!-- THREE COLUMNS -->
-        <div class="row mt-4">
-          <!-- CONTACT -->
-          <div class="col-md-4 contact-data">
-        <h5 class="h5">Kontakt</h5>
-        <span class="fa fa-home" aria-hidden="true"></span>
-        &nbsp;
-        {meta?.street}, {meta?.postal} {meta?.city}
-        <br>
-
-        <span class="fa fa-phone" aria-hidden="true"></span>
-        &nbsp;
-        {#if meta?.phone}
-          <a href={`tel:${meta.phone}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.phone}</a>
-        {/if}
-        <br>
-
-        <span class="fa fa-at" aria-hidden="true"></span>
-        &nbsp;
-        {#if meta?.email}
-          <a href={`mailto:${meta.email}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.email}</a>
-        {/if}
-        <br>
-
-        <div class="my-3"></div>
-        <strong>Presseanfragen:</strong><br>
-        {#if meta?.press_email}
-          <a href={`mailto:${meta.press_email}`} target="_blank" rel="noopener" class="text-decoration-none">{meta.press_email}</a>
-        {/if}
-      </div>
-
-      <!-- SOCIAL MEDIA -->
-      <div class="col-md-4 text-md-start">
-        <h5 class="h5">Social Media</h5>
-        {#if meta?.facebook}
-          <span class="fab fa-facebook" aria-hidden="true"></span>
-          &nbsp;
-          <a href={meta.facebook} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Facebook</a>
-          <br>
-        {/if}
-
-        {#if meta?.instagram}
-          <span class="fab fa-instagram" aria-hidden="true"></span>
-          &nbsp;
-          <a href={meta.instagram} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Instagram</a>
-          <br>
-        {/if}
-
-        {#if meta?.twitter}
-          <span class="fab fa-twitter" aria-hidden="true"></span>
-          &nbsp;
-          <a href={meta.twitter} target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-lighter">Twitter</a>
-        {/if}
-
-        <div class="my-3"></div>
-        <strong>Fotos: </strong>
-        Felicia Scheuerecker,
-        Gesundheitskollektiv Berlin
-      </div>
-
-      <!-- LEGAL INFO -->
-      <div class="col-md-4 text-md-start">
-        <h5 class="h5">Angaben gemäß §5 TMG</h5>
-        <h5 class="h5">Rechtsform</h5>
-        Eingetragener Verein (e.V.)<br>
-
-        <div>
-          <h5 class="h5">Registereintrag</h5>
-          Vereinsregister<br>
-          VRNR 34 873<br>
-        </div>
-
-        <p class="mb-4">
-          <a href={`${baseUrl}/impressum`} class="text-decoration-underline fw-lighter">Ausführliches Impressum</a><br>
-          <a href={`${baseUrl}/datenschutz`} class="text-decoration-underline fw-lighter">Datenschutz</a><br>
-        </p>
-      </div>
-    </div>
       </div>
     </div>
   </div>
 </footer>
 
+<style>
+  .footer-intro {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .footer-logo {
+    height: 64px;
+    width: auto;
+  }
+
+  .footer-col {
+    font-size: 0.9375rem;
+  }
+
+  .footer-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+
+  .footer-social-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .footer-social-circle:hover {
+    opacity: 0.8;
+  }
+</style>

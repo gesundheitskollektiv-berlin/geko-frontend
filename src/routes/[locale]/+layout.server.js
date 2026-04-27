@@ -12,18 +12,25 @@ export async function load({ params, fetch }) {
     'geko-page-landing',
     'geko-page-about',
     'geko-page-support',
+    'geko-page-kontakt',
+    'geko-page-angebote',
     'geko-page-datenschutzerklaerung',
     'geko-page-impressum',
     'geko-meta',
     'geko-announcements',
     'geko-services',
     'geko-jobs',
-    'geko-materials'
+    'geko-materials',
+    'geko-supporters'
   ];
 
-  // Fetch data from all endpoints (pass fetch for request deduplication during prerendering)
   for (const endpoint of endpoints) {
-    data[endpoint] = await getDataFromCMS(endpoint, locale, fetch);
+    try {
+      data[endpoint] = await getDataFromCMS(endpoint, locale, fetch);
+    } catch (err) {
+      console.error(`[layout.server] Failed to fetch ${endpoint}:`, err);
+      data[endpoint] = { data: null };
+    }
   }
 
   // Add locale to data

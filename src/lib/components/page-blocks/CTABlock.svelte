@@ -3,10 +3,17 @@
 
   let { data = {}, locale = 'de' } = $props();
 
-  const colorMap = { blue: 'var(--bs-geko-blue)', purple: 'var(--bs-geko-lilac)' };
+  const colorMap = {
+    blue: 'var(--bs-geko-blue)',
+    purple: 'var(--bs-geko-lilac)',
+    yellow: 'var(--bs-geko-yellow)',
+  };
 
   const cta = $derived(data?.geko_cta || {});
   const bgColor = $derived(colorMap[cta.background_color] ?? colorMap.purple);
+  const buttonClass = $derived(
+    cta.background_color === 'yellow' ? 'bg-white text-black' : 'bg-geko-yellow text-black'
+  );
 
   function isExternalLink(link) {
     if (!link) return false;
@@ -41,7 +48,7 @@
             {/if}
             {#if cta.link && cta.link_text}
               <div class="mt-4">
-                <a href={linkUrl} class="btn-geko bg-geko-yellow text-black">
+                <a href={linkUrl} class="btn-geko {buttonClass}">
                   {cta.link_text} →
                 </a>
               </div>

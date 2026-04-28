@@ -5,6 +5,9 @@
   import '../../app.scss';
   import Navbar from '$lib/components/Navbar.svelte';
   import TopScroller from '$lib/components/TopScroller.svelte';
+  import { trackNavigation } from '$lib/helpers/navHistory.js';
+
+  trackNavigation();
 
   let { children, data } = $props();
 

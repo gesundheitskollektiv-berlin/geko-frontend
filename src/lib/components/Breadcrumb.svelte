@@ -1,6 +1,18 @@
 <script>
-  /** Each item: label (required), href optional. Last item is always the “current” crumb (underlined). */
+  import { getPreviousPath } from '$lib/helpers/navHistory.js';
+
+  /** Each item: label (required), href optional. Last item is always the "current" crumb (underlined). */
   let { items = [] } = $props();
+
+  function handleClick(event, href) {
+    if (!href) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    const target = new URL(href, window.location.origin).pathname;
+    if (getPreviousPath() === target) {
+      event.preventDefault();
+      history.back();
+    }
+  }
 </script>
 
 <nav class="breadcrumb-nav mb-4" aria-label="breadcrumb">
@@ -9,7 +21,11 @@
       <span class="breadcrumb-separator mx-2" aria-hidden="true">&gt;</span>
     {/if}
     {#if item.href && i < items.length - 1}
-      <a href={item.href} class="breadcrumb-link">{item.label}</a>
+      <a
+        href={item.href}
+        class="breadcrumb-link"
+        onclick={(e) => handleClick(e, item.href)}
+      >{item.label}</a>
     {:else}
       <span class="breadcrumb-current">{item.label}</span>
     {/if}

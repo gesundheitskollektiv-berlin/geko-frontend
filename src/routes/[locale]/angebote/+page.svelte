@@ -4,6 +4,8 @@
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
+  import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+  import { t } from '$lib/helpers/translation';
 
   let { data } = $props();
 
@@ -18,7 +20,16 @@
   );
 </script>
 
-<SubpageContent page={angebotePage} showBody={false} />
+<SubpageContent page={angebotePage} showBody={false}>
+  {#snippet breadcrumb()}
+    <Breadcrumb
+      items={[
+        { label: t(locale).home, href: `/${locale}` },
+        { label: t(locale).atTheCenter },
+      ]}
+    />
+  {/snippet}
+</SubpageContent>
 
 <ServicesBlock data={servicesBlock ?? {}} {services} {locale} />
 

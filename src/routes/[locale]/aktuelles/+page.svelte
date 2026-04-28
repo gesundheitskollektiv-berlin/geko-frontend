@@ -4,6 +4,7 @@
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
+  import Breadcrumb from '$lib/components/Breadcrumb.svelte';
   import { t } from '$lib/helpers/translation';
 
   let { data } = $props();
@@ -39,6 +40,12 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
+        <Breadcrumb
+          items={[
+            { label: t(locale).home, href: `/${locale}` },
+            { label: t(locale).announcements },
+          ]}
+        />
         <h1 class="text-center mb-3 mb-lg-5">{t(locale).allAnnouncements}</h1>
 
         <AnnouncementFilterBar {tags} {locale} bind:selectedTagId />

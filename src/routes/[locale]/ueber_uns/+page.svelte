@@ -3,6 +3,7 @@
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
+  import Breadcrumb from '$lib/components/Breadcrumb.svelte';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { getStrapiPublicUrl } from '$lib/helpers/strapiPublicUrl';
   import { t } from '$lib/helpers/translation';
@@ -29,7 +30,16 @@
   };
 </script>
 
-<SubpageContent page={aboutPage} />
+<SubpageContent page={aboutPage}>
+  {#snippet breadcrumb()}
+    <Breadcrumb
+      items={[
+        { label: t(locale).home, href: `/${locale}` },
+        { label: t(locale).aboutUs },
+      ]}
+    />
+  {/snippet}
+</SubpageContent>
 
 <section class="bg-geko-white py-5">
   <div class="container">

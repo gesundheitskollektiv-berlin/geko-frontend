@@ -3,6 +3,7 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
+  import Breadcrumb from '$lib/components/Breadcrumb.svelte';
   import { t } from '$lib/helpers/translation';
 
   let { data } = $props();
@@ -22,11 +23,13 @@
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-11 col-sm-11">
-          <nav class="breadcrumb-nav mb-4" aria-label="breadcrumb">
-            <a href="/{locale}/angebote" class="breadcrumb-link">{t(locale).atTheCenter}</a>
-            <span class="breadcrumb-separator mx-2" aria-hidden="true">&gt;</span>
-            <span class="breadcrumb-current">{service.title}</span>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: t(locale).home, href: `/${locale}` },
+              { label: t(locale).atTheCenter, href: `/${locale}/angebote` },
+              { label: service.title },
+            ]}
+          />
           <div class="row">
             <div class="col-md-5">
               <h1 class="mb-4">
@@ -170,24 +173,6 @@
 <FooterBlock {meta} {locale} />
 
 <style>
-  .breadcrumb-nav {
-    font-size: 1rem;
-    color: #000;
-  }
-
-  .breadcrumb-link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .breadcrumb-link:hover {
-    text-decoration: underline;
-  }
-
-  .breadcrumb-current {
-    text-decoration: underline;
-  }
-
   .service-hero-icon {
     font-size: 2.5rem;
   }

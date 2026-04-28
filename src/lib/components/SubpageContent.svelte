@@ -2,7 +2,7 @@
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
-  let { page, showBody = true } = $props();
+  let { page, showBody = true, breadcrumb } = $props();
 
   const hasHeaderImage = $derived(!!page?.header_image);
 </script>
@@ -11,6 +11,9 @@
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
+        {#if breadcrumb}
+          {@render breadcrumb()}
+        {/if}
         {#if hasHeaderImage}
           <div class="row">
             <div class="col-12">

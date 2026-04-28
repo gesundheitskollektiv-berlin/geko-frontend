@@ -71,17 +71,18 @@ function buildLocalizedPayload(data) {
   };
 }
 
-function buildBasePayload(slug, data) {
+/** Non-localized fields in Strapi v5 still need to be sent on every locale row. */
+function buildNonLocalizedPayload(slug, data, imageId) {
   const isExternal = bool(data.external_service || data.external_link_only, false);
-
-  return {
+  const payload = {
     slug,
     icon_name: pickIconName(slug, data),
     inhouse: bool(data.inhouse, true),
     external_link_only: isExternal,
     project_url: data.external_service_url || data.project_url || null,
-    ...buildLocalizedPayload(data),
   };
+  if (imageId) payload.image = imageId;
+  return payload;
 }
 
 // ── delete-all ──────────────────────────────────────────────────────────────
@@ -89,52 +90,47 @@ function buildBasePayload(slug, data) {
 async function deleteAllServices() {
   console.log('\n=== Cleaning up existing services ===');
 
-  const documentIds = new Set();
+  let deleted = 0;
 
+  // Strapi 5: DELETE without `locale` may not remove all locale rows. Purge each
+  // locale explicitly by re-fetching page 1 until empty (deleted rows shift pagination).
   for (const locale of LOCALES) {
-    let page = 1;
-    let pageCount = 1;
-    process.stdout.write(`  Scanning locale ${locale}...`);
-
+    process.stdout.write(`  Purging locale ${locale}...`);
     try {
-      do {
+      for (;;) {
         const { data } = await api.get(ENDPOINT, {
           params: {
             locale,
-            'pagination[page]': page,
+            'pagination[page]': 1,
             'pagination[pageSize]': 100,
           },
         });
 
-        (data.data || []).forEach((s) => {
-          if (s.documentId) documentIds.add(s.documentId);
-        });
+        const rows = data.data || [];
+        if (rows.length === 0) break;
 
-        pageCount = data.meta?.pagination?.pageCount || 1;
-        page++;
-      } while (page <= pageCount);
+        for (const row of rows) {
+          if (!row.documentId) continue;
+          try {
+            await api.delete(`${ENDPOINT}/${row.documentId}`, { params: { locale } });
+            deleted++;
+          } catch (err) {
+            if (err.response?.status !== 404) {
+              console.error(
+                `  ✗ Delete failed ${row.documentId} (${locale}):`,
+                err.response?.data?.error?.message || err.message
+              );
+            }
+          }
+        }
+      }
       process.stdout.write(' done\n');
     } catch (err) {
       console.warn(` failed (${err.response?.status || err.message})`);
     }
   }
 
-  const ids = Array.from(documentIds);
-  console.log(`  Found ${ids.length} unique services to delete`);
-
-  let deleted = 0;
-  for (const id of ids) {
-    try {
-      await api.delete(`${ENDPOINT}/${id}`);
-      deleted++;
-    } catch (err) {
-      if (err.response?.status !== 404) {
-        console.error(`  ✗ Delete failed ${id}:`, err.response?.data?.error?.message || err.message);
-      }
-    }
-  }
-
-  console.log(`  ✓ Deleted ${deleted} services`);
+  console.log(`  ✓ Deleted locale rows: ${deleted}`);
 
   console.log('  Verifying...');
   for (const locale of LOCALES) {
@@ -162,19 +158,22 @@ async function createService(slug, localesData) {
   }
 
   const baseEntry = localesData[baseLocale];
-  const payload = buildBasePayload(slug, baseEntry.data);
+  const baseData = baseEntry.data;
 
   let imageId = null;
-  if (!payload.external_link_only && baseEntry.data.featured_image) {
+  const nonLocalizedProbe = buildNonLocalizedPayload(slug, baseData, null);
+  if (!nonLocalizedProbe.external_link_only && baseData.featured_image) {
     imageId = await uploadImage({
       api,
       rootDir: GEKO_VEREIN_PATH,
-      relativePath: baseEntry.data.featured_image,
+      relativePath: baseData.featured_image,
       folderName: 'Services',
-      altText: baseEntry.data.featured_image_alt || '',
+      altText: baseData.featured_image_alt || '',
     });
-    if (imageId) payload.image = imageId;
   }
+
+  const nonLocalized = buildNonLocalizedPayload(slug, baseData, imageId);
+  const payload = { ...nonLocalized, ...buildLocalizedPayload(baseData) };
 
   let documentId;
   try {
@@ -185,14 +184,6 @@ async function createService(slug, localesData) {
   } catch (err) {
     console.error(`  ✗ Failed ${slug} (${baseLocale}):`, err.response?.data?.error || err.message);
     return { created: false, localized: {} };
-  }
-
-  if (imageId) {
-    try {
-      await api.put(`${ENDPOINT}/${documentId}`, { data: { image: imageId } });
-    } catch (err) {
-      console.warn(`    ⚠ Image attach failed:`, err.response?.data?.error?.message || err.message);
-    }
   }
 
   const localized = { [baseLocale]: true };
@@ -206,7 +197,7 @@ async function createService(slug, localesData) {
     try {
       await api.put(
         `${ENDPOINT}/${documentId}`,
-        { data: localizedPayload },
+        { data: { ...nonLocalized, ...localizedPayload } },
         { params: { locale } },
       );
       console.log(`    ↳ ${locale}`);

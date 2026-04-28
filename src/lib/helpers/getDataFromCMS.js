@@ -50,7 +50,8 @@ const useStarPopulate = [
   'geko-page-kontakt',
   'geko-page-angebote',
   'geko-materials',
-  'geko-supporters'
+  'geko-supporters',
+  'geko-services'
 ];
 
 // Per-path caps and server-side sorts. Only listed paths get the treatment;
@@ -107,6 +108,7 @@ export async function getDetailsDataFromCMS(path, locale, slug, fetchFn = fetch)
     console.error('[getDetailsDataFromCMS] PUBLIC_STRAPI_URL is missing');
     return { data: null };
   }
-  const queryUrl = `${base}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&pLevel`;
+  const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
+  const queryUrl = `${base}/api/${path}?filters[slug][$eq]=${slug}&locale=${locale}&${populateParam}`;
   return await fetchData(queryUrl, fetchFn);
 }

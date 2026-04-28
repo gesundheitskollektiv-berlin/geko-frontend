@@ -62,7 +62,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Beschreibung</h3>
+            <h3 class="h4 mb-3">{t(locale).description}</h3>
             <div class="service-content">
               {@html resolveRichText(service.description)}
             </div>
@@ -78,7 +78,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Sprachen</h3>
+            <h3 class="h4 mb-3">{t(locale).serviceLanguagesHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.languages)}
             </div>
@@ -94,7 +94,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Angebot</h3>
+            <h3 class="h4 mb-3">{t(locale).serviceOfferHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.offer)}
             </div>
@@ -110,7 +110,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Wann</h3>
+            <h3 class="h4 mb-3">{t(locale).when}</h3>
             <div class="service-content">
               {@html resolveRichText(service.when)}
             </div>
@@ -126,7 +126,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Für wen</h3>
+            <h3 class="h4 mb-3">{t(locale).serviceAudienceHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.who)}
             </div>
@@ -142,7 +142,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">Wo</h3>
+            <h3 class="h4 mb-3">{t(locale).where}</h3>
             <p class="mb-4">
               <i class="fas fa-map-marker-alt me-2"></i>
               {service.where_address}
@@ -151,7 +151,7 @@
             <!-- Google Maps Embed -->
             <div class="ratio ratio-16x9">
               <iframe
-                src={`https://maps.google.com/maps?width=100%25&height=600&hl=de&q=${encodeURIComponent(service.where_address)}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+                src={`https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${encodeURIComponent(service.where_address)}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
                 allowfullscreen
                 loading="lazy"
                 title="Google Maps - {service.where_address}"

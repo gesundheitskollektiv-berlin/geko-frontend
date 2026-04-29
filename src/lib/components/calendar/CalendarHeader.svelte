@@ -163,4 +163,32 @@
     cursor: not-allowed;
   }
 
+  @media (max-width: 575.98px) {
+    .calendar-week-strip {
+      padding: 0.5rem 0.4rem;
+      gap: 0.4rem;
+      overflow-x: hidden;
+    }
+    .calendar-week-strip__days {
+      gap: 0.25rem;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .calendar-week-strip__cell {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 0.25rem 0.1rem;
+    }
+    .calendar-week-strip__cell--today {
+      min-width: 0;
+      padding: 0.3rem 0.2rem;
+    }
+    .calendar-week-strip__weekday {
+      font-size: 0.7rem;
+    }
+    .calendar-week-strip__daynum {
+      font-size: 0.8rem;
+    }
+  }
+
 </style>

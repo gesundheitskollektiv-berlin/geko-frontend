@@ -9,7 +9,7 @@
 </script>
 
 <div class="filter-bar d-flex justify-content-center align-items-center flex-wrap gap-2 my-4">
-  <span class="fw-bold me-2">{t(locale).filter}:</span>
+  <span class="fw-bold me-2 d-none d-md-inline">{t(locale).filter}:</span>
 
   <button
     type="button"

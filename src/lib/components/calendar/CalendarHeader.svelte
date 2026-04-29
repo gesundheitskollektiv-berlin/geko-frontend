@@ -28,9 +28,14 @@
   function isPastCell(d) {
     return isLocalDateBeforeToday(d);
   }
+
+  const weekRangeLabel = $derived.by(() => {
+    if (!weekDates?.length) return '';
+    return `${dayMonth(weekDates[0])} \u2013 ${dayMonth(weekDates[weekDates.length - 1])}`;
+  });
 </script>
 
-<div class="calendar-week-strip">
+<div class="calendar-week-strip" class:calendar-week-strip--with-nav={showNavigation}>
   {#if showNavigation}
     <button
       type="button"
@@ -58,6 +63,7 @@
   </div>
 
   {#if showNavigation}
+    <div class="calendar-week-strip__range">{weekRangeLabel}</div>
     <button
       type="button"
       class="calendar-week-strip__nav"
@@ -163,31 +169,58 @@
     cursor: not-allowed;
   }
 
+  .calendar-week-strip__range {
+    display: none;
+  }
+
   @media (max-width: 575.98px) {
     .calendar-week-strip {
-      padding: 0.5rem 0.4rem;
-      gap: 0.4rem;
+      padding: 0.5rem 0.6rem;
+      gap: 0.5rem;
       overflow-x: hidden;
     }
-    .calendar-week-strip__days {
+
+    /* No-nav (landing): keep 7-cell strip, spread evenly */
+    .calendar-week-strip:not(.calendar-week-strip--with-nav) .calendar-week-strip__days {
       gap: 0.25rem;
       width: 100%;
       justify-content: space-between;
     }
-    .calendar-week-strip__cell {
+
+    .calendar-week-strip:not(.calendar-week-strip--with-nav) .calendar-week-strip__cell {
       flex: 1 1 0;
       min-width: 0;
       padding: 0.25rem 0.1rem;
     }
-    .calendar-week-strip__cell--today {
+
+    .calendar-week-strip:not(.calendar-week-strip--with-nav) .calendar-week-strip__cell--today {
       min-width: 0;
       padding: 0.3rem 0.2rem;
     }
-    .calendar-week-strip__weekday {
+
+    .calendar-week-strip:not(.calendar-week-strip--with-nav) .calendar-week-strip__weekday {
       font-size: 0.7rem;
     }
-    .calendar-week-strip__daynum {
+
+    .calendar-week-strip:not(.calendar-week-strip--with-nav) .calendar-week-strip__daynum {
       font-size: 0.8rem;
+    }
+
+    /* With-nav (events page): hide 7-cell strip, show range label */
+    .calendar-week-strip--with-nav .calendar-week-strip__days {
+      display: none;
+    }
+
+    .calendar-week-strip--with-nav .calendar-week-strip__range {
+      display: flex;
+      flex: 1 1 auto;
+      min-width: 0;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--calendar-text-dark);
+      text-align: center;
     }
   }
 

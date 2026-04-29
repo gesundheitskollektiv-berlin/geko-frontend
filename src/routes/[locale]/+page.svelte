@@ -45,7 +45,7 @@
     <StrapiImage
       asset={meta.page_banner}
       alt={meta.page_banner.alternativeText || 'Geko Eingang'}
-      class="w-100"
+      class="w-100 landing-banner"
       style="display: block;"
     />
   </div>
@@ -63,3 +63,13 @@
 <FooterBlock {meta} {locale} />
 
 <SupportersBlock {locale} />
+
+<style>
+  @media (max-width: 767.98px) {
+    :global(.landing-banner) {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+</style>

@@ -63,7 +63,7 @@
   .services-cloud {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 20px;
   }
   .services-row {
@@ -72,12 +72,6 @@
     justify-content: center;
     align-items: stretch;
     gap: 20px 24px;
-  }
-
-  @media (max-width: 767.98px) {
-    .services-row {
-      flex-direction: column;
-      gap: 20px;
-    }
+    width: 100%;
   }
 </style>

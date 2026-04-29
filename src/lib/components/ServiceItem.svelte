@@ -37,8 +37,11 @@
 </div>
 
 <style>
+  /* min-width:0 lets flex items shrink below content intrinsic width (avoids horizontal overflow). */
   .service-item-wrapper {
     flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .service-pill {
@@ -47,10 +50,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px;
-    gap: 16px;
+    padding: clamp(0.75rem, 2vw, 1.25rem) clamp(0.85rem, 2.8vw, 1.25rem);
+    gap: clamp(0.65rem, 2vw, 1rem);
     width: fit-content;
-    min-height: 60px;
+    max-width: 100%;
+    min-height: clamp(3.25rem, 10vw, 3.75rem);
     background: var(--bs-white, #fff);
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 40px;
@@ -69,26 +73,17 @@
 
   .service-icon {
     flex-shrink: 0;
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
     line-height: 1;
   }
 
   .service-title {
     flex: 1 1 auto;
+    min-width: 0;
     text-align: left;
-  }
-
-  @media (max-width: 767.98px) {
-    .service-item-wrapper {
-      flex: 1 1 100%;
-      width: 100%;
-    }
-    .service-pill {
-      width: 100%;
-    }
-    .service-title {
-      overflow-wrap: anywhere;
-    }
+    font-size: clamp(0.8125rem, 0.72rem + 1.1vw, 1rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
   }
 
   .service-external-icon {

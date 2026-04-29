@@ -1,11 +1,8 @@
 <script>
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { t, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 
   let { locale = 'de' } = $props();
-
-  let isNavbarOpen = false;
 
   const navItems = $derived([
     { label: t(locale).atTheCenter,   href: `/${locale}/angebote` },
@@ -16,68 +13,24 @@
     { label: t(locale).kontakt,       href: `/${locale}/kontakt` },
   ]);
 
-  function toggleNavbar() {
-    isNavbarOpen = !isNavbarOpen;
-  }
-
-  function collapseNavbar() {
-    const navbarCollapse = document.getElementById('navbarNav');
-    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-      if (window.bootstrap) {
-        const bsCollapse = new window.bootstrap.Collapse(navbarCollapse, {
-          toggle: false
-        });
-        bsCollapse.hide();
-      } else {
-        navbarCollapse.classList.remove('show');
-      }
-    }
-    isNavbarOpen = false;
-  }
-
   function switchLocale(newLocale) {
     const currentPath = window.location.pathname;
     const newPath = currentPath.replace(`/${locale}`, `/${newLocale}`);
     goto(newPath);
   }
-
-  onMount(() => {
-    const navbarCollapse = document.getElementById('navbarNav');
-    if (navbarCollapse) {
-      navbarCollapse.addEventListener('shown.bs.collapse', () => {
-        isNavbarOpen = true;
-      });
-      navbarCollapse.addEventListener('hidden.bs.collapse', () => {
-        isNavbarOpen = false;
-      });
-    }
-  });
 </script>
 
-<nav class="navbar navbar-expand-xl navbar-light bg-geko-yellow py-3">
+<nav class="navbar navbar-expand navbar-light bg-geko-yellow py-3">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/{locale}">
       <img src="/assets/img/Logo_Geko_weiss_cropped.svg" alt="Geko Logo" class="navbar-logo" />
     </a>
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      onclick={toggleNavbar}
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-collapse">
       <ul class="navbar-nav ms-auto">
         {#each navItems as item}
           <li class="nav-item">
-            <a class="btn-geko bg-white text-black mx-2" href={item.href} onclick={collapseNavbar}>
+            <a class="btn-geko bg-white text-black mx-2" href={item.href}>
               {item.label}
             </a>
           </li>
@@ -87,14 +40,14 @@
           <button
             class="btn-geko btn-locale dropdown-toggle mx-2"
             type="button"
-            id="localeDropdown"
+            id="localeDropdownDesktop"
             data-bs-toggle="dropdown"
             data-bs-offset="0,16"
             aria-expanded="false"
           >
             {locale.toUpperCase()}
           </button>
-          <ul class="dropdown-menu dropdown-menu-end locale-menu" aria-labelledby="localeDropdown">
+          <ul class="dropdown-menu dropdown-menu-end locale-menu" aria-labelledby="localeDropdownDesktop">
             {#each SUPPORTED_LOCALES as localeOption}
               <li>
                 <button

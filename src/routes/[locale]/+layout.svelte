@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
 	import favicon from '$lib/assets/favicon.svg';
   import '../../app.scss';
-  import Navbar from '$lib/components/Navbar.svelte';
+  import Navbar from '$lib/components/navbar/Navbar.svelte';
   import TopScroller from '$lib/components/TopScroller.svelte';
   import { trackNavigation } from '$lib/helpers/navHistory.js';
 

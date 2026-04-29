@@ -12,13 +12,13 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <p class="footer-intro mb-4">
+        <p class="footer-intro mb-4 text-center text-lg-start">
           {t(locale).footerTagline}<br>
           {t(locale).footerCarriedBy}
         </p>
 
         <div
-          class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start gap-4"
+          class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-center align-items-lg-start gap-4"
         >
           <!-- 1. LOGO -->
           <div>
@@ -32,7 +32,7 @@
           </div>
 
           <!-- 2. CONTACT -->
-          <div class="footer-col body-small">
+          <div class="footer-col body-small text-center text-lg-start my-3 my-lg-0">
             {#if meta?.street || meta?.postal || meta?.city}
               <p class="mb-1">
                 <i class="fa fa-home me-2" aria-hidden="true"></i>
@@ -55,7 +55,7 @@
           </div>
 
           <!-- 3. LEGAL LINKS -->
-          <div class="footer-col">
+          <div class="footer-col text-center text-lg-start">
             <p class="mb-1">
               <a href={`${baseUrl}/impressum`} class="button-small text-black">{t(locale).imprint}</a>
             </p>

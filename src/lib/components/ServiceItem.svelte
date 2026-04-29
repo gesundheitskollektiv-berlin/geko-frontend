@@ -78,6 +78,19 @@
     text-align: left;
   }
 
+  @media (max-width: 767.98px) {
+    .service-item-wrapper {
+      flex: 1 1 100%;
+      width: 100%;
+    }
+    .service-pill {
+      width: 100%;
+    }
+    .service-title {
+      overflow-wrap: anywhere;
+    }
+  }
+
   .service-external-icon {
     flex-shrink: 0;
     margin-left: auto;

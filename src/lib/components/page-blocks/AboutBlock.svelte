@@ -19,16 +19,8 @@
           <h2 class="geko-headline-canvas mb-7">{data.title}</h2>
         </div>
         <div class="row align-items-start">
-          <div class="col-md-7">
-            {@html resolveRichText(data.content)}
-            <div class="mt-4">
-              <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/ueber_uns">
-                {t(locale).aboutUs} ->
-              </a>
-            </div>
-          </div>
           {#if data?.team_image}
-            <div class="col-md-5">
+            <div class="col-md-5 order-md-last mb-4 mb-md-0">
               <StrapiImage
                 asset={data.team_image}
                 alt={data.team_image.alternativeText || 'Team'}
@@ -36,6 +28,14 @@
               />
             </div>
           {/if}
+          <div class="col-md-7">
+            {@html resolveRichText(data.content)}
+            <div class="mt-4 text-center text-md-start">
+              <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/ueber_uns">
+                {t(locale).aboutUs} ->
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

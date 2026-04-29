@@ -59,7 +59,7 @@
   class="newsletter-layout d-flex flex-column flex-lg-row align-items-lg-center gap-4 gap-lg-5"
 >
   <div class="newsletter-content">
-    <h2 class="newsletter-heading mb-5">{t(locale).newsletterHeading}</h2>
+    <h2 class="newsletter-heading mb-5 text-center text-lg-start">{t(locale).newsletterHeading}</h2>
 
     <div class="newsletter-iframe-wrapper">
       <iframe

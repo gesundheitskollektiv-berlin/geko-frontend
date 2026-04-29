@@ -32,7 +32,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-11 col-sm-11">
-        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-5 gap-lg-7">
+        <div class="d-flex flex-column flex-lg-row align-items-center gap-5 gap-lg-7">
           {#if cta.logo}
             <div class="cta-logo-wrap flex-shrink-0">
               <StrapiImage
@@ -42,7 +42,7 @@
               />
             </div>
           {/if}
-          <div class="cta-text">
+          <div class="cta-text text-center text-lg-start">
             {#if cta.call_text}
               <h3 class="mb-5">{cta.call_text}</h3>
             {/if}

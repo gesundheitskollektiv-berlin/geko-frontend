@@ -13,7 +13,6 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
 
-  let visibleCount = $state(20);
   let selectedTagId = $state(null);
 
   const tags = $derived.by(() => {
@@ -30,10 +29,6 @@
       ? announcements
       : announcements.filter((a) => a.geko_announcement_tag?.id === selectedTagId)
   );
-
-  function loadMore() {
-    visibleCount += 10;
-  }
 </script>
 
 <section class="bg-geko-white py-5">
@@ -51,18 +46,10 @@
         <AnnouncementFilterBar {tags} {locale} bind:selectedTagId />
 
         <div class="mb-5">
-          <NewsItems announcements={filteredAnnouncements} maxAnnouncements={visibleCount} {locale} />
+          {#key selectedTagId}
+            <NewsItems announcements={filteredAnnouncements} {locale} enablePagination />
+          {/key}
         </div>
-
-        {#if filteredAnnouncements.length > visibleCount}
-          <div class="row">
-            <div class="col-12 text-center">
-              <a href="#" class="text-decoration-underline text-geko-black fs-20 fw-bold" onclick={(e) => { e.preventDefault(); loadMore(); }} style="cursor: pointer;">
-                {t(locale).loadMore}
-              </a>
-            </div>
-          </div>
-        {/if}
       </div>
     </div>
   </div>

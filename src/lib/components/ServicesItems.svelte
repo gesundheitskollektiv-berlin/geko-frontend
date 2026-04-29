@@ -73,4 +73,11 @@
     align-items: stretch;
     gap: 20px 24px;
   }
+
+  @media (max-width: 767.98px) {
+    .services-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
 </style>

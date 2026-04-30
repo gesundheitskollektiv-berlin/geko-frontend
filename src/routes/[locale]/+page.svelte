@@ -105,7 +105,7 @@
 
     .banner-overlay-title {
       left: 0.9em;
-      font-size: clamp(3.5rem, 16vw, 5.5rem);
+      font-size: clamp(4.5rem, 20vw, 7rem);
       bottom: -0.25em;
     }
   }

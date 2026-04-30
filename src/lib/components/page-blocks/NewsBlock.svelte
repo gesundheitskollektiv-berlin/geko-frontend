@@ -31,7 +31,7 @@
         </div>
 
         <div class="text-center mt-5 mt-lg-7">
-          <a class="btn-geko bg-geko-yellow text-black" href="/{locale}/aktuelles">
+          <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/aktuelles">
             {t(locale).allAnnouncements}
           </a>
         </div>

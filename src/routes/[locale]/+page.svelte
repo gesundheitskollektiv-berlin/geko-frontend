@@ -65,11 +65,17 @@
 <SupportersBlock {locale} />
 
 <style>
+  :global(.landing-banner) {
+    aspect-ratio: 16 / 9;
+    min-height: 360px;
+    max-height: 460px;
+    object-fit: cover;
+    object-position: center;
+  }
+
   @media (max-width: 767.98px) {
     :global(.landing-banner) {
       aspect-ratio: 4 / 3;
-      object-fit: cover;
-      object-position: center;
     }
   }
 </style>

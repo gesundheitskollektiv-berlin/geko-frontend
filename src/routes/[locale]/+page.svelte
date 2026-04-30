@@ -41,13 +41,14 @@
 <WelcomeMarquee />
 
 {#if meta?.page_banner}
-  <div class="w-100">
+  <div class="banner-wrapper w-100">
     <StrapiImage
       asset={meta.page_banner}
       alt={meta.page_banner.alternativeText || 'Geko Eingang'}
       class="w-100 landing-banner"
       style="display: block;"
     />
+    <span class="banner-overlay-title geko-headline-canvas" aria-hidden="true">Geko</span>
   </div>
 {/if}
 
@@ -65,9 +66,33 @@
 <SupportersBlock {locale} />
 
 <style>
+  .banner-wrapper {
+    position: relative;
+    overflow: visible;
+  }
+
+  .banner-wrapper + :global(section) {
+    padding-top: clamp(4rem, 8vw, 7rem);
+  }
+
+  .banner-overlay-title {
+    position: absolute;
+    bottom: -0.35em;
+    left: calc(clamp(1rem, 4vw, 3rem) + 6rem);
+    z-index: 2;
+    margin: 0;
+    padding: 0.05em 0.15em;
+    font-size: clamp(3rem, 11vw, 8rem);
+    line-height: 1;
+    font-weight: 800;
+    color: #000;
+    pointer-events: none;
+    user-select: none;
+  }
+
   :global(.landing-banner) {
     aspect-ratio: 16 / 9;
-    min-height: 360px;
+    min-height: 260px;
     max-height: 460px;
     object-fit: cover;
     object-position: center;
@@ -76,6 +101,12 @@
   @media (max-width: 767.98px) {
     :global(.landing-banner) {
       aspect-ratio: 4 / 3;
+    }
+
+    .banner-overlay-title {
+      left: 0.9em;
+      font-size: clamp(3.5rem, 16vw, 5.5rem);
+      bottom: -0.25em;
     }
   }
 </style>

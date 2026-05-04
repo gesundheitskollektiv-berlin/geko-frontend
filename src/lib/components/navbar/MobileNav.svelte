@@ -91,30 +91,20 @@
           </li>
         {/each}
 
-        <li class="locale-li">
-          <div class="dropdown">
-            <button
-              class="btn-geko btn-locale dropdown-toggle"
-              type="button"
-              id="localeDropdownMobile"
-              data-bs-toggle="dropdown"
-              data-bs-offset="0,16"
-              aria-expanded="false"
-            >
-              {locale.toUpperCase()}
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end locale-menu" aria-labelledby="localeDropdownMobile">
-              {#each SUPPORTED_LOCALES as l}
-                <li>
-                  <button
-                    class="dropdown-item locale-item"
-                    class:active={l === locale}
-                    aria-current={l === locale ? 'true' : undefined}
-                    onclick={() => switchLocale(l)}
-                  >{t(locale).languages[l]}</button>
-                </li>
-              {/each}
-            </ul>
+        <li class="locale-group" aria-label={t(locale).languagesLabel}>
+          <div class="locale-heading">{t(locale).languagesLabel}</div>
+          <div class="locale-pills" role="group" aria-label={t(locale).languagesLabel}>
+            {#each SUPPORTED_LOCALES as l}
+              <button
+                type="button"
+                class="btn-geko locale-pill"
+                class:active={l === locale}
+                aria-current={l === locale ? 'true' : undefined}
+                onclick={() => switchLocale(l)}
+              >
+                {t(locale).languages[l]}
+              </button>
+            {/each}
           </div>
         </li>
       </ul>
@@ -256,52 +246,44 @@
     text-decoration: none;
   }
 
-  /* Locale dropdown inside overlay */
-  .btn-locale {
+  /* Locale pills (inline, no dropdown) */
+  .locale-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .locale-heading {
+    font-weight: 800;
+    font-size: 1rem;
+  }
+
+  .locale-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .locale-pill {
+    background-color: var(--bs-geko-yellow);
+    color: #000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
+  }
+
+  .locale-pill:hover,
+  .locale-pill:focus {
+    background-color: var(--bs-geko-yellow);
+    color: #000;
+  }
+
+  .locale-pill.active,
+  .locale-pill.active:hover,
+  .locale-pill.active:focus {
     background-color: #000;
     color: var(--bs-geko-yellow);
-    border-radius: 24px;
-    font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-weight: 700;
-    padding: 12px 22px;
-    font-size: 1.125rem;
-  }
-
-  .btn-locale:hover,
-  .btn-locale:focus {
-    background-color: #000;
-    color: var(--bs-geko-yellow);
-  }
-
-  .locale-menu {
-    padding: 8px 0;
-    border-radius: 24px;
-    border: 2px solid #000;
-    background: #fff;
-    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.15);
-    min-width: 200px;
-    overflow: hidden;
-  }
-
-  .locale-item {
-    font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-weight: 700;
-    padding: 10px 20px;
-    color: #000;
-    background: transparent;
-    white-space: nowrap;
-  }
-
-  .locale-item:hover,
-  .locale-item:focus {
-    background: var(--bs-geko-lilac-light);
-    color: #000;
-  }
-
-  .locale-item.active,
-  .locale-item.active:hover,
-  .locale-item.active:focus {
-    background: var(--bs-geko-lilac);
-    color: #000;
   }
 </style>

@@ -140,3 +140,12 @@ h4 {
 .button-small:hover {
   text-decoration: underline;
 }
+
+.font-locale-link {
+  font-family: 'Noto Sans Arabic', sans-serif;
+  font-weight: 800;
+  font-size: 1rem; // 16px
+  line-height: 1; // 100%
+  letter-spacing: 0;
+  text-align: center;
+}

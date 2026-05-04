@@ -1,5 +1,5 @@
 <script>
-  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import { t, SUPPORTED_LOCALES } from '$lib/helpers/translation';
 
   let { locale = 'de' } = $props();
@@ -12,12 +12,6 @@
     { label: t(locale).support,       href: `/${locale}/unterstuetzen` },
     { label: t(locale).kontakt,       href: `/${locale}/kontakt` },
   ]);
-
-  function switchLocale(newLocale) {
-    const currentPath = window.location.pathname;
-    const newPath = currentPath.replace(`/${locale}`, `/${newLocale}`);
-    goto(newPath);
-  }
 </script>
 
 <nav class="navbar navbar-expand navbar-light bg-geko-yellow py-3">
@@ -49,15 +43,16 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-end locale-menu" aria-labelledby="localeDropdownDesktop">
             {#each SUPPORTED_LOCALES as localeOption}
+              {@const newPath = $page.url.pathname.replace(`/${locale}`, `/${localeOption}`)}
               <li>
-                <button
-                  class="dropdown-item locale-item"
+                <a
+                  class="locale-item font-locale-link"
                   class:active={localeOption === locale}
                   aria-current={localeOption === locale ? 'true' : undefined}
-                  onclick={() => switchLocale(localeOption)}
+                  href={newPath}
                 >
                   {t(locale).languages[localeOption]}
-                </button>
+                </a>
               </li>
             {/each}
           </ul>
@@ -98,33 +93,32 @@
 
   .locale-menu {
     padding: 8px 0;
-    border-radius: 24px;
+    border-radius: 20px;
     border: 2px solid #000;
-    background: #fff;
-    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.15);
-    min-width: 200px;
+    background: var(--bs-geko-yellow);
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+    min-width: 0;
+    width: max-content;
     overflow: hidden;
   }
 
   .locale-item {
-    font-family: 'CerebriSansPro', system-ui, sans-serif;
-    font-weight: 700;
+    display: block;
     padding: 10px 20px;
     color: #000;
     background: transparent;
+    text-decoration: none;
     white-space: nowrap;
   }
 
   .locale-item:hover,
   .locale-item:focus {
-    background: var(--bs-geko-lilac-light);
+    text-decoration: underline;
     color: #000;
+    background: transparent;
   }
 
-  .locale-item.active,
-  .locale-item.active:hover,
-  .locale-item.active:focus {
-    background: var(--bs-geko-lilac);
-    color: #000;
+  .locale-item.active {
+    text-decoration: underline;
   }
 </style>

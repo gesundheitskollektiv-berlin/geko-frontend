@@ -30,21 +30,24 @@
               { label: service.title },
             ]}
           />
-          <div class="row">
-            <div class="col-md-5">
-              <h1 class="mb-4">
-                {#if service.icon}
-                  <StrapiImage asset={service.icon} alt="" class="service-hero-icon me-3" />
-                {/if}
-                {service.title}
-              </h1>
+          <!-- Row: icon + headline side-by-side, full width -->
+          <div class="d-flex align-items-center gap-3 mb-4">
+            {#if service.icon}
+              <StrapiImage asset={service.icon} alt="" class="service-hero-icon flex-shrink-0" />
+            {/if}
+            <h1 class="mb-0">{service.title}</h1>
+          </div>
+
+          <!-- Row: teaser + image (or teaser full-width when no image) -->
+          {#if service.image}
+            <div class="row">
               {#if service.teaser_text}
-                <div class="service-content">
-                  {@html resolveRichText(service.teaser_text)}
+                <div class="col-md-5">
+                  <div class="service-content">
+                    {@html resolveRichText(service.teaser_text)}
+                  </div>
                 </div>
               {/if}
-            </div>
-            {#if service.image}
               <div class="col-md-7 d-flex align-items-center">
                 <StrapiImage
                   asset={service.image}
@@ -52,8 +55,12 @@
                   class="img-fluid geko-image-rounded"
                 />
               </div>
-            {/if}
-          </div>
+            </div>
+          {:else if service.teaser_text}
+            <div class="service-content">
+              {@html resolveRichText(service.teaser_text)}
+            </div>
+          {/if}
         </div>
       </div>
     </div>

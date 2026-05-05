@@ -1,4 +1,6 @@
 <script>
+  import StrapiImage from '$lib/components/StrapiImage.svelte';
+
   let { service = {}, locale = 'de' } = $props();
 
   const isExternal = $derived(service.external_link_only);
@@ -10,8 +12,8 @@
 </script>
 
 {#snippet pillContent()}
-  {#if service.icon_name}
-    <i class="fa-solid {service.icon_name} service-icon"></i>
+  {#if service.icon}
+    <StrapiImage asset={service.icon} alt="" class="service-icon" />
   {/if}
   <span class="service-title">{service.title}</span>
   {#if isExternal}
@@ -56,10 +58,11 @@
     cursor: default;
   }
 
-  .service-icon {
+  :global(img.service-icon) {
     flex-shrink: 0;
-    font-size: 1.3125rem;
-    line-height: 1;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
   }
 
   .service-title {

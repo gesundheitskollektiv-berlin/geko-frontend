@@ -33,8 +33,8 @@
           <div class="row">
             <div class="col-md-5">
               <h1 class="mb-4">
-                {#if service.icon_name}
-                  <i class="fas {service.icon_name} service-hero-icon me-3"></i>
+                {#if service.icon}
+                  <StrapiImage asset={service.icon} alt="" class="service-hero-icon me-3" />
                 {/if}
                 {service.title}
               </h1>
@@ -173,8 +173,12 @@
 <FooterBlock {meta} {locale} />
 
 <style>
-  .service-hero-icon {
-    font-size: 2.5rem;
+  :global(img.service-hero-icon) {
+    display: inline-block;
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    vertical-align: middle;
   }
 
   .service-content {

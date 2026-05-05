@@ -2,18 +2,22 @@
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/variables-dark';
 
-// Brand palette sourced from legacy Jekyll `_colors.scss`
+// Brand palette — design tokens
 $geko-white: #fff;
 $geko-black: #000;
 $geko-yellow: #fff15b;
+$geko-yellow-light: #fff9bd;
 $geko-lilac: #c89edd;
 $geko-lilac-light: #eacef8;
+$geko-lilac-pale: #f9edff;
 $geko-green: #71cf9a;
 $geko-grey-green: #b8e7cc;
 $geko-turquoise: #80ddd2;
 $geko-dark-grey: #2e2e2e;
 $geko-light-grey: #f8f8f3; // cream1
-$geko-blue: #99d8de;
+$geko-blue: #5cd3de;
+$geko-blue-lighter: #aef7fe;
+$geko-blue-light: #cffbff;
 $geko-red: #ff521c;
 $geko-orange: #ff9100;
 $geko-text-dark: #34495e;
@@ -35,10 +39,14 @@ $theme-colors: (
   'geko-white': $geko-white,
   'geko-red': $geko-red,
   'geko-yellow': $geko-yellow,
+  'geko-yellow-light': $geko-yellow-light,
   'geko-blue': $geko-blue,
+  'geko-blue-lighter': $geko-blue-lighter,
+  'geko-blue-light': $geko-blue-light,
   'geko-green': $geko-green,
   'geko-lilac': $geko-lilac,
   'geko-lilac-light': $geko-lilac-light,
+  'geko-lilac-pale': $geko-lilac-pale,
   'geko-orange': $geko-orange,
   'geko-grey-green': $geko-grey-green,
   'geko-turquoise': $geko-turquoise,

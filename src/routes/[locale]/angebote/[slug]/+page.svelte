@@ -19,7 +19,7 @@
 
 <div>
   <!-- Hero Section with Title, Teaser and Image -->
-  <section class="hero-section bg-geko-grey">
+  <section class="hero-section bg-geko-white">
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-11 col-sm-11">
@@ -180,6 +180,12 @@
 <FooterBlock {meta} {locale} />
 
 <style>
+  .hero-section {
+    position: relative;
+    z-index: 1;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
   :global(img.service-hero-icon) {
     display: inline-block;
     width: 65px;

@@ -7,7 +7,7 @@
   const hasHeaderImage = $derived(!!page?.header_image);
 </script>
 
-<section class="bg-geko-light-grey">
+<section class="hero-section bg-geko-white">
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
@@ -65,6 +65,12 @@
 {/if}
 
 <style>
+  .hero-section {
+    position: relative;
+    z-index: 1;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
   .support-content :global(a) {
     text-decoration: underline;
     color: #000;

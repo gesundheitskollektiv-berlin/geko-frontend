@@ -30,7 +30,7 @@
           {/if}
           <div class="col-md-7">
             {@html resolveRichText(data.content)}
-            <div class="text-center mt-5 mt-lg-7">
+            <div class="text-center text-md-start mt-5 mt-lg-7">
               <a
                 class="btn-geko bg-geko-yellow text-black d-md-none"
                 href="/{locale}/ueber_uns"

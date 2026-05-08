@@ -17,7 +17,8 @@
 
   const instagramUrl = $derived($page.data?.['geko-meta']?.data?.instagram);
 
-  const isActive = (href) => $page.url.pathname.startsWith(href);
+  const isActive = (href) =>
+    $page.url.pathname === href || $page.url.pathname.startsWith(`${href}/`);
 
   const close = () => (isOpen = false);
 
@@ -84,7 +85,8 @@
             <a
               href={item.href}
               onclick={close}
-              class="btn-geko {isActive(item.href) ? 'bg-geko-lilac-light' : 'bg-white'} text-black"
+              class="btn-geko bg-white text-black"
+              class:active={isActive(item.href)}
             >
               {item.label}
             </a>
@@ -210,6 +212,15 @@
     font-weight: 700;
     text-decoration: none;
     display: inline-block;
+  }
+
+  .overlay-list :global(li > .btn-geko:hover) {
+    background-color: var(--bs-geko-yellow-light) !important;
+  }
+
+  .overlay-list :global(li > .btn-geko.active),
+  .overlay-list :global(li > .btn-geko.active:hover) {
+    background-color: var(--bs-geko-yellow) !important;
   }
 
   .overlay-footer {

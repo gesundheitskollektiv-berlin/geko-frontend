@@ -19,6 +19,7 @@
   transition: all 0.2s ease-in-out;
 
   &:hover {
+    background-color: $geko-lilac !important;
     box-shadow: -5px 5px 15px 0px rgba(0, 0, 0, 0.25);
   }
 }

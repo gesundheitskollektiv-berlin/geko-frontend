@@ -12,6 +12,9 @@
     { label: t(locale).support,       href: `/${locale}/unterstuetzen` },
     { label: t(locale).kontakt,       href: `/${locale}/kontakt` },
   ]);
+
+  const isActive = (href) =>
+    $page.url.pathname === href || $page.url.pathname.startsWith(`${href}/`);
 </script>
 
 <nav class="navbar navbar-expand navbar-light bg-geko-yellow py-3">
@@ -24,7 +27,11 @@
       <ul class="navbar-nav ms-auto">
         {#each navItems as item}
           <li class="nav-item">
-            <a class="btn-geko bg-white text-black mx-2" href={item.href}>
+            <a
+              class="btn-geko bg-white text-black mx-2"
+              class:active={isActive(item.href)}
+              href={item.href}
+            >
               {item.label}
             </a>
           </li>
@@ -78,6 +85,15 @@
     border-radius: 24px;
     font-size: 1rem;
     line-height: 1.4;
+  }
+
+  .navbar :global(.navbar-nav a.btn-geko:hover) {
+    background-color: var(--bs-geko-yellow-light) !important;
+  }
+
+  .navbar :global(.navbar-nav a.btn-geko.active),
+  .navbar :global(.navbar-nav a.btn-geko.active:hover) {
+    background-color: var(--bs-geko-yellow) !important;
   }
 
   .btn-locale {

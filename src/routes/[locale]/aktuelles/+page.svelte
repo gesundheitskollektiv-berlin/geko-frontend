@@ -12,6 +12,7 @@
   const announcements = $derived(data['geko-announcements']?.data ?? []);
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
+  const newsLengthThresh = $derived(data.newsLengthThresh ?? 150);
 
   let selectedTagId = $state(null);
 
@@ -47,7 +48,7 @@
 
         <div class="mb-5">
           {#key selectedTagId}
-            <NewsItems announcements={filteredAnnouncements} {locale} enablePagination />
+            <NewsItems announcements={filteredAnnouncements} {locale} {newsLengthThresh} enablePagination />
           {/key}
         </div>
       </div>

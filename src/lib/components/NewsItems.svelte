@@ -9,6 +9,7 @@
     announcements = [],
     maxAnnouncements = 0,
     locale = 'de',
+    newsLengthThresh = 150,
     /** Aktuelles: chronological list + internal "load more". Landing: uses maxAnnouncements + highlight pin. */
     enablePagination = false,
   } = $props();
@@ -43,7 +44,7 @@
 <div class="row g-4">
   {#if selectedAnnouncements?.length}
     {#each selectedAnnouncements as item, i (item.documentId ?? item.id ?? item.slug ?? `idx-${i}`)}
-      <NewsItem {item} {locale} />
+      <NewsItem {item} {locale} {newsLengthThresh} />
     {/each}
   {:else}
     <div class="col-12">

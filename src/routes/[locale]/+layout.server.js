@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/private';
 import { getDataFromCMS } from '$lib/helpers/getDataFromCMS';
 import { getValidLocale } from '$lib/helpers/translation';
 
@@ -35,6 +36,9 @@ export async function load({ params, fetch }) {
 
   // Add locale to data
   data['locale'] = locale;
+
+  const parsedThresh = parseInt(env.NEWS_LENGTH_THRESH ?? '150', 10);
+  data['newsLengthThresh'] = Number.isFinite(parsedThresh) ? parsedThresh : 150;
 
   return data;
 }

@@ -2,12 +2,25 @@
   import { formatDate } from '$lib/helpers/formatDate';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
-  let { item = {}, locale = 'de' } = $props();
+  let { item = {}, locale = 'de', newsLengthThresh = 150 } = $props();
 
   const tag = $derived(item?.geko_announcement_tag);
   const hasTagOrDate = $derived(
     Boolean(tag?.name || item?.publish_date || item?.publishedAt)
   );
+
+  /** Word-boundary cut, strip trailing punctuation, then … */
+  function truncateAtWord(text, max) {
+    if (text == null || text === '') return '';
+    const s = typeof text === 'string' ? text : String(text);
+    if (s.length <= max) return s;
+    const slice = s.slice(0, max);
+    const lastSpace = slice.lastIndexOf(' ');
+    const cut = lastSpace > 0 ? slice.slice(0, lastSpace) : slice;
+    return cut.replace(/[\s.,;:!?\-]+$/, '') + '\u2026';
+  }
+
+  const displayTeaser = $derived(truncateAtWord(item?.teaser_text, newsLengthThresh));
 </script>
 
 <div class="col-12 col-md-6 col-lg-4">
@@ -38,8 +51,8 @@
           </div>
         {/if}
         <h3 class="h5 mb-2 fw-bold">{item?.title}</h3>
-        {#if item.teaser_text}
-          <p class="mb-0 flex-grow-1">{item.teaser_text}</p>
+        {#if displayTeaser}
+          <p class="mb-0 flex-grow-1">{displayTeaser}</p>
         {:else}
           <div class="flex-grow-1"></div>
         {/if}

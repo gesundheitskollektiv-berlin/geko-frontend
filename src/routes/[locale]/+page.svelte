@@ -31,7 +31,7 @@
     'geko-page-blocks.about':      { component: AboutBlock,      getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.jobs':       { component: JobsBlock,       getProps: (block) => ({ data: block, jobs, locale }) },
     'geko-page-blocks.calendar':   { component: CalendarBlock,   getProps: (block) => ({ data: block, events: calendarEvents, locale }) },
-    'geko-page-blocks.news':       { component: NewsBlock,       getProps: (block) => ({ data: block, announcements, locale }) },
+    'geko-page-blocks.news':       { component: NewsBlock,       getProps: (block) => ({ data: block, announcements, locale, newsLengthThresh: data.newsLengthThresh ?? 150 }) },
     'geko-page-blocks.contact':    { component: ContactBlock,    getProps: (block) => ({ data: block, meta }) },
     'geko-page-blocks.services':   { component: ServicesBlock,   getProps: (block) => ({ data: block, services, locale }) },
     'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block) => ({ data: block, locale }) },

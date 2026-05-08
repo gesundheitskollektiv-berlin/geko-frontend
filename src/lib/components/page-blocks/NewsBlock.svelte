@@ -7,6 +7,7 @@
   export let data = {};
   export let announcements = [];
   export let locale = 'de';
+  export let newsLengthThresh = 150;
 
   $: backgroundClass = 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'news';
@@ -27,7 +28,7 @@
         </div>
 
         <div class="mb-4">
-          <NewsItems {announcements} {maxAnnouncements} {locale} />
+          <NewsItems {announcements} {maxAnnouncements} {locale} {newsLengthThresh} />
         </div>
 
         <div class="text-center mt-5 mt-lg-7">

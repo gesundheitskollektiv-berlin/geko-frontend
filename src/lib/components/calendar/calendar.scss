@@ -18,6 +18,7 @@
   --calendar-week-strip-bg: var(--bs-geko-lilac-light, #{$geko-lilac-light});
   --calendar-day-header-bg: #e0e0e0;
   --calendar-event-row-bg: var(--cream1, #{$geko-light-grey});
+  --calendar-row-hover-bg: #{$geko-lilac-light};
 
   /* Typography */
   --calendar-font-family: #{$font-family-base};

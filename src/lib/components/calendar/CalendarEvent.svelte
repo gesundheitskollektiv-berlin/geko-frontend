@@ -1,5 +1,5 @@
 <script>
-  import { formatTime, getCalendarEventExternalUrl } from '$lib/helpers/calendar';
+  import { formatTime } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import CalendarEventAccordion from './CalendarEventAccordion.svelte';
   import './calendar.scss';
@@ -13,7 +13,10 @@
     return '';
   });
 
-  const opensExternal = $derived(getCalendarEventExternalUrl(event) !== null);
+  const hasDescription = $derived(String(event?.description ?? '').trim().length > 0);
+  const hasAccordionContent = $derived(
+    hasDescription || String(event?.location ?? '').trim().length > 0
+  );
 
   function handleKeydown(e) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -27,10 +30,11 @@
   <div
     class="event-item"
     class:expanded={isExpanded}
-    onclick={onClick}
-    onkeydown={handleKeydown}
-    role="button"
-    tabindex="0"
+    class:event-item--non-interactive={!hasAccordionContent}
+    onclick={hasAccordionContent ? onClick : undefined}
+    onkeydown={hasAccordionContent ? handleKeydown : undefined}
+    role={hasAccordionContent ? 'button' : undefined}
+    tabindex={hasAccordionContent ? 0 : undefined}
   >
     <div class="event-item__main">
       <div class="event-time fw-semibold text-muted">
@@ -47,17 +51,15 @@
         </div>
       {/if}
     </div>
-    <span
-      class="event-item__action"
-      class:event-item__action--external={opensExternal}
-      aria-hidden="true"
-    >
-      {#if opensExternal}
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      {:else}
-        <i class="fa-solid fa-plus"></i>
-      {/if}
-    </span>
+    {#if hasDescription}
+      <span
+        class="event-item__action"
+        class:event-item__action--expanded={isExpanded}
+        aria-hidden="true"
+      >
+        <i class="fa-solid fa-chevron-down event-item__chevron"></i>
+      </span>
+    {/if}
   </div>
 
   <CalendarEventAccordion {event} {locale} {isExpanded} />
@@ -79,16 +81,20 @@
   }
 
   .event-item:hover {
-    filter: brightness(0.98);
+    background-color: var(--calendar-row-hover-bg);
   }
 
-  .event-item:focus {
+  .event-item--non-interactive {
+    cursor: default;
+  }
+
+  .event-item--non-interactive:hover {
+    background-color: var(--calendar-event-row-bg);
+  }
+
+  .event-item:focus:not(.event-item--non-interactive) {
     outline: 2px solid var(--calendar-primary);
     outline-offset: -2px;
-  }
-
-  .event-item.expanded {
-    background-color: var(--calendar-event-row-bg);
   }
 
   .event-item__main {
@@ -110,8 +116,12 @@
     font-size: 0.9rem;
   }
 
-  .event-item__action--external {
-    font-size: 0.78rem;
+  .event-item__chevron {
+    transition: transform var(--calendar-transition-standard);
+  }
+
+  .event-item__action--expanded .event-item__chevron {
+    transform: rotate(180deg);
   }
 
   .event-time {

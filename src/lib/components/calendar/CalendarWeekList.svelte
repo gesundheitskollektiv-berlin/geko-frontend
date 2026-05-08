@@ -4,7 +4,6 @@
     filterEventsByWeek,
     groupEventsByDay,
     getVisibleCalendarDates,
-    getCalendarEventExternalUrl,
     toLocalDateKey,
   } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
@@ -52,17 +51,7 @@
   }
 
   function handleEventClick(event) {
-    const externalUrl = getCalendarEventExternalUrl(event);
-    if (externalUrl) {
-      window.open(externalUrl, '_blank');
-      return;
-    }
-
-    if (expandedEventId === event.uid) {
-      expandedEventId = null;
-    } else {
-      expandedEventId = event.uid;
-    }
+    expandedEventId = expandedEventId === event.uid ? null : event.uid;
   }
 
   function isToday(date) {

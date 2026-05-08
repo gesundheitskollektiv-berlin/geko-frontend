@@ -1,26 +1,61 @@
 <script>
   import { browser } from '$app/environment';
-  import { marked } from 'marked';
+  import { Marked } from 'marked';
   import DOMPurify from 'dompurify';
+  import { t } from '$lib/helpers/translation';
   import './calendar.scss';
 
   let { event, locale = 'de', isExpanded = false } = $props();
 
-  // Parsed description
-  const parsedDescription = $derived(() => {
+  /** @param {string} s */
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /** @param {string} s */
+  function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
+  }
+
+  const parsedDescription = $derived.by(() => {
     if (!browser || !isExpanded || !event?.description) return '';
-    
+
+    const readMoreLabel = t(locale).readMore;
+    const md = new Marked();
+    md.use({
+      renderer: {
+        /** @param {{ href?: string; title?: string | null }} token */
+        link(token) {
+          const href = token.href ?? '#';
+          const titleAttr =
+            token.title != null && token.title !== ''
+              ? ` title="${escapeAttr(token.title)}"`
+              : '';
+          const label = escapeHtml(readMoreLabel);
+          return (
+            `<a class="event-readmore-btn" href="${escapeAttr(href)}"${titleAttr} target="_blank" rel="noopener noreferrer">` +
+            `<span>${label}</span>` +
+            `<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>` +
+            `</a>`
+          );
+        },
+      },
+    });
+
     try {
-      const rawHtml = marked.parse(event.description);
-      return DOMPurify.sanitize(rawHtml);
+      const rawHtml = md.parse(event.description);
+      return DOMPurify.sanitize(rawHtml, { ADD_ATTR: ['target', 'rel'] });
     } catch (error) {
       console.error('Error parsing description:', error);
       return '';
     }
   });
 
-  // Google Maps embed URL
-  const mapUrl = $derived(() => {
+  const mapUrl = $derived.by(() => {
     if (!event?.location) return null;
     const encodedLocation = encodeURIComponent(event.location);
     return `https://www.google.com/maps?q=${encodedLocation}&output=embed`;
@@ -33,7 +68,7 @@
     {#if event.description}
       <div class="event-detail">
         <div class="event-description">
-          {@html parsedDescription()}
+          {@html parsedDescription}
         </div>
       </div>
     {/if}
@@ -46,10 +81,10 @@
       </div>
 
       <!-- Google Maps iframe -->
-      {#if mapUrl()}
+      {#if mapUrl}
         <div class="map-container mt-3">
           <iframe
-            src={mapUrl()}
+            src={mapUrl}
             width="100%"
             height="300"
             class="map-iframe"
@@ -114,12 +149,42 @@
     margin-bottom: 0;
   }
 
-  .event-description :global(a) {
+  .event-description :global(.event-readmore-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0.35rem;
+    background: #000;
+    color: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity var(--calendar-transition-standard);
+  }
+
+  .event-description :global(.event-readmore-btn:hover) {
+    opacity: 0.85;
+    color: #fff;
+  }
+
+  .event-description :global(.event-readmore-btn span) {
+    flex-shrink: 0;
+  }
+
+  .event-description :global(.event-readmore-btn i) {
+    font-size: 0.78rem;
+    margin-top: 0;
+    color: inherit;
+  }
+
+  .event-description :global(a:not(.event-readmore-btn)) {
     color: var(--calendar-primary);
     text-decoration: underline;
   }
 
-  .event-description :global(a:hover) {
+  .event-description :global(a:not(.event-readmore-btn):hover) {
     color: var(--calendar-primary-dark);
   }
 
@@ -156,4 +221,3 @@
     }
   }
 </style>
-

@@ -16,7 +16,7 @@
   $: maxAnnouncements = parseInt(env.PUBLIC_LANDING_MAX_ANNOUNCEMENTS || '6', 10);
 </script>
 
-<section id={sectionId} class="{backgroundClass} py-9">
+<section id={sectionId} class="{backgroundClass} py-5 py-lg-9">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">

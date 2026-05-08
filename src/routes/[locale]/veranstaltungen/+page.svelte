@@ -26,7 +26,7 @@
             { label: t(locale).events },
           ]}
         />
-        <h1 class="text-center mb-3 mb-lg-5">{t(locale).calendar}</h1>
+        <h1 class="mb-3 mb-lg-5">{t(locale).calendar}</h1>
         <CalendarWeekList {events} {locale} showNavigation={true} />
       </div>
     </div>

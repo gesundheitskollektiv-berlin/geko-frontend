@@ -42,7 +42,7 @@
             { label: t(locale).announcements },
           ]}
         />
-        <h1 class="text-center mb-3 mb-lg-5">{t(locale).allAnnouncements}</h1>
+        <h1 class="mb-3 mb-lg-5">{t(locale).allAnnouncements}</h1>
 
         <AnnouncementFilterBar {tags} {locale} bind:selectedTagId />
 

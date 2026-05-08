@@ -55,7 +55,7 @@
                   <span>{tag.name}</span>
                 {/if}
               </div>
-              <h1 class="mb-0">{announcement.title}</h1>
+              <h2 class="mb-0">{announcement.title}</h2>
             </div>
             <div class="col-md-5">
               <StrapiImage
@@ -81,46 +81,52 @@
             <h1 class="mb-0">{announcement.title}</h1>
           </div>
         {/if}
-
-        {#if announcement.is_event}
-          <div class="event-details mb-4 p-4 bg-light rounded">
-            {#if announcement.event_date}
-              <div class="mb-2">
-                <i class="fas fa-calendar me-2"></i>
-                <strong>Datum:</strong> {formatDate(announcement.event_date, locale)}
-              </div>
-            {/if}
-
-            {#if announcement.when_text}
-              <div class="mb-2">
-                <i class="fas fa-clock me-2"></i>
-                <strong>Wann:</strong> {announcement.when_text}
-              </div>
-            {/if}
-
-            {#if announcement.where_address}
-              <div class="mb-2">
-                <i class="fas fa-map-marker-alt me-2"></i>
-                <strong>Wo:</strong> {announcement.where_address}
-              </div>
-            {/if}
-
-            {#if announcement.event_host}
-              <div>
-                <i class="fas fa-user me-2"></i>
-                <strong>Veranstalter:</strong> {announcement.event_host}
-              </div>
-            {/if}
-          </div>
-        {/if}
-
-        {#if announcement.content}
-          <div class="announcement-description">
-            {@html resolveRichText(announcement.content)}
-          </div>
-        {/if}
       </div>
     </div>
+
+    {#if announcement.is_event || announcement.content}
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-11 col-sm-11">
+          {#if announcement.is_event}
+            <div class="event-details mb-4 p-4 bg-light rounded">
+              {#if announcement.event_date}
+                <div class="mb-2">
+                  <i class="fas fa-calendar me-2"></i>
+                  <strong>Datum:</strong> {formatDate(announcement.event_date, locale)}
+                </div>
+              {/if}
+
+              {#if announcement.when_text}
+                <div class="mb-2">
+                  <i class="fas fa-clock me-2"></i>
+                  <strong>Wann:</strong> {announcement.when_text}
+                </div>
+              {/if}
+
+              {#if announcement.where_address}
+                <div class="mb-2">
+                  <i class="fas fa-map-marker-alt me-2"></i>
+                  <strong>Wo:</strong> {announcement.where_address}
+                </div>
+              {/if}
+
+              {#if announcement.event_host}
+                <div>
+                  <i class="fas fa-user me-2"></i>
+                  <strong>Veranstalter:</strong> {announcement.event_host}
+                </div>
+              {/if}
+            </div>
+          {/if}
+
+          {#if announcement.content}
+            <div class="announcement-description">
+              {@html resolveRichText(announcement.content)}
+            </div>
+          {/if}
+        </div>
+      </div>
+    {/if}
   </div>
 </section>
 
@@ -150,7 +156,7 @@
   }
 
   .event-details {
-    border-left: 4px solid #0d6efd;
+    border-left: 4px solid var(--bs-geko-lilac);
   }
 
   :global(.geko-image-rounded) {

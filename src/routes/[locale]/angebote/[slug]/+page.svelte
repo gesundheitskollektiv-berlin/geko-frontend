@@ -71,7 +71,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).description}</h3>
             <div class="service-content">
               {@html resolveRichText(service.description)}
@@ -87,7 +87,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).serviceLanguagesHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.languages)}
@@ -103,7 +103,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).serviceOfferHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.offer)}
@@ -119,7 +119,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).when}</h3>
             <div class="service-content">
               {@html resolveRichText(service.when)}
@@ -135,7 +135,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).serviceAudienceHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.who)}
@@ -151,7 +151,7 @@
     <section class="bg-geko-white">
       <div class="container py-5">
         <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-11 col-sm-11">
+          <div class="col-lg-8 col-md-11 col-sm-11">
             <h3 class="h4 mb-3">{t(locale).where}</h3>
             <p class="mb-4">
               <i class="fas fa-map-marker-alt me-2"></i>

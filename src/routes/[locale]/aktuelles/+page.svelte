@@ -46,7 +46,7 @@
 
         <AnnouncementFilterBar {tags} {locale} bind:selectedTagId />
 
-        <div class="mb-5">
+        <div class="my-5">
           {#key selectedTagId}
             <NewsItems announcements={filteredAnnouncements} {locale} {newsLengthThresh} enablePagination />
           {/key}

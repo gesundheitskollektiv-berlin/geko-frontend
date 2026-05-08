@@ -190,7 +190,7 @@
     display: block;
     width: 100%;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--bs-geko-light-grey, #f8f8f3);
+    border-bottom: 1px solid var(--bs-geko-grey, #E5E3DF);
   }
 
   :global(img.service-hero-icon) {

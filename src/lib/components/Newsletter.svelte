@@ -77,7 +77,7 @@
     </div>
   </div>
 
-  <div class="newsletter-graphic d-none d-lg-flex justify-content-center align-items-center">
+  <div class="newsletter-graphic d-flex justify-content-center align-items-center order-first order-lg-last">
     <img
       src="/assets/img/Logo_Geko-Newsletter-Icon.svg"
       alt=""
@@ -118,7 +118,13 @@
 
   .newsletter-logo {
     width: 100%;
-    max-width: 280px;
+    max-width: 100px;
+  }
+
+  @media (min-width: 992px) {
+    .newsletter-logo {
+      max-width: 220px;
+    }
   }
 
   /* Mailjet widget injects its form into the DOM — style the submit button */

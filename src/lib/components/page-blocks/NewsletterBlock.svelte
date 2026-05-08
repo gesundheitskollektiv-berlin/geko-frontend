@@ -4,7 +4,7 @@
   let { locale = 'de' } = $props();
 </script>
 
-<section id="newsletter" class="newsletter-block pt-7 pb-0">
+<section id="newsletter" class="newsletter-block pt-0 pt-lg-7 pb-5">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 offset-lg-1 col-md-11 col-sm-11">

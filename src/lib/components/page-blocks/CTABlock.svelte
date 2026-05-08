@@ -66,6 +66,12 @@
   }
 
   .cta-section :global(.cta-logo) {
-    max-width: 220px;
+    max-width: 100px;
+  }
+
+  @media (min-width: 992px) {
+    .cta-section :global(.cta-logo) {
+      max-width: 220px;
+    }
   }
 </style>

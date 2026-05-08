@@ -30,12 +30,12 @@
               { label: service.title },
             ]}
           />
-          <!-- Row: icon + headline side-by-side, full width -->
-          <div class="d-flex align-items-center gap-3 mb-4">
+          <!-- Icon above title on mobile; icon + headline side-by-side from md up -->
+          <div class="d-flex flex-column flex-md-row align-items-center gap-3 mb-4">
             {#if service.icon}
               <StrapiImage asset={service.icon} alt="" class="service-hero-icon flex-shrink-0" />
             {/if}
-            <h1 class="mb-0">{service.title}</h1>
+            <h2 class="mb-0 text-center text-md-start">{service.title}</h2>
           </div>
 
           <!-- Row: teaser + image (or teaser full-width when no image) -->
@@ -43,7 +43,7 @@
             <div class="row">
               {#if service.teaser_text}
                 <div class="col-md-5">
-                  <div class="service-content">
+                  <div class="service-content service-content--teaser">
                     {@html resolveRichText(service.teaser_text)}
                   </div>
                 </div>
@@ -57,7 +57,7 @@
               </div>
             </div>
           {:else if service.teaser_text}
-            <div class="service-content">
+            <div class="service-content service-content--teaser">
               {@html resolveRichText(service.teaser_text)}
             </div>
           {/if}
@@ -196,6 +196,10 @@
 
   .service-content {
     line-height: 1.8;
+  }
+
+  .service-content--teaser {
+    line-height: 2rem;
   }
 
   .service-content :global(img) {

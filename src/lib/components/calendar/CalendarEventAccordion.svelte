@@ -63,7 +63,7 @@
 </script>
 
 {#if isExpanded}
-  <div class="event-details-accordion mb-1">
+  <div class="event-details-accordion">
     <!-- Description -->
     {#if event.description}
       <div class="event-detail">
@@ -155,7 +155,6 @@
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     margin-top: 0.35rem;
-    margin-bottom: 0.35rem;
     background: #000;
     color: #fff;
     border-radius: 999px;

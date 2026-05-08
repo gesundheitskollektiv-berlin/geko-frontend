@@ -20,7 +20,16 @@
         <CalendarWeekList {events} {locale} showNavigation={false} />
 
         <div class="text-center mt-3 mt-lg-5">
-          <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/veranstaltungen">
+          <a
+            class="btn-geko bg-geko-yellow text-black d-md-none"
+            href="/{locale}/veranstaltungen"
+          >
+            {t(locale).allEvents}
+          </a>
+          <a
+            class="text-decoration-underline text-geko-black fs-20 fw-bold d-none d-md-inline"
+            href="/{locale}/veranstaltungen"
+          >
             {t(locale).allEvents}
           </a>
         </div>

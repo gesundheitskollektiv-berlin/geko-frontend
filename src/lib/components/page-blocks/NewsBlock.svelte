@@ -32,7 +32,16 @@
         </div>
 
         <div class="text-center mt-5 mt-lg-7">
-          <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/aktuelles">
+          <a
+            class="btn-geko bg-geko-yellow text-black d-md-none"
+            href="/{locale}/aktuelles"
+          >
+            {t(locale).allAnnouncements}
+          </a>
+          <a
+            class="text-decoration-underline text-geko-black fs-20 fw-bold d-none d-md-inline"
+            href="/{locale}/aktuelles"
+          >
             {t(locale).allAnnouncements}
           </a>
         </div>

@@ -31,7 +31,16 @@
           <div class="col-md-7">
             {@html resolveRichText(data.content)}
             <div class="mt-4 text-center text-md-start">
-              <a class="text-decoration-underline text-geko-black fs-20 fw-bold" href="/{locale}/ueber_uns">
+              <a
+                class="btn-geko bg-geko-yellow text-black d-md-none"
+                href="/{locale}/ueber_uns"
+              >
+                {t(locale).aboutUs}
+              </a>
+              <a
+                class="text-decoration-underline text-geko-black fs-20 fw-bold d-none d-md-inline"
+                href="/{locale}/ueber_uns"
+              >
                 {t(locale).aboutUs}
               </a>
             </div>

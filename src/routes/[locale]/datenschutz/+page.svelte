@@ -10,13 +10,6 @@
   const datenschutzPage = $derived(data['geko-page-datenschutzerklaerung']?.data ?? {});
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
-  
-  // Get footer and supporters blocks from landing page blocks
-  const landingPage = $derived(data['geko-page-landing']?.data ?? {});
-  const landingBlocks = $derived(landingPage?.content ?? []);
-  const footerBlock = $derived(
-    landingBlocks.find(block => block?.__component === 'geko-page-blocks.footer')
-  );
 </script>
 
 <section class="bg-geko-white py-5">
@@ -42,9 +35,7 @@
 </section>
 
 <!-- Footer -->
-{#if footerBlock}
-  <FooterBlock data={footerBlock} {meta} {locale} />
-{/if}
+<FooterBlock {meta} {locale} />
 
 <!-- Supporters section -->
 <SupportersBlock {locale} />

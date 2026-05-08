@@ -72,7 +72,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).description}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).description}</h3>
             <div class="service-content">
               {@html resolveRichText(service.description)}
             </div>
@@ -88,7 +88,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).serviceLanguagesHeading}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).serviceLanguagesHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.languages)}
             </div>
@@ -104,7 +104,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).serviceOfferHeading}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).serviceOfferHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.offer)}
             </div>
@@ -120,7 +120,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).when}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).when}</h3>
             <div class="service-content">
               {@html resolveRichText(service.when)}
             </div>
@@ -136,7 +136,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).serviceAudienceHeading}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).serviceAudienceHeading}</h3>
             <div class="service-content">
               {@html resolveRichText(service.who)}
             </div>
@@ -152,7 +152,7 @@
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-lg-8 col-md-11 col-sm-11">
-            <h3 class="h4 mb-3">{t(locale).where}</h3>
+            <h3 class="service-detail-heading mb-3">{t(locale).where}</h3>
             <p class="mb-4">
               <i class="fas fa-map-marker-alt me-2"></i>
               {service.where_address}
@@ -184,6 +184,13 @@
     position: relative;
     z-index: 1;
     box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .service-detail-heading {
+    display: block;
+    width: 100%;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--bs-geko-light-grey, #f8f8f3);
   }
 
   :global(img.service-hero-icon) {

@@ -1,5 +1,5 @@
 <script>
-  import { formatTime } from '$lib/helpers/calendar';
+  import { formatTime, splitCalendarCancellation } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import CalendarEventAccordion from './CalendarEventAccordion.svelte';
   import './calendar.scss';
@@ -13,6 +13,8 @@
     return '';
   });
 
+  const cancellation = $derived(splitCalendarCancellation(event?.description));
+  const isCancelled = $derived(cancellation.cancelled);
   const hasDescription = $derived(String(event?.description ?? '').trim().length > 0);
   const hasAccordionContent = $derived(
     hasDescription || String(event?.location ?? '').trim().length > 0
@@ -43,7 +45,7 @@
           – {formatTime(event.end, locale)}
         {/if}
       </div>
-      <div class="event-title">{event.title}</div>
+      <div class="event-title" class:event-title--cancelled={isCancelled}>{event.title}</div>
       {#if calendarName}
         <div class="event-location text-muted">
           <i class="fa-solid fa-location-dot me-1" aria-hidden="true"></i>
@@ -135,6 +137,10 @@
     font-size: 1.125rem;
     margin-bottom: 0.25rem;
     line-height: 1.25;
+  }
+
+  .event-title--cancelled {
+    text-decoration: line-through;
   }
 
   .event-location {

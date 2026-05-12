@@ -2,6 +2,7 @@
   import { browser } from '$app/environment';
   import { Marked } from 'marked';
   import DOMPurify from 'dompurify';
+  import { splitCalendarCancellation } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import './calendar.scss';
 
@@ -21,8 +22,14 @@
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;');
   }
 
+  const cancellation = $derived(splitCalendarCancellation(event?.description));
+  const hasDescriptionText = $derived(String(event?.description ?? '').trim().length > 0);
+
   const parsedDescription = $derived.by(() => {
-    if (!browser || !isExpanded || !event?.description) return '';
+    if (!browser || !isExpanded || !hasDescriptionText) return '';
+
+    const { cancelled, descriptionBody } = cancellation;
+    const mdSource = cancelled ? descriptionBody : String(event.description ?? '');
 
     const readMoreLabel = t(locale).readMore;
     const md = new Marked();
@@ -47,7 +54,7 @@
     });
 
     try {
-      const rawHtml = md.parse(event.description);
+      const rawHtml = md.parse(mdSource);
       return DOMPurify.sanitize(rawHtml, { ADD_ATTR: ['target', 'rel'] });
     } catch (error) {
       console.error('Error parsing description:', error);
@@ -65,9 +72,12 @@
 {#if isExpanded}
   <div class="event-details-accordion">
     <!-- Description -->
-    {#if event.description}
+    {#if hasDescriptionText}
       <div class="event-detail">
         <div class="event-description">
+          {#if cancellation.cancelled}
+            <p class="event-cancelled-notice"><em>{t(locale).calendarEventCancelled}</em></p>
+          {/if}
           {@html parsedDescription}
         </div>
       </div>
@@ -139,6 +149,11 @@
 
   .event-description {
     line-height: 1.6;
+  }
+
+  .event-cancelled-notice {
+    margin-bottom: 1rem;
+    font-style: italic;
   }
 
   .event-description :global(p) {

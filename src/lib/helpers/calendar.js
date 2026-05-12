@@ -24,6 +24,22 @@ export function getCalendarEventExternalUrl(event) {
 }
 
 /**
+ * First line controls cancellation (Nextcloud description): if trimmed first line
+ * contains "cancel" (case-insensitive), the event is shown as cancelled in the UI.
+ * @param {string | null | undefined} description
+ * @returns {{ cancelled: boolean, descriptionBody: string }}
+ */
+export function splitCalendarCancellation(description) {
+  const normalized = String(description ?? '').replace(/\r\n/g, '\n');
+  const lines = normalized.split('\n');
+  const firstLine = (lines[0] ?? '').trim();
+  const cancelled =
+    firstLine !== '' && firstLine.toLowerCase().includes('cancel');
+  const descriptionBody = lines.slice(1).join('\n');
+  return { cancelled, descriptionBody };
+}
+
+/**
  * Gets the start of the week for a given date (Monday)
  * @param {Date} date - The reference date
  * @returns {Date} Start of the week

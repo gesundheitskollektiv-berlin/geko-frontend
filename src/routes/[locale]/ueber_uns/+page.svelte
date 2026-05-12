@@ -41,7 +41,7 @@
   {/snippet}
 </SubpageContent>
 
-<section class="bg-geko-white py-5">
+<!-- <section class="bg-geko-white py-5">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
@@ -53,7 +53,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 {#if materials.length > 0}
   <section class="bg-geko-white py-5">

@@ -11,6 +11,37 @@
 
   let { services = [], locale = 'de' } = $props();
 
+  /** @param {unknown} raw */
+  function normalizeOrderNumber(raw) {
+    const n = typeof raw === 'number' ? raw : Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function getServiceOrderNumber(service) {
+    const raw = service?.order_number ?? service?.attributes?.order_number;
+    return normalizeOrderNumber(raw);
+  }
+
+  const sortedServices = $derived.by(() => {
+    const copy = [...(services ?? [])];
+    copy.sort((serviceA, serviceB) => {
+      const orderA = getServiceOrderNumber(serviceA);
+      const orderB = getServiceOrderNumber(serviceB);
+
+      if (orderA !== null && orderB !== null) {
+        return orderA - orderB;
+      }
+      if (orderA !== null && orderB === null) {
+        return -1;
+      }
+      if (orderA === null && orderB !== null) {
+        return 1;
+      }
+      return 0;
+    });
+    return copy;
+  });
+
   function isLong(service) {
     return (service?.title?.length ?? 0) >= LONG_TITLE_THRESHOLD;
   }
@@ -42,7 +73,7 @@
     return rows;
   }
 
-  let rows = $derived(buildRows(services ?? []));
+  let rows = $derived(buildRows(sortedServices));
 </script>
 
 {#if services?.length}

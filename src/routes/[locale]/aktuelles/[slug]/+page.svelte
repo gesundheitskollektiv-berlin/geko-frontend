@@ -86,7 +86,7 @@
 
     {#if announcement.is_event || announcement.content}
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-11 col-sm-11">
+        <div class="col-lg-10 col-md-11 col-sm-11">
           {#if announcement.is_event}
             <div class="event-details mb-4 p-4 bg-light rounded">
               {#if announcement.event_date}

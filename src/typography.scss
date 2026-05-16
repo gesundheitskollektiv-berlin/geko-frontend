@@ -149,3 +149,28 @@ h4 {
   letter-spacing: 0;
   text-align: center;
 }
+
+// Figma body spec: 21px / 125% (locked at all breakpoints — paragraphs in rich-text
+// no longer rely on <body>'s lg+ font-size override which only kicks in at ≥992px).
+.rich-text {
+  font-family: 'CerebriSansPro', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.3125rem; // 21px
+  line-height: 1.25;
+  letter-spacing: 0;
+
+  p,
+  li,
+  blockquote {
+    font-size: inherit;
+    line-height: 1.25;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

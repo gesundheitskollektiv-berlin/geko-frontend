@@ -101,7 +101,7 @@
           <!-- Right Column: Content -->
           <div class="col-md-5">
             {#if data?.content}
-              <div class="content-container">
+              <div class="content-container rich-text">
                 {@html resolveRichText(data.content)}
               </div>
             {/if}

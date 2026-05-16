@@ -1,8 +1,12 @@
 <script>
   import { formatDate } from '$lib/helpers/formatDate';
+  import { t } from '$lib/helpers/translation';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
   let { item = {}, locale = 'de', newsLengthThresh = 150 } = $props();
+
+  /** Arrow points in the reading direction: ← for RTL (Arabic), → otherwise. */
+  const forwardArrow = $derived(locale === 'ar' ? '←' : '→');
 
   const tag = $derived(item?.geko_announcement_tag);
   const hasTagOrDate = $derived(
@@ -52,12 +56,18 @@
         {/if}
         <h3 class="h5 mb-2 fw-bold">{item?.title}</h3>
         {#if displayTeaser}
-          <p class="mb-0 flex-grow-1">{displayTeaser}</p>
+          <p class="rich-text mb-0 flex-grow-1">{displayTeaser}</p>
         {:else}
           <div class="flex-grow-1"></div>
         {/if}
         <div class="mt-auto pt-3 d-flex justify-content-center">
-          <span class="btn-geko bg-geko-white text-black">Mehr Lesen →</span>
+          <span class="btn-geko bg-geko-white text-black">
+            {#if locale === 'ar'}
+              {forwardArrow} {t(locale).readMore}
+            {:else}
+              {t(locale).readMore} {forwardArrow}
+            {/if}
+          </span>
         </div>
       </div>
     </div>

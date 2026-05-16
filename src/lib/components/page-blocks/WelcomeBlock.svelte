@@ -1,14 +1,17 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
+  import RtlScope from '$lib/components/RtlScope.svelte';
 
   export let data = {};
+  export let locale = 'de';
 
   $: backgroundClass = 'bg-geko-white';
   $: sectionId = data?.navbar_link_title ? slugify(data.navbar_link_title) : 'welcome';
 </script>
 
 <section id={sectionId} class="{backgroundClass} pb-5 pt-5 pt-lg-7">
+  <RtlScope {locale}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
@@ -27,4 +30,5 @@
         </div>
       </div>
     </div>
+  </RtlScope>
 </section>

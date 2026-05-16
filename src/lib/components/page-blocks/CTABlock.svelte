@@ -1,4 +1,5 @@
 <script>
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
 
   let { data = {}, locale = 'de' } = $props();
@@ -29,6 +30,7 @@
 </script>
 
 <section class="cta-section py-7" style:--cta-color={bgColor}>
+  <RtlScope {locale}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-11 col-sm-11">
@@ -58,6 +60,7 @@
       </div>
     </div>
   </div>
+  </RtlScope>
 </section>
 
 <style>

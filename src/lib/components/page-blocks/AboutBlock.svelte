@@ -1,6 +1,7 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { slugify } from '$lib/helpers/landingBlocks';
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import { t } from '$lib/helpers/translation';
 
@@ -12,6 +13,7 @@
 </script>
 
 <section id={sectionId} class="{backgroundClass} py-5 py-lg-9">
+  <RtlScope {locale}>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
@@ -49,6 +51,7 @@
       </div>
     </div>
   </div>
+  </RtlScope>
 </section>
 
 <style>

@@ -27,7 +27,7 @@
   const locale = $derived(data.locale);
 
   const blockMap = {
-    'geko-page-blocks.welcome':    { component: WelcomeBlock,    getProps: (block) => ({ data: block }) },
+    'geko-page-blocks.welcome':    { component: WelcomeBlock,    getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.about':      { component: AboutBlock,      getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.jobs':       { component: JobsBlock,       getProps: (block) => ({ data: block, jobs, locale }) },
     'geko-page-blocks.calendar':   { component: CalendarBlock,   getProps: (block) => ({ data: block, events: calendarEvents, locale }) },

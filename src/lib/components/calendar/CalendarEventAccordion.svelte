@@ -111,7 +111,8 @@
 
 <style>
   .event-details-accordion {
-    padding: 1rem;
+    /* Horizontal padding mirrors .event-item in CalendarEvent.svelte so title and description align */
+    padding: 1rem 1.15rem 1rem 1.35rem;
     background-color: var(--calendar-bg-light);
     animation: slideDown var(--calendar-transition-standard);
     border-left: 3px solid var(--calendar-border-gray);
@@ -149,6 +150,11 @@
 
   .event-description {
     line-height: 1.6;
+  }
+
+  .event-description.rich-text {
+    /* Fluid 18px → 21px, locked to .event-title in CalendarEvent.svelte */
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
   }
 
   .event-cancelled-notice {
@@ -227,7 +233,8 @@
 
   @media (max-width: 768px) {
     .event-details-accordion {
-      padding: 0.75rem;
+      /* Keep horizontal padding aligned with .event-item; only tighten vertical */
+      padding: 0.75rem 1.15rem 0.75rem 1.35rem;
     }
 
     .map-container iframe {

@@ -134,7 +134,8 @@
   .event-title {
     color: var(--calendar-text-dark);
     font-weight: 700;
-    font-size: 1.125rem; // 18px (mobile baseline)
+    /* Fluid 18px → 21px; mirrored on accordion description */
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
     margin-bottom: 0.25rem;
     line-height: 1.25;
   }
@@ -148,10 +149,6 @@
   }
 
   @media (min-width: 992px) {
-    .event-title {
-      font-size: 1.3125rem; // 21px
-    }
-
     .event-location {
       font-size: 1.125rem; // 18px
     }

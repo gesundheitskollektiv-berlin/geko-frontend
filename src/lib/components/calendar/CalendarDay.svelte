@@ -94,7 +94,8 @@
     padding: 0.75rem 1rem;
     text-align: center;
     color: var(--bs-secondary-color, #6c757d);
-    font-size: 0.9375rem;
+    font-size: 1.3125rem;
+    line-height: 1.25;
     border-left: 1px solid var(--calendar-border-gray);
     border-right: 1px solid var(--calendar-border-gray);
     border-bottom: 1px solid var(--calendar-border-gray);

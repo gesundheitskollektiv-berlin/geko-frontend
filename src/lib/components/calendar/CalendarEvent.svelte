@@ -134,7 +134,7 @@
   .event-title {
     color: var(--calendar-text-dark);
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 1.125rem; // 18px (mobile baseline)
     margin-bottom: 0.25rem;
     line-height: 1.25;
   }
@@ -144,6 +144,16 @@
   }
 
   .event-location {
-    font-size: 0.875rem;
+    font-size: 0.875rem; // 14px (mobile baseline)
+  }
+
+  @media (min-width: 992px) {
+    .event-title {
+      font-size: 1.3125rem; // 21px
+    }
+
+    .event-location {
+      font-size: 1.125rem; // 18px
+    }
   }
 </style>

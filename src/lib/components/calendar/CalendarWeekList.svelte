@@ -75,7 +75,7 @@
 
   {#if visibleDates.length === 0}
     <div class="calendar-empty-state">
-      <div class="h6 fw-normal mb-0 text-muted">{t(locale).noEventsThisWeek}</div>
+      <div class="rich-text mb-0 text-muted">{t(locale).noEventsThisWeek}</div>
     </div>
   {:else}
     <div class="calendar-events">

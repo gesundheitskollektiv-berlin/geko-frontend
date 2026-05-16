@@ -74,7 +74,7 @@
     <!-- Description -->
     {#if hasDescriptionText}
       <div class="event-detail">
-        <div class="event-description">
+        <div class="event-description rich-text">
           {#if cancellation.cancelled}
             <p class="event-cancelled-notice"><em>{t(locale).calendarEventCancelled}</em></p>
           {/if}
@@ -130,7 +130,7 @@
 
   .event-detail {
     font-family: var(--calendar-font-family);
-    /* Inherit font-size from body text - no explicit size needed */
+    font-size: 1.3125rem;
     display: flex;
     align-items: flex-start;
   }

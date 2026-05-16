@@ -1,4 +1,5 @@
 <script>
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
@@ -14,16 +15,18 @@
 
 </script>
 
-<SubpageContent page={supportPage}>
-  {#snippet breadcrumb()}
-    <Breadcrumb
-      items={[
-        { label: t(locale).home, href: `/${locale}` },
-        { label: t(locale).support },
-      ]}
-    />
-  {/snippet}
-</SubpageContent>
+<RtlScope {locale}>
+  <SubpageContent page={supportPage}>
+    {#snippet breadcrumb()}
+      <Breadcrumb
+        items={[
+          { label: t(locale).home, href: `/${locale}` },
+          { label: t(locale).support },
+        ]}
+      />
+    {/snippet}
+  </SubpageContent>
+</RtlScope>
 
 <NewsletterBlock {locale} />
 

@@ -1,5 +1,6 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
@@ -24,77 +25,79 @@
   const toggleMap = () => (showGoogleMap = !showGoogleMap);
 </script>
 
-<SubpageContent page={kontaktPage} showBody={false}>
-  {#snippet breadcrumb()}
-    <Breadcrumb
-      items={[
-        { label: t(locale).home, href: `/${locale}` },
-        { label: t(locale).kontakt },
-      ]}
-    />
-  {/snippet}
-</SubpageContent>
+<RtlScope {locale}>
+  <SubpageContent page={kontaktPage} showBody={false}>
+    {#snippet breadcrumb()}
+      <Breadcrumb
+        items={[
+          { label: t(locale).home, href: `/${locale}` },
+          { label: t(locale).kontakt },
+        ]}
+      />
+    {/snippet}
+  </SubpageContent>
 
-{#if kontaktPage?.body}
-  <section class="bg-geko-white">
-    <div class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-11 col-sm-11">
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div id="map-image" class={showGoogleMap ? 'd-none' : ''}>
-                <div class="image-wrapper">
-                  <img
-                    src="/assets/img/Geko_einfacheKarte_gross.png"
-                    alt="Einfache Karte"
-                    class="img-fluid geko-image-rounded"
-                  />
+  {#if kontaktPage?.body}
+    <section class="bg-geko-white">
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-11 col-sm-11">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div id="map-image" class={showGoogleMap ? 'd-none' : ''}>
+                  <div class="image-wrapper">
+                    <img
+                      src="/assets/img/Geko_einfacheKarte_gross.png"
+                      alt="Einfache Karte"
+                      class="img-fluid geko-image-rounded"
+                    />
+                  </div>
+                </div>
+
+                <div id="google-map" class={showGoogleMap ? '' : 'd-none'}>
+                  <div class="ratio ratio-16x9">
+                    <iframe
+                      src={`https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+                      allowfullscreen
+                      loading="lazy"
+                      title="Google Maps"
+                    ></iframe>
+                  </div>
+                </div>
+
+                <div class="mt-5 mb-3" class:d-none={showGoogleMap}>
+                  <button
+                    type="button"
+                    class="btn-geko bg-geko-yellow text-black"
+                    onclick={toggleMap}
+                  >
+                    Zeige Google-Karte
+                  </button>
+                </div>
+
+                <div class="mt-5 mb-3" class:d-none={!showGoogleMap}>
+                  <button
+                    type="button"
+                    class="btn-geko bg-geko-yellow text-black"
+                    onclick={toggleMap}
+                  >
+                    Zeige einfache Karte
+                  </button>
                 </div>
               </div>
 
-              <div id="google-map" class={showGoogleMap ? '' : 'd-none'}>
-                <div class="ratio ratio-16x9">
-                  <iframe
-                    src={`https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
-                    allowfullscreen
-                    loading="lazy"
-                    title="Google Maps"
-                  ></iframe>
+              <div class="col-md-6">
+                <div class="rich-text body-content">
+                  {@html resolveRichText(kontaktPage.body)}
                 </div>
-              </div>
-
-              <div class="mt-5 mb-3" class:d-none={showGoogleMap}>
-                <button
-                  type="button"
-                  class="btn-geko bg-geko-yellow text-black"
-                  onclick={toggleMap}
-                >
-                  Zeige Google-Karte
-                </button>
-              </div>
-
-              <div class="mt-5 mb-3" class:d-none={!showGoogleMap}>
-                <button
-                  type="button"
-                  class="btn-geko bg-geko-yellow text-black"
-                  onclick={toggleMap}
-                >
-                  Zeige einfache Karte
-                </button>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="rich-text body-content">
-                {@html resolveRichText(kontaktPage.body)}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-{/if}
+    </section>
+  {/if}
+</RtlScope>
 
 <NewsletterBlock {locale} />
 

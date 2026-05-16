@@ -1,4 +1,5 @@
 <script>
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
@@ -30,18 +31,19 @@
   };
 </script>
 
-<SubpageContent page={aboutPage}>
-  {#snippet breadcrumb()}
-    <Breadcrumb
-      items={[
-        { label: t(locale).home, href: `/${locale}` },
-        { label: t(locale).aboutUs },
-      ]}
-    />
-  {/snippet}
-</SubpageContent>
+<RtlScope {locale}>
+  <SubpageContent page={aboutPage}>
+    {#snippet breadcrumb()}
+      <Breadcrumb
+        items={[
+          { label: t(locale).home, href: `/${locale}` },
+          { label: t(locale).aboutUs },
+        ]}
+      />
+    {/snippet}
+  </SubpageContent>
 
-<!-- <section class="bg-geko-white py-5">
+  <!-- <section class="bg-geko-white py-5">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
@@ -55,51 +57,52 @@
   </div>
 </section> -->
 
-{#if materials.length > 0}
-  <section class="bg-geko-white py-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-11 col-sm-11">
-          <h2 class="mb-3 mb-lg-5">{t(locale).materialsHeading}</h2>
+  {#if materials.length > 0}
+    <section class="bg-geko-white py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-11 col-sm-11">
+            <h2 class="mb-3 mb-lg-5">{t(locale).materialsHeading}</h2>
 
-          {#each materials as material (material.id)}
-            <div class="row align-items-start mt-5">
-              <div class="col-12 col-md-9 col-lg-10 order-md-last">
-                <h4 class="mb-3">{material.title}</h4>
+            {#each materials as material (material.id)}
+              <div class="row align-items-start mt-5">
+                <div class="col-12 col-md-9 col-lg-10 order-md-last">
+                  <h4 class="mb-3">{material.title}</h4>
 
-                {#if material.description}
-                  <div class="rich-text">
-                    {@html resolveRichText(material.description)}
+                  {#if material.description}
+                    <div class="rich-text">
+                      {@html resolveRichText(material.description)}
+                    </div>
+                  {/if}
+                </div>
+
+                {#if material.file}
+                  <div class="col-12 col-md-3 col-lg-2 order-md-first mt-3 mt-md-0">
+                    <a
+                      class="material-download"
+                      href={getDownloadUrl(material.file)}
+                      download={material.file.name || ''}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span class="fas fa-file-arrow-down material-download__icon" aria-hidden="true"></span>
+                      <span class="material-download__meta">
+                        <span class="material-download__title">{stripExt(material.file.name) || material.title}</span>
+                        <span class="material-download__info">
+                          {fileExtLabel(material.file)}{#if fileSizeLabel(material.file)} | {fileSizeLabel(material.file)}{/if}
+                        </span>
+                      </span>
+                    </a>
                   </div>
                 {/if}
               </div>
-
-              {#if material.file}
-                <div class="col-12 col-md-3 col-lg-2 order-md-first mt-3 mt-md-0">
-                  <a
-                    class="material-download"
-                    href={getDownloadUrl(material.file)}
-                    download={material.file.name || ''}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span class="fas fa-file-arrow-down material-download__icon" aria-hidden="true"></span>
-                    <span class="material-download__meta">
-                      <span class="material-download__title">{stripExt(material.file.name) || material.title}</span>
-                      <span class="material-download__info">
-                        {fileExtLabel(material.file)}{#if fileSizeLabel(material.file)} | {fileSizeLabel(material.file)}{/if}
-                      </span>
-                    </span>
-                  </a>
-                </div>
-              {/if}
-            </div>
-          {/each}
+            {/each}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-{/if}
+    </section>
+  {/if}
+</RtlScope>
 
 <NewsletterBlock {locale} />
 

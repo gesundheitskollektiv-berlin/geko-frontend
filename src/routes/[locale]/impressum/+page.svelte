@@ -1,5 +1,6 @@
 <script>
   import { resolveRichText } from '$lib/helpers/richTextResolver';
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import Breadcrumb from '$lib/components/Breadcrumb.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
@@ -12,6 +13,7 @@
   const meta = $derived(data['geko-meta']?.data ?? {});
 </script>
 
+<RtlScope {locale}>
 <section class="bg-geko-white py-5">
   <div class="container">
     <div class="row justify-content-center">
@@ -33,6 +35,7 @@
     </div>
   </div>
 </section>
+</RtlScope>
 
 <!-- Footer -->
 <FooterBlock {meta} {locale} />

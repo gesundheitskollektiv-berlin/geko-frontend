@@ -1,4 +1,5 @@
 <script>
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import NewsItems from '$lib/components/NewsItems.svelte';
   import AnnouncementFilterBar from '$lib/components/AnnouncementFilterBar.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
@@ -36,13 +37,15 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <Breadcrumb
-          items={[
-            { label: t(locale).home, href: `/${locale}` },
-            { label: t(locale).announcements },
-          ]}
-        />
-        <h1 class="mb-3 mb-lg-5">{t(locale).allAnnouncements}</h1>
+        <RtlScope {locale}>
+          <Breadcrumb
+            items={[
+              { label: t(locale).home, href: `/${locale}` },
+              { label: t(locale).announcements },
+            ]}
+          />
+          <h1 class="mb-3 mb-lg-5">{t(locale).allAnnouncements}</h1>
+        </RtlScope>
 
         <AnnouncementFilterBar {tags} {locale} bind:selectedTagId />
 

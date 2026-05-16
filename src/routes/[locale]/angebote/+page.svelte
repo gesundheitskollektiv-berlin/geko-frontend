@@ -1,4 +1,5 @@
 <script>
+  import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import ServicesBlock from '$lib/components/page-blocks/ServicesBlock.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
@@ -20,18 +21,20 @@
   );
 </script>
 
-<SubpageContent page={angebotePage} showBody={false}>
-  {#snippet breadcrumb()}
-    <Breadcrumb
-      items={[
-        { label: t(locale).home, href: `/${locale}` },
-        { label: t(locale).atTheCenter },
-      ]}
-    />
-  {/snippet}
-</SubpageContent>
+<RtlScope {locale}>
+  <SubpageContent page={angebotePage} showBody={false}>
+    {#snippet breadcrumb()}
+      <Breadcrumb
+        items={[
+          { label: t(locale).home, href: `/${locale}` },
+          { label: t(locale).atTheCenter },
+        ]}
+      />
+    {/snippet}
+  </SubpageContent>
 
-<ServicesBlock data={servicesBlock ?? {}} {services} {locale} />
+  <ServicesBlock data={servicesBlock ?? {}} {services} {locale} />
+</RtlScope>
 
 <NewsletterBlock {locale} />
 

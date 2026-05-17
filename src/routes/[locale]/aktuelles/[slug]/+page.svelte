@@ -88,7 +88,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-10 col-md-11 col-sm-11">
           {#if announcement.is_event}
-            <div class="event-details mb-4 p-4 bg-light rounded">
+            <div class="event-details rich-text mb-4 p-4 bg-light rounded">
               {#if announcement.event_date}
                 <div class="mb-2">
                   <i class="fas fa-calendar me-2"></i>
@@ -120,7 +120,7 @@
           {/if}
 
           {#if announcement.content}
-            <div class="announcement-description">
+            <div class="announcement-description rich-text">
               {@html resolveRichText(announcement.content)}
             </div>
           {/if}
@@ -143,10 +143,6 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-  }
-
-  .announcement-description {
-    line-height: 1.8;
   }
 
   .announcement-description :global(img) {

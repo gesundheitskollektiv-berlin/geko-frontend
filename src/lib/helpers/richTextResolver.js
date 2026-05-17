@@ -1,3 +1,5 @@
+import { renderFaTokens } from './parseFaIcons.js';
+
 export function resolveRichText(nodes) {
   if (!nodes) return '';
   if (typeof nodes === 'string') return nodes;
@@ -16,7 +18,7 @@ function resolveRichTextNode(node) {
       break;
     case 'text':
       if (node.text) {
-        let tmp = node.text.replaceAll('\n', '<br />');
+        let tmp = renderFaTokens(node.text).replaceAll('\n', '<br />');
 
         if (node.bold) tmp = `<span class="fw-bold">${tmp}</span>`;
         if (node.code) tmp = `<code>${tmp}</code>`;

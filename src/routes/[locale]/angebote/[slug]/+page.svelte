@@ -38,7 +38,7 @@
                   {#if service.icon}
                     <StrapiImage asset={service.icon} alt="" class="service-hero-icon flex-shrink-0" />
                   {/if}
-                  <h2 class="mb-0 text-center text-md-start">{service.title}</h2>
+                  <h1 class="mb-0 text-center text-md-start">{service.title}</h1>
                 </div>
                 {#if service.teaser_text}
                   <div class="service-content service-content--teaser">
@@ -59,7 +59,7 @@
               {#if service.icon}
                 <StrapiImage asset={service.icon} alt="" class="service-hero-icon flex-shrink-0" />
               {/if}
-              <h2 class="mb-0 text-center text-md-start">{service.title}</h2>
+              <h1 class="mb-0 text-center text-md-start">{service.title}</h1>
             </div>
             <div class="service-content service-content--teaser">
               {@html resolveRichText(service.teaser_text)}
@@ -69,7 +69,7 @@
               {#if service.icon}
                 <StrapiImage asset={service.icon} alt="" class="service-hero-icon flex-shrink-0" />
               {/if}
-              <h2 class="mb-0 text-center text-md-start">{service.title}</h2>
+              <h1 class="mb-0 text-center text-md-start">{service.title}</h1>
             </div>
           {/if}
         </div>

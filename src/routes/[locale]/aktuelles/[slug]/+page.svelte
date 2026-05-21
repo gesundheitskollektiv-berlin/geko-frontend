@@ -55,7 +55,7 @@
                   <span>{tag.name}</span>
                 {/if}
               </div>
-              <h2 class="mb-0">{announcement.title}</h2>
+              <h1 class="mb-0">{announcement.title}</h1>
             </div>
             <div class="col-md-5">
               <StrapiImage

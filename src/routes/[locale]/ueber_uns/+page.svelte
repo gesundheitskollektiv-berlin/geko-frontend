@@ -32,7 +32,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-11 col-sm-11">
-        <h2 class="mb-3 mb-lg-5">{t(locale).jobOffers}</h2>
+        <h1 class="mb-3 mb-lg-5">{t(locale).jobOffers}</h1>
         <p class="mb-0">
           {t(locale).jobOffersIntro}
           <a href="/{locale}/aktuelles">{t(locale).announcements}</a>.

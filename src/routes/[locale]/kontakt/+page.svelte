@@ -105,7 +105,7 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h2 class="mb-3">{kontaktPage.title}</h2>
+              <h1 class="mb-3">{kontaktPage.title}</h1>
               {#if kontaktPage.intro_text}
                 <div class="rich-text support-content service-content--teaser">
                   {@html resolveRichText(kontaktPage.intro_text)}

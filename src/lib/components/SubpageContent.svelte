@@ -17,7 +17,7 @@
         {#if hasHeaderImage}
           <div class="row">
             <div class="col-md-6">
-              <h2 class="mb-3">{page.title}</h2>
+              <h1 class="mb-3">{page.title}</h1>
               {#if page.intro_text}
                 <div class="rich-text support-content service-content--teaser">
                   {@html resolveRichText(page.intro_text)}
@@ -33,7 +33,7 @@
             </div>
           </div>
         {:else}
-          <h2 class="mb-3">{page.title}</h2>
+          <h1 class="mb-3">{page.title}</h1>
           {#if page.intro_text}
             <div class="rich-text support-content service-content--teaser">
               {@html resolveRichText(page.intro_text)}

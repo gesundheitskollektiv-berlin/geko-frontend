@@ -30,7 +30,7 @@
       },
       {
         kind: 'iframe',
-        src: `https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${mapQuery}&t=&z=14&ie=UTF8&iwloc=B&output=embed`,
+        src: `https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${mapQuery}&t=&z=16&ie=UTF8&iwloc=B&output=embed`,
       },
     ];
     if (kontaktPage?.header_image) {

@@ -172,7 +172,7 @@
             <!-- Google Maps Embed -->
             <div class="ratio ratio-16x9">
               <iframe
-                src={`https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${encodeURIComponent(service.where_address)}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+                src={`https://maps.google.com/maps?width=100%25&height=600&hl=${locale}&q=${encodeURIComponent(service.where_address)}&t=&z=16&ie=UTF8&iwloc=B&output=embed`}
                 allowfullscreen
                 loading="lazy"
                 title="Google Maps - {service.where_address}"

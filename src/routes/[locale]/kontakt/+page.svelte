@@ -238,7 +238,7 @@
 
   .kontakt-carousel {
     position: relative;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 5 / 3;
     border-radius: 0.5rem;
     overflow: hidden;
     background: #000;

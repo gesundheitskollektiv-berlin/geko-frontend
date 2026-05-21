@@ -16,31 +16,26 @@
         {/if}
         {#if hasHeaderImage}
           <div class="row">
-            <div class="col-12">
-              <h1 class="mb-3 mb-lg-5">{page.title}</h1>
-            </div>
-          </div>
-
-          <div class="row g-4 align-items-start">
             <div class="col-md-6">
+              <h2 class="mb-3">{page.title}</h2>
               {#if page.intro_text}
-                <div class="rich-text support-content">
+                <div class="rich-text support-content service-content--teaser">
                   {@html resolveRichText(page.intro_text)}
                 </div>
               {/if}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center">
               <StrapiImage
                 asset={page.header_image}
                 alt={page.header_image?.alternativeText || page.title}
-                class="img-fluid w-100 geko-image-rounded"
+                class="img-fluid geko-image-rounded"
               />
             </div>
           </div>
         {:else}
-          <h1 class="mb-3 mb-lg-5">{page.title}</h1>
+          <h2 class="mb-3">{page.title}</h2>
           {#if page.intro_text}
-            <div class="rich-text support-content">
+            <div class="rich-text support-content service-content--teaser">
               {@html resolveRichText(page.intro_text)}
             </div>
           {/if}
@@ -80,6 +75,10 @@
 
   .support-content :global(a:hover) {
     opacity: 0.85;
+  }
+
+  .service-content--teaser {
+    line-height: 2rem;
   }
 
   .body-content :global(a) {

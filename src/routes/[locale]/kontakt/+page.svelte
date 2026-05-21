@@ -104,23 +104,18 @@
           />
 
           <div class="row">
-            <div class="col-12">
-              <h1 class="mb-3 mb-lg-5">{kontaktPage.title}</h1>
-            </div>
-          </div>
-
-          <div class="row g-4 align-items-start">
             <div class="col-md-6">
+              <h2 class="mb-3">{kontaktPage.title}</h2>
               {#if kontaktPage.intro_text}
-                <div class="rich-text support-content">
+                <div class="rich-text support-content service-content--teaser">
                   {@html resolveRichText(kontaktPage.intro_text)}
                 </div>
               {/if}
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center">
               <div
-                class="carousel slide carousel-fade kontakt-carousel"
+                class="carousel slide carousel-fade kontakt-carousel w-100"
                 onmouseenter={pause}
                 onmouseleave={restart}
                 onfocusin={pause}
@@ -235,6 +230,10 @@
 
   .support-content :global(a:hover) {
     opacity: 0.85;
+  }
+
+  .service-content--teaser {
+    line-height: 2rem;
   }
 
   .kontakt-carousel {

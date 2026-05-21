@@ -3,6 +3,7 @@
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
+  import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
   import Breadcrumb from '$lib/components/Breadcrumb.svelte';
   import { t } from '$lib/helpers/translation';
 
@@ -188,6 +189,8 @@
 <NewsletterBlock {locale} />
 
 <FooterBlock {meta} {locale} />
+
+<SupportersBlock {locale} />
 
 <style>
   .hero-section {

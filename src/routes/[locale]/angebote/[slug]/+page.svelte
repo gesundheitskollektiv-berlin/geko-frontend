@@ -190,7 +190,7 @@
 
 <FooterBlock {meta} {locale} />
 
-<SupportersBlock {locale} />
+<SupportersBlock {locale} supporters={service.geko_supporters} />
 
 <style>
   .hero-section {

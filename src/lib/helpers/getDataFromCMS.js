@@ -18,7 +18,10 @@ function getStrapiAuthHeaders() {
   return { Authorization: `Bearer ${token}` };
 }
 
-const fetchData = async (url, fetchFn = fetch) => {
+/** CMS collections that may be absent in some environments — treat HTTP 404 as empty data */
+const MISSING_ENDPOINT_OK = new Set(['geko-jobs']);
+
+const fetchData = async (url, fetchFn = fetch, { allow404 = false } = {}) => {
   if (shouldUseCache() && cache.has(url)) {
     return cache.get(url);
   }
@@ -28,6 +31,10 @@ const fetchData = async (url, fetchFn = fetch) => {
 
   if (!response.ok) {
     const bodyText = await response.text();
+    if (allow404 && response.status === 404) {
+      console.warn(`[getDataFromCMS] Strapi 404 for optional endpoint ${url} — using empty result`);
+      return { data: null };
+    }
     console.error(
       `[getDataFromCMS] Strapi ${response.status} ${response.statusText} ${url}:`,
       bodyText.slice(0, 500)
@@ -62,7 +69,8 @@ export async function getDataFromCMS(path, locale, fetchFn = fetch) {
   const populateParam = useStarPopulate.includes(path) ? 'populate=*' : 'pLevel';
 
   const queryUrl = `${base}/api/${path}?${populateParam}&locale=${locale}`;
-  return await fetchData(queryUrl, fetchFn);
+  const allow404 = MISSING_ENDPOINT_OK.has(path);
+  return await fetchData(queryUrl, fetchFn, { allow404 });
 }
 
 // Collections / single-types whose media fields aren't populated by pLevel —
@@ -91,10 +99,20 @@ async function fetchAllPages(path, locale, fetchFn = fetch, baseUrl = getStrapiP
   const maxItems = maxItemsByPath[path];
   const sort = sortByPath[path];
   const sortParam = sort ? `&sort[0]=${sort}` : '';
+  const allow404 = MISSING_ENDPOINT_OK.has(path);
 
   do {
     const queryUrl = `${baseUrl}/api/${path}?${populateParam}&locale=${locale}${sortParam}&pagination[page]=${currentPage}&pagination[pageSize]=100`;
-    const result = await fetchData(queryUrl, fetchFn);
+    const result = await fetchData(queryUrl, fetchFn, { allow404 });
+
+    if (!result?.data && allow404 && currentPage === 1) {
+      return {
+        data: [],
+        meta: {
+          pagination: { page: 1, pageSize: 0, pageCount: 1, total: 0 },
+        },
+      };
+    }
 
     if (result?.data) {
       allData = allData.concat(result.data);

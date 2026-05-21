@@ -6,7 +6,7 @@
 
 <div class="row mb-7">
 	{#if supporters?.length}
-		{#each supporters as supporter (supporter.id)}
+		{#each supporters as supporter (supporter.documentId ?? supporter.id)}
 			<Supporter {supporter} />
 		{/each}
 	{:else}

@@ -1,77 +1,24 @@
 <script>
-  import { onMount } from 'svelte';
   import { t } from '$lib/helpers/translation';
 
   let { locale = 'de' } = $props();
-
-  let iframeEl;
-
-  onMount(() => {
-    const SCRIPT_SRC = 'https://app.mailjet.com/pas-nc-embedded-v2.js';
-
-    // The Mailjet v2 widget self-initializes from a `window.load` listener.
-    // When this component mounts after the page has already loaded
-    // (e.g. on client-side navigation), that listener never fires, so we
-    // call iframe-resizer ourselves once the script is available.
-    function initWidget() {
-      if (!iframeEl || typeof window.iFrameResize !== 'function') return;
-      window.iFrameResize({ checkOrigin: false }, iframeEl);
-    }
-
-    function onCaptchaMessage(event) {
-      if (!iframeEl) return;
-      const type = event?.data?.type;
-      if (type === 'CAPTCHA_OPEN') iframeEl.style.minHeight = '650px';
-      if (type === 'CAPTCHA_CLOSE') iframeEl.style.minHeight = '0px';
-    }
-
-    let script = document.querySelector('script[data-mailjet-embed-v2]');
-    if (!script) {
-      script = document.createElement('script');
-      script.src = SCRIPT_SRC;
-      script.type = 'text/javascript';
-      script.async = true;
-      script.dataset.mailjetEmbedV2 = '';
-      document.body.appendChild(script);
-    }
-
-    if (typeof window.iFrameResize === 'function') {
-      initWidget();
-    } else {
-      script.addEventListener('load', initWidget, { once: true });
-    }
-
-    window.addEventListener('message', onCaptchaMessage);
-
-    return () => {
-      window.removeEventListener('message', onCaptchaMessage);
-      script.removeEventListener('load', initWidget);
-      try {
-        iframeEl?.iFrameResizer?.removeListeners?.();
-      } catch {
-        // no-op
-      }
-    };
-  });
 </script>
 
 <div
   class="newsletter-layout d-flex flex-column flex-lg-row align-items-lg-center gap-4 gap-lg-5"
 >
   <div class="newsletter-content">
-    <h2 class="newsletter-heading mb-5 text-center text-lg-start">{t(locale).newsletterHeading}</h2>
+    <h2 class="newsletter-heading mb-4 text-center text-lg-start">{t(locale).newsletterHeading}</h2>
+
+    <p class="newsletter-intro mb-2 text-center text-lg-start">{t(locale).newsletterIntro}</p>
 
     <div class="newsletter-iframe-wrapper">
       <iframe
-        bind:this={iframeEl}
-        data-w-type="embedded"
+        class="newsletter-iframe"
+        src="https://e2e5db3e.sibforms.com/v2/serve/MUIFAG0dYxfQn9ZBfjPd8CfAqj9qj2R8Sx9vHxvZ-BxLoX_ipkPrfX2muDBlLbO97w69TsjNMHH2RASKsL0D6r_RuXuXv-odFg_Qm3Yr9GYOYfJruhfmTnLgV08oJaMObu0CmBPlIWOd0cAuqoRqPKStOpobJQ_3N_4hnJewH8MzU2DpC1UJdREexw_gcoUQq66lyW6Nsn9LXcKBEA=="
         frameborder="0"
         scrolling="no"
-        marginheight="0"
-        marginwidth="0"
-        src="https://x983w.mjt.lu/wgt/x983w/0j7k/form?c=392471ef"
-        width="100%"
-        style="height: 0;"
+        allowfullscreen
         title="Newsletter Anmeldung"
       ></iframe>
     </div>
@@ -88,6 +35,17 @@
 </div>
 
 <style>
+  .newsletter-intro {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 992px) {
+    .newsletter-intro {
+      font-size: 20px;
+    }
+  }
+
   .newsletter-heading {
     font-weight: 800;
     line-height: 1.15;
@@ -96,24 +54,38 @@
     overflow-wrap: break-word;
   }
 
-  /* Let the form column grow into the available row so we don't leave a
-     gap before the graphic, and so the embedded Mailjet widget gets enough
-     width to switch into its horizontal layout. */
   .newsletter-content {
     width: 100%;
     flex: 1 1 0;
     min-width: 0;
   }
 
+  /* Clip Brevo’s 32px top padding inside the iframe (see .sib-form in sib-styles.css). */
   .newsletter-iframe-wrapper {
     width: 100%;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    height: 368px;
   }
 
-  .newsletter-iframe-wrapper iframe {
+  .newsletter-iframe {
     display: block;
     width: 100%;
-    max-width: 100%;
+    height: 400px;
+    margin-top: -32px;
     border: 0;
+  }
+
+  @media (min-width: 992px) {
+    .newsletter-iframe-wrapper {
+      height: 273px;
+    }
+
+    .newsletter-iframe {
+      height: 305px;
+    }
   }
 
   .newsletter-logo {
@@ -125,24 +97,5 @@
     .newsletter-logo {
       max-width: 220px;
     }
-  }
-
-  /* Mailjet widget injects its form into the DOM — style the submit button */
-  :global(.newsletter-iframe-wrapper input[type='submit'],
-          .newsletter-iframe-wrapper button[type='submit'],
-          .newsletter-iframe-wrapper .mj-widget-button) {
-    background-color: #fff15b !important;
-    color: #000 !important;
-    border: none !important;
-    border-radius: 2rem !important;
-    font-weight: 700 !important;
-    padding: 0.55rem 1.5rem !important;
-    cursor: pointer !important;
-  }
-
-  :global(.newsletter-iframe-wrapper input[type='submit']:hover,
-          .newsletter-iframe-wrapper button[type='submit']:hover,
-          .newsletter-iframe-wrapper .mj-widget-button:hover) {
-    opacity: 0.88 !important;
   }
 </style>

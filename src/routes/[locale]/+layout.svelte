@@ -1,7 +1,6 @@
 <script>
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
-	import favicon from '$lib/assets/favicon.svg';
   import '../../app.scss';
   import Navbar from '$lib/components/navbar/Navbar.svelte';
   import TopScroller from '$lib/components/TopScroller.svelte';
@@ -19,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href="/assets/img/favicon.png" type="image/png" />
 </svelte:head>
 
 <Navbar locale={data.locale} />

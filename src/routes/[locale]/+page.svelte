@@ -1,7 +1,6 @@
 <script>
   import WelcomeBlock from '$lib/components/page-blocks/WelcomeBlock.svelte';
   import AboutBlock from '$lib/components/page-blocks/AboutBlock.svelte';
-  import JobsBlock from '$lib/components/page-blocks/JobsBlock.svelte';
   import CalendarBlock from '$lib/components/page-blocks/CalendarBlock.svelte';
   import NewsBlock from '$lib/components/page-blocks/NewsBlock.svelte';
   import ContactBlock from '$lib/components/page-blocks/ContactBlock.svelte';
@@ -22,14 +21,12 @@
   const newsItems = $derived(announcements.filter((item) => !item.is_event));
   const eventItems = $derived(announcements.filter((item) => item.is_event));
   const services = $derived(data['geko-services']?.data ?? []);
-  const jobs = $derived(data['geko-jobs']?.data ?? []);
   const calendarEvents = $derived(data.calendarEvents ?? []);
   const locale = $derived(data.locale);
 
   const blockMap = {
     'geko-page-blocks.welcome':    { component: WelcomeBlock,    getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.about':      { component: AboutBlock,      getProps: (block) => ({ data: block, locale }) },
-    'geko-page-blocks.jobs':       { component: JobsBlock,       getProps: (block) => ({ data: block, jobs, locale }) },
     'geko-page-blocks.calendar':   { component: CalendarBlock,   getProps: (block) => ({ data: block, events: calendarEvents, locale }) },
     'geko-page-blocks.news':       { component: NewsBlock,       getProps: (block) => ({ data: block, announcements, locale, newsLengthThresh: data.newsLengthThresh ?? 150 }) },
     'geko-page-blocks.contact':    { component: ContactBlock,    getProps: (block) => ({ data: block, meta }) },

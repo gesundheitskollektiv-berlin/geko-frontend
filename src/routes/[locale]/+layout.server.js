@@ -20,7 +20,6 @@ export async function load({ params, fetch }) {
     'geko-meta',
     'geko-announcements',
     'geko-services',
-    'geko-jobs',
     'geko-materials',
     'geko-supporters'
   ];

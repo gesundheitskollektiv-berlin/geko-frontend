@@ -1,4 +1,8 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta } from '$lib/helpers/pageMeta';
+  import { t } from '$lib/helpers/translation';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import WelcomeBlock from '$lib/components/page-blocks/WelcomeBlock.svelte';
   import AboutBlock from '$lib/components/page-blocks/AboutBlock.svelte';
   import CalendarBlock from '$lib/components/page-blocks/CalendarBlock.svelte';
@@ -24,6 +28,20 @@
   const calendarEvents = $derived(data.calendarEvents ?? []);
   const locale = $derived(data.locale);
 
+  const welcomeBlock = $derived(
+    landingBlocks.find((block) => block?.__component === 'geko-page-blocks.welcome')
+  );
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: welcomeBlock?.title ? `${welcomeBlock.title} - Geko` : 'Geko',
+      description: t(locale).footerTagline,
+      imageAsset: meta?.page_banner,
+      pageUrl: $page.url,
+      locale
+    })
+  );
+
   const blockMap = {
     'geko-page-blocks.welcome':    { component: WelcomeBlock,    getProps: (block) => ({ data: block, locale }) },
     'geko-page-blocks.about':      { component: AboutBlock,      getProps: (block) => ({ data: block, locale }) },
@@ -34,6 +52,8 @@
     'geko-page-blocks.cta':        { component: CTABlock,        getProps: (block) => ({ data: block, locale }) },
   };
 </script>
+
+<PageMeta {...pageMeta} />
 
 <WelcomeMarquee />
 

@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import { onMount } from 'svelte';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
@@ -14,6 +17,16 @@
   const kontaktPage = $derived(data['geko-page-kontakt']?.data ?? {});
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${kontaktPage.title || t(locale).kontakt} - Geko`,
+      description: plainTextFromRichText(kontaktPage.intro_text),
+      imageAsset: kontaktPage.header_image,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 
   const mapQuery = $derived(
     encodeURIComponent(
@@ -90,6 +103,8 @@
     return () => pause();
   });
 </script>
+
+<PageMeta {...pageMeta} />
 
 <RtlScope {locale}>
   <section class="hero-section bg-geko-white">

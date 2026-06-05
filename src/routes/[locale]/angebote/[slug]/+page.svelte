@@ -1,6 +1,9 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
   import SupportersBlock from '$lib/components/page-blocks/SupportersBlock.svelte';
@@ -12,11 +15,19 @@
   const service = $derived(data.service || {});
   const locale = $derived(data.locale || 'de');
   const meta = $derived(data['geko-meta']?.data ?? {});
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `Geko - ${service.title || 'Service'}`,
+      description: plainTextFromRichText(service.teaser_text),
+      imageAsset: service.image,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
 
-<svelte:head>
-  <title>{service.title || 'Service'} - Geko</title>
-</svelte:head>
+<PageMeta {...pageMeta} />
 
 <div>
   <!-- Hero Section with Title, Teaser and Image -->

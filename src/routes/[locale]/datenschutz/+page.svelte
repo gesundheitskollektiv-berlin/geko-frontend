@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import Breadcrumb from '$lib/components/Breadcrumb.svelte';
@@ -11,7 +14,17 @@
   const datenschutzPage = $derived(data['geko-page-datenschutzerklaerung']?.data ?? {});
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${datenschutzPage.title || t(locale).privacyPolicy} - Geko`,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
+
+<PageMeta {...pageMeta} />
 
 <RtlScope {locale}>
 <section class="bg-geko-white py-5">

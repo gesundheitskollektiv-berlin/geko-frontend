@@ -1,7 +1,10 @@
 <script>
+  import { page } from '$app/stores';
   import { formatDate, formatDateShort } from '$lib/helpers/formatDate';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { t } from '$lib/helpers/translation';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import StrapiImage from '$lib/components/StrapiImage.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
   import FooterBlock from '$lib/components/page-blocks/FooterBlock.svelte';
@@ -29,11 +32,20 @@
           { label: t(locale).announcements, href: `/${locale}/aktuelles` },
         ]
   );
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${announcement.title || 'Announcement'} - Geko`,
+      description: plainTextFromRichText(announcement.content),
+      imageAsset: announcement.image,
+      pageUrl: $page.url,
+      locale,
+      type: 'article'
+    })
+  );
 </script>
 
-<svelte:head>
-  <title>{announcement.title || 'Announcement'} - Geko</title>
-</svelte:head>
+<PageMeta {...pageMeta} />
 
 <section class="announcement-page bg-geko-white">
   <div class="container py-5">

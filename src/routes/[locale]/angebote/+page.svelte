@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import ServicesBlock from '$lib/components/page-blocks/ServicesBlock.svelte';
@@ -19,7 +22,18 @@
   const servicesBlock = $derived(
     landingBlocks.find((block) => block?.__component === 'geko-page-blocks.services')
   );
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${angebotePage.title || t(locale).atTheCenter} - Geko`,
+      description: plainTextFromRichText(angebotePage.intro_text),
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
+
+<PageMeta {...pageMeta} />
 
 <RtlScope {locale}>
   <SubpageContent page={angebotePage} showBody={false}>

@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
@@ -13,7 +16,17 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
 
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${supportPage.title || t(locale).support} - Geko`,
+      description: plainTextFromRichText(supportPage.intro_text),
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
+
+<PageMeta {...pageMeta} />
 
 <RtlScope {locale}>
   <SubpageContent page={supportPage}>

@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import { t } from '$lib/helpers/translation';
   import CalendarWeekList from '$lib/components/calendar/CalendarWeekList.svelte';
@@ -12,11 +15,18 @@
   const locale = $derived(data.locale ?? 'de');
   const events = $derived(data.calendarEvents ?? []);
   const meta = $derived(data['geko-meta']?.data ?? {});
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${t(locale).calendar} - Geko`,
+      description: t(locale).footerTagline,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
 
-<svelte:head>
-  <title>{t(locale).calendar} – Geko</title>
-</svelte:head>
+<PageMeta {...pageMeta} />
 
 <section class="bg-geko-white py-5">
   <div class="container">

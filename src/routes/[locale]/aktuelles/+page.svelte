@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import NewsItems from '$lib/components/NewsItems.svelte';
   import AnnouncementFilterBar from '$lib/components/AnnouncementFilterBar.svelte';
@@ -14,6 +17,15 @@
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
   const newsLengthThresh = $derived(data.newsLengthThresh ?? 150);
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${t(locale).announcements} - Geko`,
+      description: t(locale).currentNews,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 
   let selectedTagId = $state(null);
 
@@ -32,6 +44,8 @@
       : announcements.filter((a) => a.geko_announcement_tag?.id === selectedTagId)
   );
 </script>
+
+<PageMeta {...pageMeta} />
 
 <section class="bg-geko-white py-5">
   <div class="container">

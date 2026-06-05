@@ -1,4 +1,7 @@
 <script>
+  import { page } from '$app/stores';
+  import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
+  import PageMeta from '$lib/components/PageMeta.svelte';
   import RtlScope from '$lib/components/RtlScope.svelte';
   import SubpageContent from '$lib/components/SubpageContent.svelte';
   import NewsletterBlock from '$lib/components/page-blocks/NewsletterBlock.svelte';
@@ -14,7 +17,19 @@
   const materials = $derived(data['geko-materials']?.data ?? []);
   const locale = $derived(data.locale);
   const meta = $derived(data['geko-meta']?.data ?? {});
+
+  const pageMeta = $derived(
+    buildPageMeta({
+      title: `${aboutPage.title || t(locale).aboutUs} - Geko`,
+      description: plainTextFromRichText(aboutPage.intro_text),
+      imageAsset: aboutPage.header_image,
+      pageUrl: $page.url,
+      locale
+    })
+  );
 </script>
+
+<PageMeta {...pageMeta} />
 
 <RtlScope {locale}>
   <SubpageContent page={aboutPage}>

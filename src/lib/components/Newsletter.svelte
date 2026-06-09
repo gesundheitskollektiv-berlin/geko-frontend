@@ -1,4 +1,4 @@
-<!-- <script>
+<script>
   import { t } from '$lib/helpers/translation';
 
   let { locale = 'de' } = $props();
@@ -98,4 +98,4 @@
       max-width: 220px;
     }
   }
-</style> -->
+</style>

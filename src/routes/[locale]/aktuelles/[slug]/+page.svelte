@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/stores';
-  import { formatDate, formatDateShort } from '$lib/helpers/formatDate';
+  import { formatDate } from '$lib/helpers/formatDate';
   import { buildPageMeta, plainTextFromRichText } from '$lib/helpers/pageMeta';
   import { resolveRichText } from '$lib/helpers/richTextResolver';
   import { t } from '$lib/helpers/translation';
@@ -18,20 +18,13 @@
 
   const tag = $derived(announcement?.geko_announcement_tag);
   const hasImage = $derived(Boolean(announcement?.image));
-  const displayDate = $derived(announcement?.publish_date || announcement?.publishedAt);
+  const eventDate = $derived(announcement?.is_event ? announcement?.event_date : null);
 
-  const breadcrumbItems = $derived(
-    displayDate
-      ? [
-          { label: t(locale).home, href: `/${locale}` },
-          { label: t(locale).announcements, href: `/${locale}/aktuelles` },
-          { label: formatDateShort(displayDate, 'de') },
-        ]
-      : [
-          { label: t(locale).home, href: `/${locale}` },
-          { label: t(locale).announcements, href: `/${locale}/aktuelles` },
-        ]
-  );
+  const breadcrumbItems = $derived([
+    { label: t(locale).home, href: `/${locale}` },
+    { label: t(locale).announcements, href: `/${locale}/aktuelles` },
+    { label: announcement.title },
+  ]);
 
   const pageMeta = $derived(
     buildPageMeta({
@@ -56,17 +49,19 @@
         {#if hasImage}
           <div class="row g-4 align-items-start mb-5">
             <div class="col-md-7">
-              <div class="d-flex align-items-baseline gap-2 text-muted meta-row mb-3">
-                {#if displayDate}
-                  <time>{formatDateShort(displayDate, 'de')}</time>
-                {/if}
-                {#if displayDate && tag?.name}
-                  <span aria-hidden="true">|</span>
-                {/if}
-                {#if tag?.name}
-                  <span>{tag.name}</span>
-                {/if}
-              </div>
+              {#if eventDate || tag?.name}
+                <div class="d-flex align-items-baseline gap-2 text-muted meta-row mb-3">
+                  {#if eventDate}
+                    <time>{formatDate(eventDate, locale)}</time>
+                  {/if}
+                  {#if eventDate && tag?.name}
+                    <span aria-hidden="true">|</span>
+                  {/if}
+                  {#if tag?.name}
+                    <span>{tag.name}</span>
+                  {/if}
+                </div>
+              {/if}
               <h1 class="mb-0">{announcement.title}</h1>
             </div>
             <div class="col-md-5">
@@ -79,17 +74,19 @@
           </div>
         {:else}
           <div class="mb-5">
-            <div class="d-flex align-items-baseline gap-2 text-muted meta-row mb-3">
-              {#if displayDate}
-                <time>{formatDateShort(displayDate, 'de')}</time>
-              {/if}
-              {#if displayDate && tag?.name}
-                <span aria-hidden="true">|</span>
-              {/if}
-              {#if tag?.name}
-                <span>{tag.name}</span>
-              {/if}
-            </div>
+            {#if eventDate || tag?.name}
+              <div class="d-flex align-items-baseline gap-2 text-muted meta-row mb-3">
+                {#if eventDate}
+                  <time>{formatDate(eventDate, locale)}</time>
+                {/if}
+                {#if eventDate && tag?.name}
+                  <span aria-hidden="true">|</span>
+                {/if}
+                {#if tag?.name}
+                  <span>{tag.name}</span>
+                {/if}
+              </div>
+            {/if}
             <h1 class="mb-0">{announcement.title}</h1>
           </div>
         {/if}
@@ -101,13 +98,6 @@
         <div class="col-lg-10 col-md-11 col-sm-11">
           {#if announcement.is_event}
             <div class="event-details rich-text mb-4 p-4 bg-light rounded">
-              {#if announcement.event_date}
-                <div class="mb-2">
-                  <i class="fas fa-calendar me-2"></i>
-                  <strong>Datum:</strong> {formatDate(announcement.event_date, locale)}
-                </div>
-              {/if}
-
               {#if announcement.when_text}
                 <div class="mb-2">
                   <i class="fas fa-clock me-2"></i>

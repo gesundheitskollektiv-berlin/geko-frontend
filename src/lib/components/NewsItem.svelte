@@ -9,9 +9,8 @@
   const forwardArrow = $derived(locale === 'ar' ? '←' : '→');
 
   const tag = $derived(item?.geko_announcement_tag);
-  const hasTagOrDate = $derived(
-    Boolean(tag?.name || item?.publish_date || item?.publishedAt)
-  );
+  const eventDate = $derived(item?.is_event ? item?.event_date : null);
+  const hasTagOrDate = $derived(Boolean(tag?.name || eventDate));
 
   /** Word-boundary cut, strip trailing punctuation, then … */
   function truncateAtWord(text, max) {
@@ -47,9 +46,9 @@
                 <span class="invisible" aria-hidden="true">&nbsp;</span>
               {/if}
             </span>
-            {#if item.publish_date || item.publishedAt}
+            {#if eventDate}
               <time class="text-end flex-shrink-0">
-                {formatDate(item.publish_date || item.publishedAt, locale)}
+                {formatDate(eventDate, locale)}
               </time>
             {/if}
           </div>

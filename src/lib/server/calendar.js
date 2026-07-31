@@ -37,75 +37,70 @@ function parseICalData(icsData, feedId) {
     const comp = new ICAL.Component(jcalData);
     const vevents = comp.getAllSubcomponents('vevent');
 
-    // Define date range for recurring events (1 year from now)
+    // Expand recurring events from ~3 months back so the week view (which shows
+    // past days of the current week) and back-navigation are populated, through
+    // 1 year ahead.
     const rangeStart = new Date();
+    rangeStart.setMonth(rangeStart.getMonth() - 3);
     const rangeEnd = new Date();
     rangeEnd.setFullYear(rangeEnd.getFullYear() + 1);
 
-    const allEvents = [];
+    // Split into masters and RECURRENCE-ID overrides. When a single occurrence
+    // of a recurring Nextcloud event is edited, the export keeps the untouched
+    // master (with RRULE) and appends an override sharing the same UID plus a
+    // RECURRENCE-ID. The override must replace that occurrence, not add a second
+    // entry.
+    const masters = [];
+    const overridesByUid = new Map();
 
     vevents.forEach(vevent => {
+      if (vevent.hasProperty('recurrence-id')) {
+        const uid = vevent.getFirstPropertyValue('uid');
+        if (!overridesByUid.has(uid)) {
+          overridesByUid.set(uid, []);
+        }
+        overridesByUid.get(uid).push(vevent);
+      } else {
+        masters.push(vevent);
+      }
+    });
+
+    const allEvents = [];
+
+    masters.forEach(vevent => {
       const event = new ICAL.Event(vevent);
-      
-      // Get basic event data
-      const title = event.summary || 'Untitled Event';
-      const description = event.description || '';
-      const location = event.location || '';
-      
-      // Get duration for recurring events
-      const duration = event.duration;
-      
-      // Check if event is recurring
+
       if (event.isRecurring()) {
-        // Expand recurring event into multiple occurrences
-        const occurrences = expandRecurringEvent(vevent, rangeStart, rangeEnd);
-        
-        occurrences.forEach((startDate, index) => {
-          // Calculate end date based on duration
-          let endDate = new Date(startDate);
-          if (duration) {
-            endDate = new Date(startDate.getTime() + duration.toSeconds() * 1000);
-          } else if (event.endDate) {
-            // Use original duration
-            const originalDuration = event.endDate.toJSDate().getTime() - event.startDate.toJSDate().getTime();
-            endDate = new Date(startDate.getTime() + originalDuration);
+        // Attach any edited occurrences so the iterator yields the override's
+        // values instead of the original for those dates.
+        const overrides = overridesByUid.get(event.uid) ?? [];
+        overrides.forEach(ex => {
+          try {
+            event.relateException(ex);
+          } catch (error) {
+            // UID/RECURRENCE-ID mismatch: leave it as an orphan handled below.
+            console.error('Error relating calendar exception:', error);
           }
-          
-          allEvents.push({
-            title,
-            description,
-            location,
-            start: startDate,
-            end: endDate,
-            feedId,
-            isRecurring: true,
-            uid: `${event.uid}-${index}`
-          });
+        });
+        // Overrides related to this master are consumed; drop them so they are
+        // not later emitted again as orphan singles.
+        overridesByUid.delete(event.uid);
+
+        const occurrences = expandRecurringOccurrences(event, rangeStart, rangeEnd);
+        occurrences.forEach(details => {
+          allEvents.push(buildEventFromOccurrence(details, event, feedId));
         });
       } else {
-        // Single event
-        let startDate = null;
-        let endDate = null;
-        
-        if (event.startDate) {
-          startDate = event.startDate.toJSDate();
-        }
-        
-        if (event.endDate) {
-          endDate = event.endDate.toJSDate();
-        }
-        
-        allEvents.push({
-          title,
-          description,
-          location,
-          start: startDate,
-          end: endDate,
-          feedId,
-          isRecurring: false,
-          uid: event.uid
-        });
+        allEvents.push(buildSingleEvent(event, feedId, false));
       }
+    });
+
+    // Emit orphan overrides (RECURRENCE-ID components whose master is missing
+    // from the feed) as standalone single events so they are not silently lost.
+    overridesByUid.forEach(overrides => {
+      overrides.forEach(vevent => {
+        allEvents.push(buildSingleEvent(new ICAL.Event(vevent), feedId, false));
+      });
     });
 
     // Filter out events without valid dates
@@ -117,49 +112,85 @@ function parseICalData(icsData, feedId) {
 }
 
 /**
- * Expands recurring events into individual occurrences
- * @param {ICAL.Component} vevent - The VEVENT component
+ * Builds an event object from an expanded recurring occurrence.
+ * @param {ICAL.Event.occurrenceDetails} details - Occurrence details
+ * @param {ICAL.Event} event - The master event
+ * @param {string} feedId - Feed id stored on the event
+ * @returns {Object} Event object
+ */
+function buildEventFromOccurrence(details, event, feedId) {
+  const item = details.item;
+  return {
+    title: item.summary || 'Untitled Event',
+    description: item.description || '',
+    location: item.location || '',
+    start: details.startDate.toJSDate(),
+    end: details.endDate ? details.endDate.toJSDate() : details.startDate.toJSDate(),
+    feedId,
+    isRecurring: true,
+    uid: `${event.uid}-${details.recurrenceId.toString()}`
+  };
+}
+
+/**
+ * Builds an event object from a non-recurring (or orphan) event.
+ * @param {ICAL.Event} event - The event
+ * @param {string} feedId - Feed id stored on the event
+ * @param {boolean} isRecurring - Whether the event is recurring
+ * @returns {Object} Event object
+ */
+function buildSingleEvent(event, feedId, isRecurring) {
+  return {
+    title: event.summary || 'Untitled Event',
+    description: event.description || '',
+    location: event.location || '',
+    start: event.startDate ? event.startDate.toJSDate() : null,
+    end: event.endDate ? event.endDate.toJSDate() : null,
+    feedId,
+    isRecurring,
+    uid: event.uid
+  };
+}
+
+/**
+ * Expands a recurring event into individual occurrence details. Each occurrence
+ * is resolved through the event so that RECURRENCE-ID overrides replace the
+ * original occurrence's summary/times.
+ * @param {ICAL.Event} event - The master event (with exceptions related)
  * @param {Date} rangeStart - Start of date range
  * @param {Date} rangeEnd - End of date range
- * @returns {Array} Array of event dates
+ * @returns {Array<ICAL.Event.occurrenceDetails>} Array of occurrence details
  */
-function expandRecurringEvent(vevent, rangeStart, rangeEnd) {
+function expandRecurringOccurrences(event, rangeStart, rangeEnd) {
   const occurrences = [];
-  
+
   try {
-    const event = new ICAL.Event(vevent);
-    
-    if (!event.isRecurring()) {
-      // Not recurring, just return the original date
-      return [event.startDate.toJSDate()];
-    }
-    
     // Create time objects for range
     const rangeStartTime = ICAL.Time.fromJSDate(rangeStart, true);
     const rangeEndTime = ICAL.Time.fromJSDate(rangeEnd, true);
-    
+
     // Get the iterator for recurring events
     const iterator = event.iterator();
     let next;
-    
+
     // Limit to prevent infinite loops
     let count = 0;
-    const maxOccurrences = 500;
-    
+    const maxOccurrences = 750;
+
     while ((next = iterator.next()) && count < maxOccurrences) {
       // Check if we're past the end date
       if (next.compare(rangeEndTime) > 0) {
         break;
       }
-      
+
       // Only include if within range
       if (next.compare(rangeStartTime) >= 0) {
-        occurrences.push(next.toJSDate());
+        occurrences.push(event.getOccurrenceDetails(next));
       }
-      
+
       count++;
     }
-    
+
     return occurrences;
   } catch (error) {
     console.error('Error expanding recurring event:', error);

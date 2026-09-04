@@ -1,6 +1,22 @@
 import ICAL from 'ical.js';
 
 /**
+ * Nextcloud public CalDAV feeds shared by the prerendered page loads and the
+ * live /api/calendar endpoint. feedId drives the UI label/legend, not color.
+ * @type {Array<{ url: string, feedId: string }>}
+ */
+export const CALENDAR_FEEDS = [
+  {
+    url: 'https://intern.geko-berlin.de/remote.php/dav/public-calendars/a7bymwRGr9jgxcBH?export',
+    feedId: 'gekoCenter',
+  },
+  {
+    url: 'https://intern.geko-berlin.de/remote.php/dav/public-calendars/8B6TbF2QSSB2BeKP?export',
+    feedId: 'kiez',
+  },
+];
+
+/**
  * Fetches and parses iCal feed from a URL
  * @param {string} url - The ICS feed URL
  * @param {string} feedId - Stable id for this feed (used for UI labels, not color)

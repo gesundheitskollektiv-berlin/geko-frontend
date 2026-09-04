@@ -7,6 +7,7 @@
     toLocalDateKey,
   } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
+  import { onMount } from 'svelte';
   import CalendarHeader from './CalendarHeader.svelte';
   import CalendarDay from './CalendarDay.svelte';
   import './calendar.scss';
@@ -17,7 +18,21 @@
 
   let expandedEventId = $state(null);
 
-  const weekEvents = $derived(filterEventsByWeek(events, currentWeekStart));
+  // Prerendered `events` are a build-time snapshot; refresh from the live
+  // endpoint on mount so Nextcloud changes appear without a rebuild.
+  let liveEvents = $state(null);
+  const activeEvents = $derived(liveEvents ?? events);
+
+  onMount(async () => {
+    try {
+      const res = await fetch('/api/calendar');
+      if (res.ok) liveEvents = await res.json();
+    } catch {
+      // Network/endpoint failure: keep the prerendered snapshot.
+    }
+  });
+
+  const weekEvents = $derived(filterEventsByWeek(activeEvents, currentWeekStart));
   const groupedEvents = $derived(groupEventsByDay(weekEvents));
 
   const visibleDates = $derived(

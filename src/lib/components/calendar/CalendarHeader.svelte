@@ -1,6 +1,6 @@
 <script>
   import { t } from '$lib/helpers/translation';
-  import { isSameLocalCalendarDay, isLocalDateBeforeToday } from '$lib/helpers/calendar';
+  import { isSameDay, isBeforeBerlinToday, berlinToday } from '$lib/helpers/calendar';
   import './calendar.scss';
 
   let {
@@ -14,19 +14,19 @@
   const intlLocale = $derived(locale === 'ar' ? 'ar' : locale);
 
   function weekdayShort(d) {
-    return new Intl.DateTimeFormat(intlLocale, { weekday: 'short' }).format(d);
+    return new Intl.DateTimeFormat(intlLocale, { weekday: 'short', timeZone: 'UTC' }).format(d);
   }
 
   function dayMonth(d) {
-    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+    return `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.`;
   }
 
   function isTodayCell(d) {
-    return isSameLocalCalendarDay(d, new Date());
+    return isSameDay(d, berlinToday());
   }
 
   function isPastCell(d) {
-    return isLocalDateBeforeToday(d);
+    return isBeforeBerlinToday(d);
   }
 
   const weekRangeLabel = $derived.by(() => {

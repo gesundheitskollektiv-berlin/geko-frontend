@@ -39,213 +39,206 @@ export function splitCalendarCancellation(description) {
   return { cancelled, descriptionBody };
 }
 
-/**
- * Gets the start of the week for a given date (Monday)
- * @param {Date} date - The reference date
- * @returns {Date} Start of the week
+/*
+ * Time zone handling
+ * ------------------
+ * The calendar always displays Berlin time, independent of the visitor's device
+ * time zone (and of the build host's zone during prerendering).
+ *
+ * Two kinds of values are used:
+ * - Instants (event.start / event.end): real points in time. They are formatted
+ *   and bucketed into days with timeZone: CALENDAR_TIME_ZONE.
+ * - Calendar days (week strip, day headers, navigation): a Date at 00:00 UTC that
+ *   represents a Berlin calendar date. All arithmetic uses UTC getters/setters and
+ *   formatting uses timeZone: 'UTC', so neither DST nor the device zone matter.
  */
-export function getWeekStart(date) {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
-  return new Date(d.setDate(diff));
+
+export const CALENDAR_TIME_ZONE = 'Europe/Berlin';
+
+const berlinDatePartsFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: CALENDAR_TIME_ZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+
+/**
+ * Berlin calendar date (YYYY-MM-DD) of an instant.
+ * @param {Date|string} instant
+ * @returns {string}
+ */
+export function toBerlinDateKey(instant) {
+  const d = instant instanceof Date ? instant : new Date(instant);
+  const parts = {};
+  for (const { type, value } of berlinDatePartsFormatter.formatToParts(d)) {
+    parts[type] = value;
+  }
+  return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
 /**
- * Gets the end of the week for a given date (Sunday)
- * @param {Date} date - The reference date
- * @returns {Date} End of the week
+ * Calendar day value for a YYYY-MM-DD key.
+ * @param {string} key
+ * @returns {Date}
  */
-export function getWeekEnd(date) {
-  const d = getWeekStart(date);
-  return new Date(d.setDate(d.getDate() + 6));
+export function dayFromKey(key) {
+  return new Date(`${key}T00:00:00Z`);
 }
 
 /**
- * Filters events that fall within a specific week
+ * YYYY-MM-DD key of a calendar day value.
+ * @param {Date} day
+ * @returns {string}
+ */
+export function dayKey(day) {
+  return day.toISOString().slice(0, 10);
+}
+
+/** Today's date in Berlin, as a calendar day value. */
+export function berlinToday() {
+  return dayFromKey(toBerlinDateKey(new Date()));
+}
+
+/**
+ * @param {Date} day - Calendar day value
+ * @param {number} n - Number of days to add (may be negative)
+ * @returns {Date} New calendar day value
+ */
+export function addDays(day, n) {
+  const d = new Date(day.getTime());
+  d.setUTCDate(d.getUTCDate() + n);
+  return d;
+}
+
+/** True if both calendar day values denote the same date. */
+export function isSameDay(a, b) {
+  return dayKey(a) === dayKey(b);
+}
+
+/** True if the calendar day value is strictly before today (Berlin). */
+export function isBeforeBerlinToday(day) {
+  return dayKey(day) < dayKey(berlinToday());
+}
+
+/**
+ * Gets the start of the week (Monday) for a calendar day value
+ * @param {Date} day - Calendar day value
+ * @returns {Date} Monday of that week, as a calendar day value
+ */
+export function getWeekStart(day) {
+  const weekday = day.getUTCDay();
+  return addDays(day, weekday === 0 ? -6 : 1 - weekday);
+}
+
+/**
+ * Gets the end of the week (Sunday) for a calendar day value
+ * @param {Date} day - Calendar day value
+ * @returns {Date} Sunday of that week, as a calendar day value
+ */
+export function getWeekEnd(day) {
+  return addDays(getWeekStart(day), 6);
+}
+
+/**
+ * Filters events that overlap the given week (by Berlin calendar date)
  * @param {Array} events - Array of event objects
- * @param {Date} weekStart - Start of the week
+ * @param {Date} weekStart - Monday of the week, as a calendar day value
  * @returns {Array} Filtered events
  */
 export function filterEventsByWeek(events, weekStart) {
-  const weekEnd = getWeekEnd(weekStart);
-  
+  const startKey = dayKey(weekStart);
+  const endKey = dayKey(getWeekEnd(weekStart));
+
   return events.filter(event => {
     if (!event.start) return false;
-    
-    const eventStart = new Date(event.start);
-    const eventEnd = event.end ? new Date(event.end) : eventStart;
-    
-    // Event overlaps with the week if:
-    // - Event starts before week ends AND
-    // - Event ends after week starts
-    return eventStart <= weekEnd && eventEnd >= weekStart;
+
+    const eventStartKey = toBerlinDateKey(event.start);
+    const eventEndKey = toBerlinDateKey(event.end ?? event.start);
+
+    return eventStartKey <= endKey && eventEndKey >= startKey;
   });
 }
 
-/** Local calendar YYYY-MM-DD (avoids UTC shift from toISOString) */
-export function toLocalDateKey(date) {
-  const d = date instanceof Date ? date : new Date(date);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
 /**
- * Groups events by day
+ * Groups events by Berlin calendar day
  * @param {Array} events - Array of event objects
  * @returns {Object} Events grouped by day key (YYYY-MM-DD)
  */
 export function groupEventsByDay(events) {
   const grouped = {};
-  
+
   for (const event of events) {
     if (!event.start) continue;
-    
-    const date = new Date(event.start);
-    const dateKey = toLocalDateKey(date);
-    
+
+    const dateKey = toBerlinDateKey(event.start);
+
     if (!grouped[dateKey]) {
       grouped[dateKey] = [];
     }
-    
+
     grouped[dateKey].push(event);
   }
-  
+
   // Sort events within each day by start time
   for (const dateKey in grouped) {
     grouped[dateKey].sort((a, b) => {
       return new Date(a.start).getTime() - new Date(b.start).getTime();
     });
   }
-  
+
   return grouped;
 }
 
 /**
- * Formats a date for display
- * @param {Date|string} date - The date to format
+ * Formats a calendar day value for display
+ * @param {Date} day - Calendar day value
  * @param {string} locale - The locale code (e.g., 'de', 'en')
  * @param {Object} options - Intl.DateTimeFormat options
  * @returns {string} Formatted date string
  */
-export function formatDate(date, locale = 'de', options = {}) {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString(locale, options);
+export function formatDate(day, locale = 'de', options = {}) {
+  return day.toLocaleDateString(locale, { ...options, timeZone: 'UTC' });
 }
 
 /**
- * Formats a time for display
- * @param {Date|string} date - The date to format
+ * Formats the Berlin clock time of an instant
+ * @param {Date|string} date - The instant to format
  * @param {string} locale - The locale code (e.g., 'de', 'en')
  * @returns {string} Formatted time string
  */
 export function formatTime(date, locale = 'de') {
   const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
-}
-
-/**
- * Formats a date range for display
- * @param {Date|string} start - Start date
- * @param {Date|string} end - End date
- * @param {string} locale - The locale code
- * @returns {string} Formatted date range
- */
-export function formatDateRange(start, end, locale = 'de') {
-  const startDate = typeof start === 'string' ? new Date(start) : start;
-  const endDate = end ? (typeof end === 'string' ? new Date(end) : end) : null;
-  
-  if (!endDate || startDate.toDateString() === endDate.toDateString()) {
-    // Same day or no end date
-    return formatDate(startDate, locale, { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  } else {
-    // Different days
-    return `${formatDate(startDate, locale, { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric' 
-    })} - ${formatDate(endDate, locale, { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
-    })}`;
-  }
-}
-
-/**
- * Gets the week range display text in numeric format
- * @param {Date} weekStart - Start of the week
- * @param {string} locale - The locale code
- * @returns {string} Week range text (e.g., "08.12.2025 - 14.12.2025")
- */
-export function getWeekRangeText(weekStart, locale = 'de') {
-  const weekEnd = getWeekEnd(weekStart);
-  
-  const formatNumericDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
-  };
-  
-  return `${formatNumericDate(weekStart)} - ${formatNumericDate(weekEnd)}`;
-}
-
-/** Start of local calendar day as timestamp */
-export function startOfLocalDay(date) {
-  const d = date instanceof Date ? date : new Date(date);
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-}
-
-export function isSameLocalCalendarDay(a, b) {
-  return startOfLocalDay(a) === startOfLocalDay(b);
-}
-
-/** True if `date` is strictly before today (local). */
-export function isLocalDateBeforeToday(date) {
-  return startOfLocalDay(date) < startOfLocalDay(new Date());
+  return d.toLocaleTimeString(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: CALENDAR_TIME_ZONE,
+  });
 }
 
 /**
  * Dates to show: only days that have events. When `landingFromToday`, range starts at
- * today (local) through Sunday of `weekStart`'s week (not earlier in the week).
+ * today (Berlin) through Sunday of `weekStart`'s week (not earlier in the week).
+ * @param {Date} weekStart - Monday of the week, as a calendar day value
+ * @returns {Date[]} Calendar day values
  */
 export function getVisibleCalendarDates(weekStart, groupedByDay, options = {}) {
   const { landingFromToday = false } = options;
-  const weekEnd = getWeekEnd(new Date(weekStart.getTime()));
+  const endKey = dayKey(getWeekEnd(weekStart));
 
-  let d = new Date(weekStart);
-  d.setHours(0, 0, 0, 0);
-
+  let cursor = weekStart;
   if (landingFromToday) {
-    const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    if (todayStart.getTime() > d.getTime()) {
-      d = todayStart;
+    const today = berlinToday();
+    if (dayKey(today) > dayKey(cursor)) {
+      cursor = today;
     }
   }
 
-  const end = new Date(weekEnd);
-  end.setHours(23, 59, 59, 999);
-
   const out = [];
-  const cursor = new Date(d);
-  while (cursor.getTime() <= end.getTime()) {
-    const key = toLocalDateKey(cursor);
-    const ev = groupedByDay[key];
-    if (ev?.length > 0) {
-      out.push(new Date(cursor));
+  while (dayKey(cursor) <= endKey) {
+    if (groupedByDay[dayKey(cursor)]?.length > 0) {
+      out.push(cursor);
     }
-    cursor.setDate(cursor.getDate() + 1);
+    cursor = addDays(cursor, 1);
   }
   return out;
 }
-

@@ -1,5 +1,5 @@
 <script>
-  import { formatDate, isSameLocalCalendarDay } from '$lib/helpers/calendar';
+  import { formatDate, isSameDay, berlinToday, addDays } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import CalendarEvent from './CalendarEvent.svelte';
   import './calendar.scss';
@@ -7,18 +7,14 @@
   let { date, events = [], locale = 'de', expandedEventId = null, onEventClick, isToday = false } = $props();
 
   function relativeDayPrefix() {
-    const now = new Date();
-    if (isSameLocalCalendarDay(date, now)) {
+    const today = berlinToday();
+    if (isSameDay(date, today)) {
       return t(locale).today;
     }
-    const tomorrow = new Date(now);
-    tomorrow.setDate(now.getDate() + 1);
-    if (isSameLocalCalendarDay(date, tomorrow)) {
+    if (isSameDay(date, addDays(today, 1))) {
       return t(locale).tomorrow;
     }
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    if (isSameLocalCalendarDay(date, yesterday)) {
+    if (isSameDay(date, addDays(today, -1))) {
       return t(locale).yesterday;
     }
     return '';

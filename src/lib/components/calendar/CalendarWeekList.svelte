@@ -4,7 +4,10 @@
     filterEventsByWeek,
     groupEventsByDay,
     getVisibleCalendarDates,
-    toLocalDateKey,
+    berlinToday,
+    addDays,
+    dayKey,
+    isSameDay,
   } from '$lib/helpers/calendar';
   import { t } from '$lib/helpers/translation';
   import CalendarHeader from './CalendarHeader.svelte';
@@ -13,7 +16,7 @@
 
   let { events = [], locale = 'de', showNavigation = true } = $props();
 
-  let currentWeekStart = $state(getWeekStart(new Date()));
+  let currentWeekStart = $state(getWeekStart(berlinToday()));
 
   let expandedEventId = $state(null);
 
@@ -27,27 +30,16 @@
   );
 
   /** Mon–Sun for the purple week strip (always 7 cells). */
-  const stripDates = $derived.by(() => {
-    const dates = [];
-    const start = new Date(currentWeekStart);
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(start);
-      date.setDate(start.getDate() + i);
-      dates.push(date);
-    }
-    return dates;
-  });
+  const stripDates = $derived(
+    Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i))
+  );
 
   function goToPreviousWeek() {
-    const newDate = new Date(currentWeekStart);
-    newDate.setDate(newDate.getDate() - 7);
-    currentWeekStart = newDate;
+    currentWeekStart = addDays(currentWeekStart, -7);
   }
 
   function goToNextWeek() {
-    const newDate = new Date(currentWeekStart);
-    newDate.setDate(newDate.getDate() + 7);
-    currentWeekStart = newDate;
+    currentWeekStart = addDays(currentWeekStart, 7);
   }
 
   function handleEventClick(event) {
@@ -55,12 +47,7 @@
   }
 
   function isToday(date) {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
+    return isSameDay(date, berlinToday());
   }
 </script>
 
@@ -79,8 +66,8 @@
     </div>
   {:else}
     <div class="calendar-events">
-      {#each visibleDates as date (toLocalDateKey(date))}
-        {@const dateKey = toLocalDateKey(date)}
+      {#each visibleDates as date (dayKey(date))}
+        {@const dateKey = dayKey(date)}
         {@const dayEvents = groupedEvents[dateKey] || []}
         <CalendarDay
           {date}
